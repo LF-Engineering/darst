@@ -24,3 +24,9 @@ darts jump box
 - Similarly with `devk.sh`, `stgk.sh` and `prodk.sh`.
 
 
+# Helm 3
+
+- Use `testh.sh` (installed from `helm/testh.sh`) instead of the plain `helm` command, it just prepends `KUBECONFIG=/root/.kube/kubeconfig_test AWS_PROFILE=lfproduct-test`.
+- Similarly with `devh.sh`, `stgh.sh` and `prodh.sh`.
+
+
