@@ -32,4 +32,8 @@ darts jump box
 - You can prepend with `V2=1` to use `Helm 2` instead of `helm 3` - but this is only valid until old clusters are still alive.
 
 
+# eksctl
 
+
+- Use `testeksctl.sh` (installed from `eksctl/testeksctl.sh`) instead of the plain `eksctl` command, it just prepends `KUBECONFIG=/root/.kube/kubeconfig_test AWS_PROFILE=lfproduct-test`.
+- Similarly with `deveksctl.sh`, `stgeksctl.sh` and `prodeksctl.sh`.
