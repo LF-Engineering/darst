@@ -29,5 +29,7 @@ darts jump box
 
 - Use `testh.sh` (installed from `helm/testh.sh`) instead of the plain `helm` command, it just prepends `KUBECONFIG=/root/.kube/kubeconfig_test AWS_PROFILE=lfproduct-test`.
 - Similarly with `devh.sh`, `stgh.sh` and `prodh.sh`.
+- You can prepend with `V2=1` to use `Helm 2` instead of `helm 3` - but this is only valid until old clusters are still alive.
+
 
 
