@@ -1,6 +1,7 @@
 # darst
 darts jump box
 
+
 # How to use
 
 - First create the EC2 instance via: `AWS_PROFILE=lfproduct-test ./create_ec2_instance.sh`
@@ -18,7 +19,7 @@ darts jump box
 - Similarly with `devaws.sh`, `stgaws.sh` and `prodaws.sh`.
 
 
-# Kubernetes
+# Kubernetes (EKS >= v1.13)
 
 - Use `testk.sh` (installed from `k8s/testk.sh`) instead of the plain `kubectl` command, it just prepends `KUBECONFIG=/root/.kube/kubeconfig_test AWS_PROFILE=lfproduct-test`.
 - Similarly with `devk.sh`, `stgk.sh` and `prodk.sh`.
