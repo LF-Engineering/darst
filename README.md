@@ -14,4 +14,3 @@ darts jump box
 
 # AWS
 
-- AWS is configured to use MFA, keys are expiring, you can run `awsmfa.sh` anytime to regenerate keys.
