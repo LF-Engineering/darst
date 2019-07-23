@@ -16,3 +16,11 @@ darts jump box
 
 - Use `testaws.sh` (installed from `aws/testaws.sh`) instead of the plain `aws` command, it just prepends `AWS_PROFILE=lfproduct-test`.
 - Similarly with `devaws.sh`, `stgaws.sh` and `prodaws.sh`.
+
+
+# Kubernetes
+
+- Use `testk.sh` (installed from `k8s/testk.sh`) instead of the plain `kubectl` command, it just prepends `KUBECONFIG=/root/.kube/kubeconfig_test AWS_PROFILE=lfproduct-test`.
+- Similarly with `devk.sh`, `stgk.sh` and `prodk.sh`.
+
+
