@@ -15,3 +15,4 @@ darts jump box
 # AWS
 
 - Use `testaws.sh` (installed from `aws/testaws.sh`) instead of the plain `aws` command, it just prepends `AWS_PROFILE=lfproduct-test`.
+- Similarly with `devaws.sh`, `stgaws.sh` and `prodaws.sh`.
