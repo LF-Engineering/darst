@@ -44,7 +44,7 @@ darts jump box
 
 # utils
 
-- Use `./utils/chnage_namespace.sh test namespace-name` to change current namespace in `test` env to `namespace-name`.
+- Use `./utils/change_namespace.sh test namespace-name` to change current namespace in `test` env to `namespace-name`.
 
 
 # Deploy infra step-by-step
