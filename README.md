@@ -40,3 +40,10 @@ darts jump box
 - Use `eksctl/get_cluster.sh {{env}}` to get current cluster info, replace `{{env}}` with `dev` or `stg` or `test` or `prod`. Example: `./eksctl/create_cluster.sh test`.
 - Use `eksctl/create_cluster.sh {{env}}` to create EKS v1.13 cluster, replace `{{env}}` with `dev` or `stg` or `test` or `prod`. Example `./eksctl/get_cluster.sh test`.
 - Use `eksctl/delete_cluster.sh {{env}}` to delete cluster, replace `{{env}}` with `dev` or `stg` or `test` or `prod`. Example: `./eksctl/delete_cluster.sh test`.
+
+
+# Deploy infra step-by-step
+
+For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
+
+- `./eksctl/create_cluster test`.
