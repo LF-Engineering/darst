@@ -48,4 +48,4 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 
 - `./eksctl/create_cluster test`.
 - `testh.sh init`.
-- `es/setup.sh`.
+- `es/setup.sh test`.
