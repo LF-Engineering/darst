@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /usr/share/elasticsearch/data
+    path: /data
   nodeAffinity:
     required:
       nodeSelectorTerms:
