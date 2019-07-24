@@ -6,4 +6,6 @@ then
 fi
 "${1}h.sh" repo add elastic https://helm.elastic.co
 "${1}k.sh" create -f es/namespace.yaml
-"${1}h.sh" install dev-analytics-elasticsearch elastic/elasticsearch --namespace dev-analytics-elasticsearch --set 'replicas=5,esJavaOpts=-Xms6g -Xmx6g,nodeSelector.lfda=elastic,resources.requests.cpu=1500m,resources.requests.memory=6Gi,resources.limits.cpu=2000m,resources.limits.memory=7Gi,volumeClaimTemplate.storageClassName=gp2,volumeClaimTemplate.resources.requests.storage=400Gi'`.
+"${1}k.sh" config set-context --current --namespace=dev-analytics-elasticsearch
+"${1}h.sh" -n dev-analytics-elasticsearch install dev-analytics-elasticsearch elastic/elasticsearch --set 'replicas=5,esJavaOpts=-Xms6g -Xmx6g,nodeSelector.lfda=elastic,resources.requests.cpu=1500m,resources.requests.memory=6Gi,resources.limits.cpu=2000m,resources.limits.memory=7Gi,volumeClaimTemplate.storageClassName=gp2,volumeClaimTemplate.resources.requests.storage=400Gi'
+"${1}k.sh" config set-context --current --namespace=default
