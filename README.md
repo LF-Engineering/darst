@@ -49,5 +49,5 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Create EKS v1.13 cluster: `./eksctl/create_cluster test`.
 - Create local-storage storage class: `./local-storage/setup.sh`.
 - Init Helm on that cluster: `testh.sh init`.
-- Install ElasticSearch Helm Chart: `es/setup.sh test`.
+- Install ElasticSearch Helm Chart: `./es/setup.sh test`. If needed delete and reinstall via `./es/delete.sh test`.
 - When ES is up and running (all 5 ES pods shoul be in `Running` state: `testk.sh get po -n dev-analytics-elasticsearch`), test it via: `./es/test.sh test`.
