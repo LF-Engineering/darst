@@ -1,2 +1,2 @@
 #!/bin/bash
-KUBECONFIG=/root/.kube/kubeconfig_dev AWS_PROFILE=lfproduct-dev kubectl "$@"
+KUBECONFIG=~/.kube/kubeconfig_dev AWS_PROFILE=lfproduct-dev kubectl "$@"
