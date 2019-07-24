@@ -42,6 +42,11 @@ darts jump box
 - Use `eksctl/delete_cluster.sh {{env}}` to delete cluster, replace `{{env}}` with `dev` or `stg` or `test` or `prod`. Example: `./eksctl/delete_cluster.sh test`.
 
 
+# utils
+
+- Use `./utils/chnage_namespace.sh test namespace-name` to change current namespace in `test` env to `namespace-name`.
+
+
 # Deploy infra step-by-step
 
 For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
