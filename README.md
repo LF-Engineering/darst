@@ -65,4 +65,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Install OpenEBS and NFS provisioner: `./openebs/setup.sh test`. You can delete via `./openebs/delete.sh test`.
 - Install ElasticSearch Helm Chart: `./es/setup.sh test`. You can delete via `./es/delete.sh test`.
 - When ES is up and running (all 5 ES pods should be in `Running` state: `testk.sh get po -n dev-analytics-elasticsearch`), test it via: `./es/test.sh test`.
-
+- Clone `cncf/da-patroni` repo and change directory to that repo.
+- Run `./setup.sh test` to deploy on `test` env.
+- Run `./config.sh test` to configure patroni once it is up & running, check for for `3/3` Ready from `testk.sh get sts -n devstats devstats-postgres`.
+- Run `./delete.sh test` to delete.
