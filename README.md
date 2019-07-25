@@ -47,9 +47,12 @@ All next commands are assumed to be run on the `darst` jump box.
 - Use `eksctl/delete_cluster.sh {{env}}` to delete cluster, replace `{{env}}` with `dev` or `stg` or `test` or `prod`. Example: `./eksctl/delete_cluster.sh test`.
 
 
-# utils
+# Utils
 
-- Use `./utils/change_namespace.sh test namespace-name` to change current namespace in `test` env to `namespace-name`.
+Those scripts are installed in `/usr/local/bin` from `./utils/` directory.
+
+- Use `change_namespace.sh test namespace-name` to change current namespace in `test` env to `namespace-name`.
+- Use `pod_shell.sh env pod-name` to bash into the pod.
 
 
 # Deploy infra step-by-step
