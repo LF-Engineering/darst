@@ -8,5 +8,5 @@ fi
 for ip in `"${1}k.sh" get nodes -l lfda=elastic -o wide | grep 'ip-' | awk '{print $7}'`
 do
   echo "IP: $ip"
-  ssh "ec2-user@${ip}" 'sudo mkdir /data; sudo chmod ugo+rwx /data'
+  ssh "ec2-user@${ip}" 'sudo mkfs.xfs -f /dev/nvme0n1; sudo mkdir /data; sudo chmod ugo+rwx /data; echo "`sudo blkid /dev/nvme0n1 | awk '"'"'{print $2}'"'"'` /data xfs defaults 0 0" | sudo tee -a /etc/fstab; sudo mount /data'
 done
