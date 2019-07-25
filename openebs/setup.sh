@@ -12,3 +12,4 @@ do
   ssh "ec2-user@${ip}" 'sudo mkfs -t xfs /dev/nvme0n1; sudo mkdir /var/openebs; sudo chmod ugo+rwx /var/openebs; echo "`sudo blkid /dev/nvme0n1 | awk '"'"'{print $2}'"'"'` /var/openebs xfs defaults 0 0" | sudo tee -a /etc/fstab; sudo mount /var/openebs'
 done
 "${1}k.sh" apply -f https://openebs.github.io/charts/openebs-operator-1.0.0.yaml
+"${1}h.sh" install local-storage-nfs stable/nfs-server-provisioner --set=persistence.enabled=true,persistence.storageClass=openebs-hostpath,persistence.size=2Ti,storageClass.name=nfs-openebs-localstorage
