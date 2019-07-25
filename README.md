@@ -13,6 +13,11 @@ darts jump box
 - After than you can login password-less via: `ssh darst@darst` or `root@darst` and that configuration is assumed later.
 
 
+All next commands are assumed to be run on the `darst` jump box.
+
+- Use `mfa.sh` (from `mfa/mfa.sh`) to renew your AWS access keys for the next 36 hours.
+
+
 # AWS
 
 - Use `testaws.sh` (installed from `aws/testaws.sh`) instead of the plain `aws` command, it just prepends `AWS_PROFILE=lfproduct-test`.
