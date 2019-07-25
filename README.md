@@ -57,9 +57,9 @@ All next commands are assumed to be run on the `darst` jump box.
 For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 
 - Create EKS v1.13 cluster: `./eksctl/create_cluster test`.
-- Create local-storage storage class: `./local-storage/setup.sh test`.
-- Init Helm on that cluster: `testh.sh init`.
+- Create local-storage storage class and mount NVMe volumes in `devstats`, `elastic` and `grimoire` node groups: `./local-storage/setup.sh test`.
+- Init Helm on the cluster: `testh.sh init`.
+- Install OpenEBS and NFS provisioner: `./openebs/setup.sh test`.
 - Install ElasticSearch Helm Chart: `./es/setup.sh test`. If needed delete and reinstall via `./es/delete.sh test`.
 - When ES is up and running (all 5 ES pods shoul be in `Running` state: `testk.sh get po -n dev-analytics-elasticsearch`), test it via: `./es/test.sh test`.
-- Install OpenEBS and NFS provisioner: `./openebs/setup.sh test`.
 
