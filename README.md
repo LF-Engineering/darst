@@ -52,7 +52,7 @@ All next commands are assumed to be run on the `darst` jump box.
 Those scripts are installed in `/usr/local/bin` from `./utils/` directory.
 
 - Use `change_namespace.sh test namespace-name` to change current namespace in `test` env to `namespace-name`.
-- Use `pod_shell.sh env pod-name` to bash into the pod.
+- Use `pod_shell.sh env namespace-name pod-name` to bash into the pod.
 
 
 # Deploy infra step-by-step
