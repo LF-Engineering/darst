@@ -73,9 +73,11 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Run `./setup.sh test` to deploy on `test` env. Note that this currently deploys only 4 projects (just a demo), all 65 projects will take days to provision.
 - Run `./delete.sh test` to delete.
 - For each file in `mariadb/*.secret.example` create corresponding `mariadb/*.secret` file. `*.secret` file are not checked in the gitgub repository.
-- Each file must be save without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
-- Install MariaDB database: `./mariadb/setup.sh/. You can delete via `./mariadb/delete.sh`.
-- Once installed test if MariaDB works (should list databases): `./mariadb/test.sh`.
+- Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
+- Install MariaDB database: `./mariadb/setup.sh test`. You can delete via `./mariadb/delete.sh test`.
+- Once installed test if MariaDB works (should list databases): `./mariadb/test.sh test`.
+- Provision Sorting Hat structure: `./mariadb/structure.sh test`.
+- Popoulate merged `dev` and `staging` Sorting Hat data: `./mariadb/populate.sh test`. You will need `cncf/merge-sh-dbs` repo cloned in `../merge-sh-dbs`.
 
 
 # Merge Sorting Hat databases
