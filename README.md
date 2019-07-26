@@ -75,6 +75,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - For each file in `mariadb/*.secret.example` create corresponding `mariadb/*.secret` file. `*.secret` file are not checked in the gitgub repository.
 - Each file must be save without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
 - Install MariaDB database: `./mariadb/setup.sh/. You can delete via `./mariadb/delete.sh`.
+- Once installed test if MariaDB works (should list databases): `./mariadb/test.sh`.
 
 
 # Merge Sorting Hat databases
