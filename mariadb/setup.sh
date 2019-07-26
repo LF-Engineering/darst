@@ -22,5 +22,7 @@ vim --not-a-term -c "%s/PASS_MAIN/${pass}/g" --not-a-term -c "%s/PASS_ROOT/${pas
 "${1}k.sh" create -f mariadb/namespace.yaml
 change_namespace.sh $1 mariadb
 "${1}k.sh" -n mariadb create -f "$fn"
-"${1}h.sh" -n mariadb install mariadb stable/mariadb
+db=`cat mariadb/DB.secret`
+usr=`cat mariadb/USER.secret`
+"${1}h.sh" -n mariadb install mariadb stable/mariadb --set "existingSecret=mariadb,db.name=${db},db.user=${usr},master.nodeSelector.lfda=grimoire,master.persistence.storageClass=openebs-hostpath,master.persistence.size=4Gi,master.resources.requests.cpu=250m,master.resources.requests.memory=256Mi,master.resources.limits.cpu=2000m,master.resources.limits.memory=2Gi,slave.replicas=1,slave.nodeSelector.lfda=grimoire,slave.persistence.storageClass=openebs-hostpath,slave.persistence.size=4Gi,slave.resources.requests.cpu=250m,slave.resources.requests.memory=256Mi,slave.resources.limits.cpu=2000m,slave.resources.limits.memory=2Gi"
 change_namespace.sh $1 default
