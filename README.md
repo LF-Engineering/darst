@@ -87,3 +87,9 @@ If you want to merge `dev` and `staging` sorting hat databases:
 
 - Clone `cncf/merge-sh-dbs`.
 - Follow `README.md` instructions.
+
+
+# MariadDB backups image
+
+- Use `DOCKER_USER=... ./mariadb/backups_image.sh` to build MariaDB backups docker image.
+

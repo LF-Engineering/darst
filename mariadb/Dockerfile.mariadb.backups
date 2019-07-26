@@ -1,0 +1,3 @@
+FROM mariadb
+RUN cp mariadb/backup_all_dbs.sh /usr/bin/
+
