@@ -6,8 +6,7 @@ then
 fi
 k="${1}k.sh"
 function finish {
-  #"$k" delete pod mariadb-test
-  ls
+  "$k" delete pod mariadb-test
 }
 trap finish EXIT
 "${1}k.sh" run --generator=run-pod/v1 --image=mariadb mariadb-test --env="SH_HOST=`cat mariadb/HOST.secret`" --env="SH_USER=`cat mariadb/USER.secret`" --env="SH_PASS=`cat mariadb/PASS.secret`" --env="SH_DB=`cat mariadb/DB.secret`" -- /bin/sleep 3600s
@@ -17,3 +16,4 @@ do
   sleep 1
 done
 "${1}k.sh" cp mariadb/test_db.sh mariadb-test:/usr/bin/test_db.sh
+"${1}k.sh" exec -it mariadb-test -- /usr/bin/test_db.sh
