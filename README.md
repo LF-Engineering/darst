@@ -72,3 +72,11 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Clone `cncf/devstats-helm-lf` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env. Note that this currently deploys only 4 projects (just a demo), all 65 projects will take days to provision.
 - Run `./delete.sh test` to delete.
+
+
+# Merge Sorting Hat databases
+
+If you want to merge `dev` and `staging` sorting hat databases:
+
+- Clone `cncf/merge-sh-dbs`.
+- Follow `README.md` instructions.
