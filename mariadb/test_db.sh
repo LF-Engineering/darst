@@ -1,2 +1,2 @@
 #!/bin/bash
-mysql -h$SH_HOST -u$SH_USER -p$SH_PASS $SH_DB -e "show databases"
+mysql -h$SH_HOST -u$SH_USER -p$SH_PASS $SH_DB -e "show databases; show tables"
