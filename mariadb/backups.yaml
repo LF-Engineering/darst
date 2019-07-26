@@ -1,0 +1,56 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  namespace: mariadb
+  name: mariadb-backups
+  labels:
+    name: mariadb
+    type: backups
+spec:
+  schedule: '45 3 * * *'
+  successfulJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          namespace: mariadb
+          name: mariadb-backups
+          labels:
+            name: mariadb
+            type: backups
+        spec:
+          containers:
+          - command:
+            - '/usr/bin/backup_all_dbs.sh'
+            resources:
+              requests:
+                memory: '128Mi'
+                cpu: '200m'
+              limits:
+                memory: '1Gi'
+                cpu: '1000m'
+            env:
+            - name: SH_HOST
+              value: SHHOST
+            - name: SH_USER
+              value: SHUSER
+            - name: PG_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: mariadb-root-password
+            image: 'lukaszgryglicki/mariadb-backups'
+            imagePullPolicy: Always
+            name: mariadb-backups
+            volumeMounts:
+            - name: mariadb-backups
+              mountPath: '/root'
+          volumes:
+          - name: mariadb-backups
+            persistentVolumeClaim:
+              claimName: mariadb-backups
+          restartPolicy: Never
+          nodeSelector:
+            lfda: devstats
