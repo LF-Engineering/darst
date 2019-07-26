@@ -36,7 +36,7 @@ spec:
               value: SHHOST
             - name: SH_USER
               value: SHUSER
-            - name: PG_PASS
+            - name: SH_PASS
               valueFrom:
                 secretKeyRef:
                   name: mariadb-secret
