@@ -77,7 +77,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Install MariaDB database: `./mariadb/setup.sh test`. You can delete via `./mariadb/delete.sh test`.
 - Once installed test if MariaDB works (should list databases): `./mariadb/test.sh test`.
 - Provision Sorting Hat structure: `./mariadb/structure.sh test`.
-- Popoulate merged `dev` and `staging` Sorting Hat data: `./mariadb/populate.sh test`. You will need `cncf/merge-sh-dbs` repo cloned in `../merge-sh-dbs`.
+- Popoulate merged `dev` and `staging` Sorting Hat data: `./mariadb/populate.sh test`. You will need `cncf/merge-sh-dbs` repo cloned in `../merge-sh-dbs` and actual merged data generated (that merged SQL is checked in the repo).
 
 
 # Merge Sorting Hat databases
