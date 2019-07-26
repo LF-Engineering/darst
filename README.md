@@ -72,6 +72,8 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Clone `cncf/devstats-helm-lf` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env. Note that this currently deploys only 4 projects (just a demo), all 65 projects will take days to provision.
 - Run `./delete.sh test` to delete.
+- For each file in `mariadb/*.secret.example` create corresponding `mariadb/*.secret` file. `*.secret` file are not checked in the gitgub repository.
+- Install MariaDB database: `./mariadb/setup.sh/. You can delete via `./mariadb/delete.sh`.
 
 
 # Merge Sorting Hat databases
