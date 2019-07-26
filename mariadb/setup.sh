@@ -21,5 +21,5 @@ fi
 vim --not-a-term -c "%s/PASS_MAIN/${pass}/g" --not-a-term -c "%s/PASS_ROOT/${pass_root}/g" --not-a-term -c "%s/PASS_REP/${pass_rep}/g" -c 'wq!' "$fn"
 change_namespace.sh $1 mariadb
 "${1}k.sh" -n mariadb create -f mariadb/secret.yaml
-#"${1}h.sh" -n mariadb install mariadb stable/mariadb
+"${1}h.sh" -n mariadb install mariadb stable/mariadb
 change_namespace.sh $1 default
