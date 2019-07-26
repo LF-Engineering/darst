@@ -18,7 +18,7 @@ then
   echo "$0: you need to provide password values in mariadb/PASS.secret, mariadb/PASS_ROOT.secret, mariadb/PASS_REP.secret files"
   exit 1
 fi
-vim --not-a-term -c "%s/PASS_MAIN/${pass}/g" --not-a-term -c "%s/PASS_ROOT/${pass_root}/g" --not-a-term -c "%s/PASS_REP/${pass_rep}/g" -c 'wq!' "$fn"
+vim --not-a-term -c "%s/PASS_MAIN/${pass}/g" -c "%s/PASS_ROOT/${pass_root}/g" -c "%s/PASS_REP/${pass_rep}/g" -c 'wq!' "$fn"
 "${1}k.sh" create -f mariadb/namespace.yaml
 change_namespace.sh $1 mariadb
 "${1}k.sh" -n mariadb create -f "$fn"
