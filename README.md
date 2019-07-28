@@ -73,7 +73,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Run `./setup.sh test` to deploy on `test` env. Note that this currently deploys only 4 projects (just a demo), all 65 projects will take days to provision.
 - Run `./add_projects.sh test 4 8` to add 4 new projects with index 4, 5, 6, 7 (see `devstats-helm/values.yaml` for project indices.
 - Run `./delete.sh test` to delete.
-- For each file in `mariadb/secrets/*.secret.example` create corresponding `mariadb/secrets/*.secret` file. `*.secret` file are not checked in the gitgub repository.
+- For each file in `mariadb/secrets/*.secret.example` create corresponding `mariadb/secrets/*.secret` file. `*.secret` files are not checked in the gitgub repository.
 - Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
 - Install MariaDB database: `./mariadb/setup.sh test`. You can delete via `./mariadb/delete.sh test`.
 - Once installed test if MariaDB works (should list databases): `./mariadb/test.sh test`.
