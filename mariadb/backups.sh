@@ -10,8 +10,8 @@ function finish {
 }
 trap finish EXIT
 cp mariadb/backups.yaml "$fn"
-host=`cat mariadb/HOST.secret`
-usr=`cat mariadb/ROOT_USER.secret`
+host=`cat mariadb/secrets/HOST.secret`
+usr=`cat mariadb/secrets/ROOT_USER.secret`
 vim --not-a-term -c "%s/SHUSER/${usr}/g" -c "%s/SHHOST/${host}/g" -c 'wq!' "$fn"
 change_namespace.sh $1 mariadb
 "${1}k.sh" -n mariadb create -f mariadb/backups-pv.yaml
