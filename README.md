@@ -69,6 +69,9 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Run `./setup.sh test` to deploy on `test` env.
 - Run `./config.sh test` to configure patroni once it is up & running, check for for `3/3` Ready from `testk.sh get sts -n devstats devstats-postgres`.
 - Run `./delete.sh test` to delete.
+- Clone `cncf/json2hat-helm` repo and change directory to that repo.
+- Run `./setup.sh test` to deploy on `test` env.
+- Run `./delete.sh test` to delete.
 - Clone `cncf/devstats-helm-lf` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env. Note that this currently deploys only 4 projects (just a demo), all 65 projects will take days to provision.
 - Run `./add_projects.sh test 4 8` to add 4 new projects with index 4, 5, 6, 7 (see `devstats-helm/values.yaml` for project indices.
