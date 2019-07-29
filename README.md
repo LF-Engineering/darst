@@ -69,6 +69,8 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Run `./setup.sh test` to deploy on `test` env.
 - Run `./config.sh test` to configure patroni once it is up & running, check for for `3/3` Ready from `testk.sh get sts -n devstats devstats-postgres`.
 - To delete run `./delete.sh test`.
+- For each file in `redis/secrets/*.secret.example` create corresponding `redis/secrets/*.secret` file. `*.secret` files are not checked in the gitgub repository.
+- Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
 - Run `./redis/setup.sh test` to deploy Redis on `test` env.
 - Run `./redis/test.sh test` to test Redis installation.
 - To delete Redis run `./redis/delete.sh test`.

@@ -6,5 +6,6 @@ then
 fi
 change_namespace.sh $1 redis
 "${1}h.sh" delete redis
+"${1}k.sh" -n redis delete secret redis-secret
 # "${1}k.sh" delete pvc xxx
 change_namespace.sh $1 default

@@ -5,7 +5,7 @@ then
   exit 1
 fi
 fn=/tmp/apply.yaml
-function finish { 
+function finish {
   rm -f "$fn" 2>/dev/null
 }
 trap finish EXIT
