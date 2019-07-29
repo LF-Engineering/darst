@@ -68,14 +68,17 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Clone `cncf/da-patroni` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env.
 - Run `./config.sh test` to configure patroni once it is up & running, check for for `3/3` Ready from `testk.sh get sts -n devstats devstats-postgres`.
-- Run `./delete.sh test` to delete.
+- To delete run `./delete.sh test`.
+- Run `./redis/setup.sh test` to deploy Redis on `test` env.
+- Run `./redis/test.sh test` to test Redis installation.
+- To delete Redis run `./redis/delete.sh test`.
 - Clone `cncf/json2hat-helm` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env.
-- Run `./delete.sh test` to delete.
+- To delete run `./delete.sh test`.
 - Clone `cncf/devstats-helm-lf` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env. Note that this currently deploys only 4 projects (just a demo), all 65 projects will take days to provision.
 - Run `./add_projects.sh test 4 8` to add 4 new projects with index 4, 5, 6, 7 (see `devstats-helm/values.yaml` for project indices.
-- Run `./delete.sh test` to delete.
+- To delete run `./delete.sh test`.
 - For each file in `mariadb/secrets/*.secret.example` create corresponding `mariadb/secrets/*.secret` file. `*.secret` files are not checked in the gitgub repository.
 - Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
 - Install MariaDB database: `./mariadb/setup.sh test`. You can delete via `./mariadb/delete.sh test`.
