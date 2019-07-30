@@ -120,3 +120,9 @@ If you want to merge `dev` and `staging` sorting hat databases:
 - Clone `dev-analytics-grimoire-docker` repo: `git clone https://github.com/LF-Engineering/dev-analytics-grimoire-docker.git` and change directory to that repo.
 - Run `./collect_and_build.sh`
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-grimoire-docker" .` to build `dev-analytics-grimoire-docker` image, replace `docker-user` with your docker user.
+
+
+# dev-analytics-uapi image
+
+- Clone `dev-analytics-api` repo: `git clone https://github.com/LF-Engineering/dev-analytics-api.git` and change directory to that repo.
+- Use `docker build -f Dockerfile -t "docker-user/dev-analytics-api" .` to build `dev-analytics-api` image, replace `docker-user` with your docker user.
