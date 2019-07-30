@@ -106,3 +106,8 @@ If you want to merge `dev` and `staging` sorting hat databases:
 # dev-analytics-sortinghat-api tests image
 
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-sortinghat-api" .` to build `dev-analytics-sortinghat-api` tests image, replace `docker-user` with your docker user.
+
+
+# dev-analytics-ui image
+
+- Use `docker build -f Dockerfile -t "docker-user/dev-analytics-ui" .` to build `dev-analytics-ui` image, replace `docker-user` with your docker user.
