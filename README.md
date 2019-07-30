@@ -107,12 +107,14 @@ If you want to merge `dev` and `staging` sorting hat databases:
 
 - Clone `dev-analytics-sortinghat-api` repo: `git clone https://github.com/LF-Engineering/dev-analytics-sortinghat-api.git` and change directory to that repo.
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-sortinghat-api" .` to build `dev-analytics-sortinghat-api` tests image, replace `docker-user` with your docker user.
+- Run `docker push "docker-user/dev-analytics-sortinghat-api"`.
 
 
 # dev-analytics-ui image
 
 - Clone `dev-analytics-ui` repo: `git clone https://github.com/LF-Engineering/dev-analytics-ui.git` and change directory to that repo.
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-ui" .` to build `dev-analytics-ui` image, replace `docker-user` with your docker user.
+- Run `docker push "docker-user/dev-analytics-ui"`.
 
 
 # dev-analytics-grimoire-docker image
@@ -120,9 +122,11 @@ If you want to merge `dev` and `staging` sorting hat databases:
 - Clone `dev-analytics-grimoire-docker` repo: `git clone https://github.com/LF-Engineering/dev-analytics-grimoire-docker.git` and change directory to that repo.
 - Run `./collect_and_build.sh`
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-grimoire-docker" .` to build `dev-analytics-grimoire-docker` image, replace `docker-user` with your docker user.
+- Run `docker push "docker-user/dev-analytics-grimoire-docker"`.
 
 
-# dev-analytics-uapi image
+# dev-analytics-api image
 
 - Clone `dev-analytics-api` repo: `git clone https://github.com/LF-Engineering/dev-analytics-api.git` and change directory to that repo.
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-api" .` to build `dev-analytics-api` image, replace `docker-user` with your docker user.
+- Run `docker push "docker-user/dev-analytics-api"`.
