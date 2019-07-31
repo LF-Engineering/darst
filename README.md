@@ -67,6 +67,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - When ES is up and running (all 5 ES pods should be in `Running` state: `testk.sh get po -n dev-analytics-elasticsearch`), test it via: `./es/test.sh test`.
 - Clone `cncf/da-patroni` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env.
+- Run `./test.sh test` to test database (should list databases).
 - Run `./config.sh test` to configure patroni once it is up & running, check for for `3/3` Ready from `testk.sh get sts -n devstats devstats-postgres`.
 - To delete run `./delete.sh test`.
 - For each file in `redis/secrets/*.secret.example` create corresponding `redis/secrets/*.secret` file. `*.secret` files are not checked in the gitgub repository.
