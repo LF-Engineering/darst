@@ -1,0 +1,71 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: backups
+  name: backups-page
+  labels:
+    name: backups-backups
+spec:
+  replicas: 1
+  template:
+    metadata:
+      namespace: backups
+      labels:
+        name: backups-page
+    spec:
+      volumes:
+      - name: devstats-backups
+        persistentVolumeClaim:
+          claimName: devstats-backups
+      - name: mariadb-backups
+        persistentVolumeClaim:
+          claimName: mariadb-backups
+      containers:
+      - env:
+        image: 'lukaszgryglicki/backups-page'
+        imagePullPolicy: Always
+        name: backups-page
+        volumeMounts:
+        - name: devstats-backups
+          mountPath: '/usr/share/nginx/html/devstats-backups'
+        - name: maria-backups
+          mountPath: '/usr/share/nginx/html/mariadb-backups'
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          exec:
+            command:
+            - '/usr/bin/backups_health_check.sh'
+            - '127.0.0.1:80'
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          exec:
+            command:
+            - '/usr/bin/backups_health_check.sh'
+            - '127.0.0.1:80'
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        resources:
+          requests:
+            memory: '256Mi'
+            cpu: '200m'
+          limits:
+            memory: '1Gi'
+            cpu: '1000m'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: backups
+  name: backups-page-service
+  labels:
+    name: backups-page-service
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    name: devstats-page
