@@ -1,0 +1,66 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: mariadb
+  name: backups-page
+  labels:
+    name: backups-backups
+spec:
+  replicas: 1
+  template:
+    metadata:
+      namespace: mariadb
+      labels:
+        name: backups-page
+    spec:
+      volumes:
+      - name: backups
+        persistentVolumeClaim:
+          claimName: mariadb-backups
+      containers:
+      - env:
+        image: 'lukaszgryglicki/backups-page'
+        imagePullPolicy: Always
+        name: backups-page
+        volumeMounts:
+        - name: backups
+          mountPath: '/usr/share/nginx/html/backups'
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          exec:
+            command:
+            - '/usr/bin/backups_health_check.sh'
+            - '127.0.0.1:80'
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          exec:
+            command:
+            - '/usr/bin/backups_health_check.sh'
+            - '127.0.0.1:80'
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        resources:
+          requests:
+            memory: '256Mi'
+            cpu: '200m'
+          limits:
+            memory: '1Gi'
+            cpu: '1000m'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: mariadb
+  name: backups-page-service
+  labels:
+    name: backups-page-service
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    name: backups-page
+  type: LoadBalancer

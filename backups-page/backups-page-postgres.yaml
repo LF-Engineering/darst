@@ -1,42 +1,7 @@
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  namespace: backups
-  name: devstats-backups
-  labels:
-    name: devstats
-    type: pvc
-    proj: backups
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: nfs-openebs-localstorage
-  resources:
-    requests:
-      storage: 160Gi
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  namespace: backups
-  name: mariadb-backups
-  labels:
-    name: devstats
-    type: pvc
-    proj: backups
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: nfs-openebs-localstorage
-  resources:
-    requests:
-      storage: 4Gi
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  namespace: backups
+  namespace: devstats
   name: backups-page
   labels:
     name: backups-backups
@@ -44,27 +9,22 @@ spec:
   replicas: 1
   template:
     metadata:
-      namespace: backups
+      namespace: devstats
       labels:
         name: backups-page
     spec:
       volumes:
-      - name: devstats-backups
+      - name: backups
         persistentVolumeClaim:
           claimName: devstats-backups
-      - name: mariadb-backups
-        persistentVolumeClaim:
-          claimName: mariadb-backups
       containers:
       - env:
         image: 'lukaszgryglicki/backups-page'
         imagePullPolicy: Always
         name: backups-page
         volumeMounts:
-        - name: devstats-backups
-          mountPath: '/usr/share/nginx/html/devstats-backups'
-        - name: mariadb-backups
-          mountPath: '/usr/share/nginx/html/mariadb-backups'
+        - name: backups
+          mountPath: '/usr/share/nginx/html/backups'
         ports:
         - containerPort: 80
         livenessProbe:
@@ -92,7 +52,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: backups
+  namespace: devstats
   name: backups-page-service
   labels:
     name: backups-page-service
