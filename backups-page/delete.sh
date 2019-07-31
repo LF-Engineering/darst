@@ -6,5 +6,6 @@ then
 fi
 change_namespace.sh $1 backups
 "${1}h.sh" delete dev-analytics-elasticsearch
+"${1}k.sh" delete svc backups-page-service
 "${1}k.sh" delete deployment backups-page
 change_namespace.sh $1 default
