@@ -59,33 +59,71 @@ Those scripts are installed in `/usr/local/bin` from `./utils/` directory.
 
 For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 
+
+# Cluster
+
 - Create EKS v1.13 cluster: `./eksctl/create_cluster test`. you can drop the cluster via `./eksctl/delete_cluster.sh test`.
 - Init Helm on the cluster: `testh.sh init`.
+
+
+# Storage
+
 - Create local-storage storage class and mount NVMe volumes in `devstats`, `elastic` and `grimoire` node groups: `./local-storage/setup.sh test`. You can delete via `./local-storage/delete.sh test`.
 - Install OpenEBS and NFS provisioner: `./openebs/setup.sh test`. You can delete via `./openebs/delete.sh test`.
+
+
+# ElasticSearch
+
 - Install ElasticSearch Helm Chart: `./es/setup.sh test`. You can delete via `./es/delete.sh test`.
 - When ES is up and running (all 5 ES pods should be in `Running` state: `testk.sh get po -n dev-analytics-elasticsearch`), test it via: `./es/test.sh test`.
+
+
+
+# Patroni (Postgres database for dev-analytics-api and DevStats with automatic daily backups)
+
 - Clone `cncf/da-patroni` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env.
 - Run `./test.sh test` to test database (should list databases).
-- Run `./config.sh test` to configure patroni once it is up & running, check for for `3/3` Ready from `testk.sh get sts -n devstats devstats-postgres`.
+- Run `./config.sh test` to configure Patroni once it is up & running, check for for `3/3` Ready from `testk.sh get sts -n devstats devstats-postgres`.
+- To delete run entire patroni installation do `./delete.sh test`.
+
+
+# dev-analytics-api database
+
 - Deploy `dev-analytics-api` DB structure: `./dev_analytics/structure.sh test`.
 - Deploy populated `dev-analytics-api` DB structure: `./dev_analytics/populate.sh test`. You will need `dev_analytics/dev_analytics.sql.secret` file which is gitignored due to sensitive data.
 - You can see database details from the patroni stateful pod: `pod_shell.sh test devstats devstats-postgres-0`, then `psql dev_analytics`, finally: `select id, name, slug from projects;`.
 - You can delete `dev-analytics-api` database via `./dev_analytics/delete.sh test`.
-- To delete run entire patroni installation do `./delete.sh test`.
+
+
+
+# Redis
+
 - For each file in `redis/secrets/*.secret.example` create corresponding `redis/secrets/*.secret` file. `*.secret` files are not checked in the gitgub repository.
 - Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
 - Run `./redis/setup.sh test` to deploy Redis on `test` env.
 - Run `./redis/test.sh test` to test Redis installation.
 - To delete Redis run `./redis/delete.sh test`.
+
+
+
+# Import CNCF affiliations cron job
+
 - Clone `cncf/json2hat-helm` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env.
 - To delete run `./delete.sh test`.
+
+
+# DevStats
+
 - Clone `cncf/devstats-helm-lf` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env. Note that this currently deploys only 4 projects (just a demo), all 65 projects will take days to provision.
 - Run `./add_projects.sh test 4 8` to add 4 new projects with index 4, 5, 6, 7 (see `devstats-helm/values.yaml` for project indices.
 - To delete run `./delete.sh test`.
+
+
+# MariaDB (database for Sorting Hat)
+
 - For each file in `mariadb/secrets/*.secret.example` create corresponding `mariadb/secrets/*.secret` file. `*.secret` files are not checked in the gitgub repository.
 - Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
 - Install MariaDB database: `./mariadb/setup.sh test`. You can delete via `./mariadb/delete.sh test`.
@@ -93,7 +131,11 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Provision Sorting Hat structure: `./mariadb/structure.sh test`.
 - Popoulate merged `dev` and `staging` Sorting Hat data: `./mariadb/populate.sh test`. You will need `cncf/merge-sh-dbs` repo cloned in `../merge-sh-dbs` and actual merged data generated (that merged SQL is checked in the repo).
 - Run `./mariadb/backups.sh test` to setup daily automatic backups.
-- Run `./backups-page/setup.sh` to setup static page allowing to see generated backups.
+
+
+# Static Nginx deployment giving access to all database backups
+
+- Run `./backups-page/setup.sh` to setup static page allowing to see generated backups. (NFS shared RWX volume access).
 - Run `./backups-page/elbs.sh` to see the final URLs where MariaDB and Postgres backups are available, give AWS ELBs some time to be created first.
 - Use `./backups-page/delete.sh` to delete backups static page.
 
@@ -138,3 +180,4 @@ If you want to merge `dev` and `staging` sorting hat databases:
 - Clone `dev-analytics-api` repo: `git clone https://github.com/LF-Engineering/dev-analytics-api.git` and change directory to that repo.
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-api" .` to build `dev-analytics-api` image, replace `docker-user` with your docker user.
 - Run `docker push "docker-user/dev-analytics-api"`.
+
