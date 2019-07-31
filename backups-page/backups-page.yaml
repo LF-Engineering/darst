@@ -29,7 +29,7 @@ spec:
         volumeMounts:
         - name: devstats-backups
           mountPath: '/usr/share/nginx/html/devstats-backups'
-        - name: maria-backups
+        - name: mariadb-backups
           mountPath: '/usr/share/nginx/html/mariadb-backups'
         ports:
         - containerPort: 80
