@@ -1,4 +1,38 @@
 ---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: backups
+  name: devstats-backups
+  labels:
+    name: devstats
+    type: pvc
+    proj: backups
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-openebs-localstorage
+  resources:
+    requests:
+      storage: 160Gi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: backups
+  name: mariadb-backups
+  labels:
+    name: devstats
+    type: pvc
+    proj: backups
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-openebs-localstorage
+  resources:
+    requests:
+      storage: 4Gi
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
