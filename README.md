@@ -90,6 +90,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Popoulate merged `dev` and `staging` Sorting Hat data: `./mariadb/populate.sh test`. You will need `cncf/merge-sh-dbs` repo cloned in `../merge-sh-dbs` and actual merged data generated (that merged SQL is checked in the repo).
 - Run `./mariadb/backups.sh test` to setup daily automatic backups.
 - Run `./backups-page/setup.sh` to setup static page allowing to see generated backups.
+- Run `./backups-page/elbs.sh` to see the final URLs where MariaDB and Postgres backups are available, give AWS ELBs some time to be created first.
 - Use `./backups-page/delete.sh` to delete backups static page.
 
 
