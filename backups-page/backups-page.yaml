@@ -102,5 +102,5 @@ spec:
     port: 80
     targetPort: 80
   selector:
-    name: devstats-page
+    name: backups-page
   type: LoadBalancer
