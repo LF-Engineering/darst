@@ -71,6 +71,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Run `./config.sh test` to configure patroni once it is up & running, check for for `3/3` Ready from `testk.sh get sts -n devstats devstats-postgres`.
 - Deploy `dev-analytics-api` DB structure: `./dev_analytics/structure.sh test`.
 - Deploy populated `dev-analytics-api` DB structure: `./dev_analytics/populate.sh test`. You will need `dev_analytics/dev_analytics.sql.secret` file which is gitignored due to sensitive data.
+- You can see database details from the patroni stateful pod: `pod_shell.sh test devstats devstats-postgres-0`, then `psql dev_analytics`, finally: `select * from projects;`.
 - You can delete `dev-analytics-api` database via `./dev_analytics/delete.sh test`.
 - To delete run `./delete.sh test`.
 - For each file in `redis/secrets/*.secret.example` create corresponding `redis/secrets/*.secret` file. `*.secret` files are not checked in the gitgub repository.
