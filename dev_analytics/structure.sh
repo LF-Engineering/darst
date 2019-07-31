@@ -9,7 +9,7 @@ function finish {
   "$k" delete pod patroni-structure
 }
 trap finish EXIT
-"${1}k.sh" run --generator=run-pod/v1 --image=postgres patroni-structure --env="PG_HOST=`cat ~/dev/da-patroni/secrets/PG_HOST.secret`" --env="PG_USER=`cat ~/dev/da-patroni/secrets/PG_ADMIN_USER.secret`" --env="PGPASSWORD=`cat ~/dev/da-patroni/secrets/PG_PASS.${1}.secret`" -- /bin/sleep 3600s
+"${1}k.sh" run --generator=run-pod/v1 --image=postgres patroni-structure --env="PG_HOST=`cat ~/dev/da-patroni/da-patroni/secrets/PG_HOST.secret`" --env="PG_USER=`cat ~/dev/da-patroni/da-patroni/secrets/PG_ADMIN_USER.secret`" --env="PGPASSWORD=`cat ~/dev/da-patroni/da-patroni/secrets/PG_PASS.${1}.secret`" -- /bin/sleep 3600s
 while [ ! "`${1}k.sh get po | grep patroni-structure | awk '{ print $3 }'`" = "Running" ]
 do
   echo "Waiting for pod to be running..."
