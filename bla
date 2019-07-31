@@ -1,0 +1,17 @@
+I could only find a single password , that one I’ve already provided. It only worked for `sa` user. I wasn’t able to figure out password for `rdsuser` or `lfda_api_user` or `postgres` user etc. But I’ve figured out how to change all tables and sequences owner to `sa` then dump finally back to `lfda_api_user`. That approach actually worked:
+```
+for tab in `PGPASSWORD=3ef56fc25142 psql -h dev-analytics-api-devstats-dev.cluster-ch92vofnmy4d.us-west-2.rds.amazonaws.com -U sa dev_analytics -tAc "select tablename from pg_tables where schemaname = 'public'"`; do PGPASSWORD=3ef56fc25142 psql -h dev-analytics-api-devstats-dev.cluster-ch92vofnmy4d.us-west-2.rds.amazonaws.com -U sa dev_analytics -c "alter table $tab owner to sa"; done
+PGPASSWORD=3ef56fc25142 psql -h dev-analytics-api-devstats-dev.cluster-ch92vofnmy4d.us-west-2.rds.amazonaws.com -U sa dev_analytics -c "alter sequence seq_infrastructure_redis_instance_database owner to sa"
+PGPASSWORD=3ef56fc25142 pg_dump -h dev-analytics-api-devstats-dev.cluster-ch92vofnmy4d.us-west-2.rds.amazonaws.com -U sa -Fc dev_analytics > dev_analytics.dump
+PGPASSWORD=3ef56fc25142 psql -h dev-analytics-api-devstats-dev.cluster-ch92vofnmy4d.us-west-2.rds.amazonaws.com -U sa dev_analytics -c "alter sequence seq_infrastructure_redis_instance_database owner to lfda_api_user"
+for tab in `PGPASSWORD=3ef56fc25142 psql -h dev-analytics-api-devstats-dev.cluster-ch92vofnmy4d.us-west-2.rds.amazonaws.com -U sa dev_analytics -tAc "select tablename from pg_tables where schemaname = 'public'"`; do PGPASSWORD=3ef56fc25142 psql -h dev-analytics-api-devstats-dev.cluster-ch92vofnmy4d.us-west-2.rds.amazonaws.com -U sa dev_analytics -c "alter table $tab owner to lfda_api_user"; done
+devk.sh cp patroni-test:dev_analytics.sql dev_analytics.sql
+devk.sh cp patroni-test:dev_analytics.dump dev_analytics.dump
+```
+After that I've added instructions about adding `dev-analytics-api` database to our deployment `cncf/darst`:
+```
+- Deploy `dev-analytics-api` DB structure: `./dev_analytics/structure.sh test`.
+- Deploy populated `dev-analytics-api` DB structure: `./dev_analytics/populate.sh test`. You will need `dev_analytics/dev_analytics.sql.secret` file which is gitignored due to sensitive data.
+- You can see database details from the patroni stateful pod: `pod_shell.sh test devstats devstats-postgres-0`, then `psql dev_analytics`, finally: `select id, name, slug from projects;`.
+- You can delete `dev-analytics-api` database via `./dev_analytics/delete.sh test`.
+```

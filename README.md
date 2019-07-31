@@ -73,7 +73,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Deploy populated `dev-analytics-api` DB structure: `./dev_analytics/populate.sh test`. You will need `dev_analytics/dev_analytics.sql.secret` file which is gitignored due to sensitive data.
 - You can see database details from the patroni stateful pod: `pod_shell.sh test devstats devstats-postgres-0`, then `psql dev_analytics`, finally: `select id, name, slug from projects;`.
 - You can delete `dev-analytics-api` database via `./dev_analytics/delete.sh test`.
-- To delete run `./delete.sh test`.
+- To delete run entire patroni installation do `./delete.sh test`.
 - For each file in `redis/secrets/*.secret.example` create corresponding `redis/secrets/*.secret` file. `*.secret` files are not checked in the gitgub repository.
 - Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
 - Run `./redis/setup.sh test` to deploy Redis on `test` env.
