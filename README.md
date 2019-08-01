@@ -114,7 +114,6 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 - To delete Redis run `./redis/delete.sh test`.
 
 
-
 # Import CNCF affiliations cron job
 
 - Clone `cncf/json2hat-helm` repo and change directory to that repo.
@@ -146,6 +145,13 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 - Run `./backups-page/setup.sh` to setup static page allowing to see generated backups. (NFS shared RWX volume access).
 - Run `./backups-page/elbs.sh` to see the final URLs where MariaDB and Postgres backups are available, give AWS ELBs some time to be created first.
 - Use `./backups-page/delete.sh` to delete backups static page.
+
+
+# dev-analytics-api deployment
+
+- Make sure that you have `dev-analytics-api` image built (see `dev-analytics-api image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-api` (due to (probably) some AWS imagePullSecret issues).
+- Run `./dev-analytics-api/setup.sh test` to deploy. You cna delete via `./dev-analytics-api/delete.sh`.
+- Note that during the deployment `.circleci/deployments/test/secrets.ejson` file is regenerated with new key values. You may want to go to `dev-analytics-api` repo and commit that changes (secrets.ejson is encrypted and can be committed into the repo).
 
 
 # Merge Sorting Hat databases
