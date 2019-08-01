@@ -10,7 +10,7 @@ seed_env_short=dev
 seed_env_long=develop
 env_short=$1
 function finish {
-  change_namespace.sh $ENV_NS_short default
+  change_namespace.sh $env_short default
 }
 trap finish EXIT
 cd ~/dev/dev-analytics-api || exit 1
