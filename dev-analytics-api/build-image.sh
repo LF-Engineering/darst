@@ -9,17 +9,8 @@ if [ "$env" = "stg" ]
 then
   env=staging
 fi
-if [ "$env" = "dev" ]
-then
-  env=develop
-fi
-envd=$env
-if [ "$envd" = "develop" ]
-then
-  envd=dev
-fi
 cd ~/dev/dev-analytics-terraform-stash || exit 2
-dir_name=`ls -d *.$envd | head -n 1`
+dir_name=`ls -d *.$env | head -n 1`
 echo $dir_name
 if [ -z "$dir_name" ]
 then
