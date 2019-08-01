@@ -42,8 +42,8 @@ All next commands are assumed to be run on the `darst` jump box.
 
 - Use `testeksctl.sh` (installed from `eksctl/testeksctl.sh`) instead of the plain `eksctl` command, it just prepends `KUBECONFIG=/root/.kube/kubeconfig_test AWS_PROFILE=lfproduct-test`.
 - Similarly with `deveksctl.sh`, `stgeksctl.sh` and `prodeksctl.sh`.
-- Use `eksctl/get_cluster.sh {{env}}` to get current cluster info, replace `{{env}}` with `dev` or `stg` or `test` or `prod`. Example: `./eksctl/create_cluster.sh test`.
-- Use `eksctl/create_cluster.sh {{env}}` to create EKS v1.13 cluster, replace `{{env}}` with `dev` or `stg` or `test` or `prod`. Example `./eksctl/get_cluster.sh test`.
+- Use `eksctl/create_cluster.sh {{env}}` to create EKS v1.13 cluster, replace `{{env}}` with `dev` or `stg` or `test` or `prod`. Example `./eksctl/create_cluster.sh test`.
+- Use `eksctl/get_cluster.sh {{env}}` to get current cluster info, replace `{{env}}` with `dev` or `stg` or `test` or `prod`. Example: `./eksctl/get_cluster.sh test`.
 - Use `eksctl/delete_cluster.sh {{env}}` to delete cluster, replace `{{env}}` with `dev` or `stg` or `test` or `prod`. Example: `./eksctl/delete_cluster.sh test`.
 
 
@@ -63,6 +63,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 # Cluster
 
 - Create EKS v1.13 cluster: `./eksctl/create_cluster test`. you can drop the cluster via `./eksctl/delete_cluster.sh test`.
+- Create cluster roles: `./cluster-setup/setup.sh test`. To delete `./cluster-setup/delete.sh test`.
 - Init Helm on the cluster: `testh.sh init`.
 
 
