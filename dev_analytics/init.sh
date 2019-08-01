@@ -12,7 +12,7 @@ function finish {
 }
 trap finish EXIT
 cp dev_analytics/init.sql "$fn"
-pass=`cat "~/dev/da-patroni/da-patroni/secrets/PG_PASS.$1.secret"`
+pass="`cat ~/dev/da-patroni/da-patroni/secrets/PG_PASS.$1.secret`"
 if [ -z "$pass" ]
 then
   echo "$0: you need to provide password value in ~/dev/da-patroni/da-patroni/secrets/PG_PASS.$1.secret"
