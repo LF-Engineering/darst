@@ -91,7 +91,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 
 # dev-analytics-api database
 
-- Init `dev-analytics-api` DB users, roles, permissions: `./dev_analytics/structure.sh test`.
+- Init `dev-analytics-api` DB users, roles, permissions: `./dev_analytics/init.sh test`.
 - You can delete `dev-analytics-api` database via `./dev_analytics/delete.sh test`.
 
 
