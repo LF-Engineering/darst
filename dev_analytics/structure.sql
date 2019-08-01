@@ -1054,16 +1054,6 @@ ALTER TABLE ONLY public.project_infrastructure_sortinghat_assignments
 
 
 --
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: sa
---
-
-REVOKE ALL ON SCHEMA public FROM rdsadmin;
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-GRANT ALL ON SCHEMA public TO sa;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
 -- PostgreSQL database dump complete
 --
 
