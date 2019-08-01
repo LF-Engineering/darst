@@ -8,4 +8,4 @@ fi
 cd ~/dev/dev-analytics-api/.circleci/deployments/$API_DIR || exit 3
 context="`cat ~/.kube/kubeconfig_$KUBCONFIGE_SUFF | grep '^\- name: ' | awk '{print $3}'`"
 echo $context
-#kubernetes-deploy "$context" "arn:aws:eks:$region:$n:cluster/a-test-cluster" --template-dir=.
+kubernetes-deploy "$context" --template-dir=.
