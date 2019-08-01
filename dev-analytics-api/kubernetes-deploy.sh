@@ -7,5 +7,4 @@ fi
 . env.sh "$1" || exit 1
 cd ~/dev/dev-analytics-api/.circleci/deployments/$API_DIR || exit 3
 context="`cat ~/.kube/kubeconfig_$KUBCONFIGE_SUFF | grep '^\- name: ' | awk '{print $3}'`"
-echo $context
-kubernetes-deploy "$context" --template-dir=.
+kubernetes-deploy "dev-analytics-api-$ENV_NS" "$context" --template-dir=.
