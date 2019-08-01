@@ -35,5 +35,5 @@ cd .circleci/deployments || exit 2
 # FIXME: how about those keys?
 # ./update-secret.sh $ENV_NS RAILS_MASTER_KEY '?' (its not needed probably), how about SalesForce keys?
 ./update-secret.sh $ENV_NS
-rm -f "$API_DIR/test/temp-key/"  2>/dev/null
+rm -f "$API_DIR/temp-key/"  2>/dev/null
 git status
