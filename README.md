@@ -185,7 +185,13 @@ If you want to merge `dev` and `staging` sorting hat databases:
 
 # dev-analytics-api image
 
+
+For your own user:
+
 - Clone `dev-analytics-api` repo: `git clone https://github.com/LF-Engineering/dev-analytics-api.git` and change directory to that repo.
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-api" .` to build `dev-analytics-api` image, replace `docker-user` with your docker user.
 - Run `docker push "docker-user/dev-analytics-api"`.
 
+Using AWS account:
+
+- Run: `./dev-analytics-api/build-image.sh test`.
