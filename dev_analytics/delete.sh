@@ -16,4 +16,4 @@ do
   sleep 1
 done
 "${1}k.sh" cp dev_analytics/delete_db.sh patroni-delete:/usr/bin/delete_db.sh
-"${1}k.sh" exec -it patroni-delete -- /usr/bin/delete_db.sh
+"${1}k.sh" exec -it patroni-delete -- /usr/bin/delete_db.sh "$1"
