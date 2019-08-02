@@ -19,14 +19,14 @@ function finish {
 trap finish EXIT
 cp dev-analytics-ui/namespace.yaml "$ns"
 cp dev-analytics-ui/deployment.yaml "$fn"
-cert=`cat "dev-analytics-ui/ssl-cert.$1.secret"`
-host=`cat "dev-analytics-ui/hostname.$1.secret"`
+cert=`cat "dev-analytics-ui/secrets/ssl-cert.$1.secret"`
+host=`cat "dev-analytics-ui/secrets/hostname.$1.secret"`
 if ( [ -z "$cert" ] || [ -z "$host" ] )
 then
-  echo "$0: you need to provide values in dev-analytics-ui/ssl-cert.$1.secret and dev-analytics-ui/hostname.$1.secret"
+  echo "$0: you need to provide values in dev-analytics-ui/secrets/ssl-cert.$1.secret and dev-analytics-ui/secrets/hostname.$1.secret"
   exit 1
 fi
-vim --not-a-term -c "%s/PASS_MAIN/${pass}/g" -c "%s/SSL_CERT/${cert}/g" -c "%s/HOSTNAME/${host}/g" -c "%s/IMAGE/${DOCKER_USER}/g" -c 'wq!' "$fn"
+vim --not-a-term -c "%s/SSL_CERT/${cert}/g" -c "%s/HOSTNAME/${host}/g" -c "%s/IMAGE/${DOCKER_USER}/g" -c 'wq!' "$fn"
 vim --not-a-term -c "%s/ENV/${ENV_NS}/g" -c 'wq!' "$fn"
 "${1}k.sh" create -f "$ns"
 change_namespace.sh $1 dev-analytics-ui
