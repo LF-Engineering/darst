@@ -95,14 +95,13 @@ esac
 cp grimoire/namespace.yaml "$fn"
 vim --not-a-term -c "%s/NAME/${name}/g" -c 'wq!' "$fn"
 "${1}k.sh" apply -f "$fn"
-echo "Flags: $FLAGS"
 change_namespace.sh $1 "$name"
 if [ "$op" = "install" ]
 then
-  "${1}hh.sh" install "$name" ./grimoire/grimoire-chart $FLAGS --set api.url="$api_url",projectSlug="$slug", image.repository="$repository",image.account="$account",image.tag="$tag",identity.image.repository="$identity_repository",identity.image.account="$account",identity.image.tag="$identity_tag",identity.db.name="$identity_database"
+  "${1}h.sh" install "$name" ./grimoire/grimoire-chart $FLAGS --set api.url="$api_url",projectSlug="$slug", image.repository="$repository",image.account="$account",image.tag="$tag",identity.image.repository="$identity_repository",identity.image.account="$account",identity.image.tag="$identity_tag",identity.db.name="$identity_database"
 elif [ "$op" = "upgrade" ]
 then
-  "${1}hh.sh" upgrade "$name" ./grimoire/grimoire-chart $FLAGS --reuse-values --set api.url="$api_url",projectSlug="$slug", image.repository="$repository",image.account="$account",image.tag="$tag",identity.image.repository="$identity_repository",identity.image.account="$account",identity.image.tag="$identity_tag",identity.db.name="$identity_database"
+  "${1}h.sh" upgrade "$name" ./grimoire/grimoire-chart $FLAGS --reuse-values --set api.url="$api_url",projectSlug="$slug", image.repository="$repository",image.account="$account",image.tag="$tag",identity.image.repository="$identity_repository",identity.image.account="$account",identity.image.tag="$identity_tag",identity.db.name="$identity_database"
 else
   echo "$0: unknown operation: $op"
   exit 9
