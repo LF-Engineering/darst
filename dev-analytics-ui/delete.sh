@@ -7,3 +7,4 @@ fi
 change_namespace.sh $1 dev-analytics-ui
 "${1}k.sh" -n dev-analytics-ui delete deployment dev-analytics-ui-lb
 change_namespace.sh $1 default
+"${1}k.sh" delete ns dev-analytics-ui
