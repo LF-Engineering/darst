@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity
+  labels:
+    app.kubernetes.io/name: {{ include "grimoire-core.name" . }}-identity-api
+    helm.sh/chart: {{ include "grimoire-core.chart" . }}
+    app.kubernetes.io/instance: {{ $.Release.Name }}
+    app.kubernetes.io/managed-by: {{ $.Release.Service }}
+spec:
+  ports:
+  - port: 80
+    targetPort: identity
+  selector:
+    app.kubernetes.io/name: {{ include "grimoire-core.name" . }}-identity-api
+    lfanalytics.io/service: identity-api

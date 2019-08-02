@@ -1,0 +1,97 @@
+{{- range $idx, $service := .Values.services }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{$service.name}}
+  labels:
+    app.kubernetes.io/name: {{ include "grimoire-core.name" $ }}-{{$service.name}}
+    helm.sh/chart: {{ include "grimoire-core.chart" $ }}
+    app.kubernetes.io/instance: {{ $.Release.Name }}
+    app.kubernetes.io/managed-by: {{ $.Release.Service }}
+spec:
+  replicas: {{ $service.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "grimoire-core.name" $ }}-{{$service.name}}
+      app.kubernetes.io/instance: {{ $.Release.Name }}
+      grimoire.lfanalytics.io/grimoire-service: {{$service.name}}
+  strategy:
+    type: {{ $service.upgradeStrategy }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "grimoire-core.name" $ }}-{{$service.name}}
+        app.kubernetes.io/instance: {{ $.Release.Name }}
+        grimoire.lfanalytics.io/grimoire-service: {{$service.name}}
+    spec:
+      volumes:
+      - name: logs
+        emptyDir: {}
+      - name: shared
+        persistentVolumeClaim:
+          claimName: {{ $.Release.Name }}-shared
+      - name: archives
+        emptyDir: {}
+      - name: config
+        emptyDir:
+          medium: Memory
+      initContainers:
+      {{ include "grimoire.config-init" $ | nindent 6 }}
+      containers:
+      {{- if or (eq $service.name "mordred") (eq $service.name "arthurd") }}
+      - name: {{$service.name}}-logs
+        stdin: true 
+        tty: true 
+        image: "{{ $.Values.image.account }}.{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+        imagePullPolicy: {{ $.Values.image.pullPolicy }}
+        {{- if eq $service.name "mordred" }}
+        command: ["tail", "-q", "-s", "2", "-F", "/logs/mordred/all.log"]
+        {{- else if eq $service.name "arthurd" }}
+        command: ["tail", "-q", "-s", "2", "-F", "/logs/arthurd_logs/arthur.log"]
+        {{ end }}
+        volumeMounts:
+        - mountPath: /logs
+          name: logs
+      {{ end }}
+      - name: {{$service.name}}
+        image: "{{ $.Values.image.account }}.{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+        imagePullPolicy: {{ $.Values.image.pullPolicy }}
+        command: ["/run/{{$service.name}}.sh"]
+        {{- if eq $service.name "arthurd" }}
+        ports:
+        - containerPort: 9090
+          name: arthurd
+        {{ end }}
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /logs
+          name: logs
+        - mountPath: /home/grimoire/.perceval/archives
+          name: archives
+        - mountPath: /home/grimoire/.perceval/repositories
+          name: shared
+        resources:
+        {{- if eq $service.name "mordred" -}}
+          {{- toYaml $.Values.mordredResources | nindent 12 }}
+        {{- else if eq $service.name "arthurw" -}}
+          {{- toYaml $.Values.arthurwResources | nindent 12 }}
+        {{- else if or (eq $service.name "arthurd") -}}
+          {{- toYaml $.Values.arthurdResources | nindent 12 }}
+        {{- else -}}
+          {{- toYaml $.Values.resources | nindent 12 }}
+        {{- end }}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{ end }}
+---
+{{end}}

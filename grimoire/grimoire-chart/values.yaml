@@ -1,0 +1,71 @@
+replicaCount: 1
+
+api:
+  url: https://api.dev.lfanalytics.io
+image:
+  account: "395594542180"
+  repository: dkr.ecr.us-west-2.amazonaws.com/lfda/grimoire-core
+  tag: "0.7.0-grimoire-preview-develop"
+  pullPolicy: Always
+
+identity:
+  image:
+    account: "395594542180"
+    repository: dkr.ecr.us-west-2.amazonaws.com/lfda/sortinghat-api
+    tag: "1.3.0-alpha.22"
+    pullPolicy: Always
+  db:
+    host: sortinghat-db.services.lfanalytics.internal
+    name: sortinghat
+    user: sortinghat
+    password: lfda
+
+resources:
+  requests:
+   cpu: 100m
+   memory: 64Mi
+arthurdResources:
+  limits:
+    cpu: 0.5
+  requests:
+   cpu: 100m
+   memory: 256Mi
+arthurwResources:
+  limits:
+    cpu: 1
+  requests:
+   cpu: 150m
+   memory: 256Mi
+mordredResources:
+  limits:
+    cpu: 2
+  requests:
+   cpu: 250m
+   memory: 1024Mi
+identityResources:
+  limits:
+    cpu: 1
+  requests:
+   cpu: 100m
+   memory: 256Mi
+
+arthurw:
+  flags: ""
+
+services:
+- name: arthurd
+  replicaCount: 1
+  upgradeStrategy: Recreate
+- name: arthurw
+  replicaCount: 2
+  upgradeStrategy: Recreate
+- name: mordred
+  replicaCount: 1
+  upgradeStrategy: Recreate
+
+nodeSelector:
+  lfda: grimoire
+
+tolerations: []
+
+affinity: {}
