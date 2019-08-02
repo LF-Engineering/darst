@@ -37,7 +37,7 @@ then
   echo "$0: you need to provide values in dev-analytics-sortinghat-api/parameters/WEB_CONCURENCY.$1.parameter, dev-analytics-sortinghat-api/parameters/FLASK_ENV.$1.parameter, dev-analytics-sortinghat-api/parameters/FLASK_DEBUG.$1.parameter and dev-analytics-sortinghat-api/parameters/LOG_LEVEL.$1.parameter files"
   exit 3
 fi
-vim --not-a-term -c "%s/{SH_HOST}/${host}/g" -c "%s/{SH_USER}/${user}/g" -c "%s/{SH_PASS}/${pass}/g" -c "%s/{SH_DB}/${db}/g" -c "%s/{WEB_CONCURENCY}/${wcon}/g" -c "%s/{FLASK_ENV}/${fenv}/g" -c "%s/{FLASK_DEBUG}/${fdbg}/g" -c "%s/{LOG_LEVEL}/${llev}/g" -c "%s/IMAGE/${DOCKER_USER}\/dev-analytics-sortinghat-api/g" -c 'wq!' "$fn"
+vim --not-a-term -c "%s/{SH_HOST}/${host}/g" -c "%s/{SH_USER}/${user}/g" -c "%s/{SH_PASS}/${pass}/g" -c "%s/{SH_DB}/${db}/g" -c "%s/{WEB_CONCURENCY}/${wcon}/g" -c "%s/{FLASK_ENV}/${fenv}/g" -c "%s/{FLASK_DEBUG}/${fdbg}/g" -c "%s/{LOG_LEVEL}/${llev}/g" -c "%s/{IMAGE}/${DOCKER_USER}\/dev-analytics-sortinghat-api/g" -c 'wq!' "$fn"
 vim --not-a-term -c "%s/ENV/${ENV_NS}/g" -c 'wq!' "$ns"
 "${1}k.sh" create -f "$ns"
 change_namespace.sh $1 sortinghat-api
