@@ -161,6 +161,12 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 - Run `DOCKER_USER=... ./dev-analytics-ui/setup.sh test` to deploy. You can delete via `./dev-analytics-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 
 
+# dev-analytics-sortinghat-api deployment
+
+- Make sure that you have `dev-analytics-sortinghat-api` image built (see `dev-analytics-sortinghat-api image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-sortinghat-api`.
+- Run `DOCKER_USER=... ./dev-analytics-sortinghat-api/setup.sh test` to deploy. You can delete via `./dev-analytics-sortinghat-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
+
+
 # Merge Sorting Hat databases
 
 If you want to merge `dev` and `staging` sorting hat databases:
