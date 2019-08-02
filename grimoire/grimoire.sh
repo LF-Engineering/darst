@@ -58,6 +58,12 @@ else
 fi
 identity_repository="${DOCKER_USER}/dev-analytics-sortinghat-api"
 repository="${DOCKER_USER}/dev-analytics-grimoire-docker"
+fn=/tmp/ns.yaml
+function finish {
+  rm -f "$fn"
+  change_namespace.sh $env default
+}
+trap finish EXIT
 api_url="https://`cat grimoire/secrets/api-url.${1}.secret`"
 if [ -z "$api_url" ]
 then
@@ -86,12 +92,6 @@ case "$choice" in
   n|N ) exit 1;;
   * ) exit 2;;
 esac
-fn=/tmp/ns.yaml
-function finish {
-  rm -f "$fn"
-  change_namespace.sh $env default
-}
-trap finish EXIT
 cp grimoire/namespace.yaml "$fn"
 vim --not-a-term -c "%s/NAME/${name}/g" -c 'wq!' "$fn"
 "${1}k.sh" apply -f "$fn"
