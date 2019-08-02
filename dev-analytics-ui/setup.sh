@@ -26,8 +26,8 @@ then
   echo "$0: you need to provide values in dev-analytics-ui/secrets/ssl-cert.$1.secret and dev-analytics-ui/secrets/hostname.$1.secret"
   exit 1
 fi
-vim --not-a-term -c "%s/SSL_CERT/${cert}/g" -c "%s/HOSTNAME/${host}/g" -c "%s/IMAGE/${DOCKER_USER}/g" -c 'wq!' "$fn"
-vim --not-a-term -c "%s/ENV/${ENV_NS}/g" -c 'wq!' "$fn"
+vim --not-a-term -c "%s/SSLCERT/${cert}/g" -c "%s/HOSTNAME/${host}/g" -c "%s/IMAGE/${DOCKER_USER}\/dev-analytics-ui/g" -c 'wq!' "$fn"
+vim --not-a-term -c "%s/ENV/${ENV_NS}/g" -c 'wq!' "$ns"
 "${1}k.sh" create -f "$ns"
 change_namespace.sh $1 dev-analytics-ui
 "${1}k.sh" -n dev-analytics-ui create -f "$fn"
