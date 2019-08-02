@@ -13,8 +13,7 @@ fi
 ns=/tmp/ns.yaml
 fn=/tmp/apply.yaml
 function finish {
-  #rm -f "$ns" "$fn" 2>/dev/null
-  cat "$ns" "$fn"
+  rm -f "$ns" "$fn" 2>/dev/null
 }
 trap finish EXIT
 cp dev-analytics-sortinghat-api/namespace.yaml "$ns"
