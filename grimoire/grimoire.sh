@@ -77,23 +77,24 @@ then
   echo "$0: failed to get data from ${api_url}"
   exit 11
 fi
-
 echo "Installing: $name $slug"
 echo "API: $api_url"
 echo "ID DB: $identity_database"
-
 read -p "Continue (y/n) " choice
-
 case "$choice" in 
   y|Y ) echo "Upgrading";;
   n|N ) exit 1;;
   * ) exit 2;;
 esac
-
+fn=/tmp/ns.yaml
 function finish {
+  rm -f "$fn"
   change_namespace.sh $env default
 }
 trap finish EXIT
+cp grimoire/namespace.yaml "$fn"
+vim --not-a-term -c "%s/NAME/${name}/g" -c 'wq!' "$fn"
+"${1}k.sh" apply -f "$fn"
 echo $FLAGS
 change_namespace.sh $1 "$name"
 if [ "$op" = "install" ]
