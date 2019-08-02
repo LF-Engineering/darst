@@ -91,10 +91,10 @@ case "$choice" in
 esac
 
 function finish {
-  change_namespace $env default
+  change_namespace.sh $env default
 }
 trap finish EXIT
-
+echo $FLAGS
 change_namespace.sh $1 "$name"
 if [ "$op" = "install" ]
 then
