@@ -66,7 +66,7 @@ then
 fi
 if [ -z "$NO_API_DNS" ]
 then
-  identity_database="$(curl -s ${api_url}/api/internal/grimoire/configuration/${slug}/environment |jq .SORTINGHAT_DATABASE)"
+  identity_database="`curl -s ${api_url}/api/internal/grimoire/configuration/${slug}/environment | jq .SORTINGHAT_DATABASE`"
 else
   "${1}k.sh" delete po api-temp 1>/dev/null 2>/dev/null
   api_url="dev-analytics-api-lb.dev-analytics-api-${env}"
@@ -95,7 +95,7 @@ trap finish EXIT
 cp grimoire/namespace.yaml "$fn"
 vim --not-a-term -c "%s/NAME/${name}/g" -c 'wq!' "$fn"
 "${1}k.sh" apply -f "$fn"
-echo $FLAGS
+echo "Flags: $FLAGS"
 change_namespace.sh $1 "$name"
 if [ "$op" = "install" ]
 then
