@@ -27,4 +27,8 @@ do
 done
 "${1}k.sh" cp dev_analytics/init_db.sh patroni-init:/usr/bin/init_db.sh
 "${1}k.sh" cp "$fn" patroni-init:init.sql
-"${1}k.sh" exec -it patroni-init -- /usr/bin/init_db.sh
+if [ "$1" = "test" ]
+then
+  "${1}k.sh" cp init_test.sql patroni-init:init_test.sql
+fi
+"${1}k.sh" exec -it patroni-init -- /usr/bin/init_db.sh "$1"
