@@ -201,3 +201,10 @@ For your own user:
 Using AWS account:
 
 - Run: `./dev-analytics-api/build-image.sh test`.
+
+
+# dev-analytics-circle-docker-build-base image
+
+- Clone `dev-analytics-circle-docker-build-base` repo: `git clone https://github.com/LF-Engineering/dev-analytics-circle-docker-build-base.git` and change directory to that repo.
+- Use `docker build -f Dockerfile -t "docker-user/dev-analytics-circle-docker-build-base" .` to build `dev-analytics-circle-docker-build-base` image, replace `docker-user` with your docker user.
+- Run `docker push "docker-user/dev-analytics-circle-docker-build-base"`.
