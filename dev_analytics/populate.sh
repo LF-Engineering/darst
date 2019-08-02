@@ -22,4 +22,4 @@ do
 done
 "${1}k.sh" cp dev_analytics/populate_db.sh patroni-populate:/usr/bin/populate_db.sh
 "${1}k.sh" cp dev_analytics/dev_analytics.sql.secret patroni-populate:populate.sql
-"${1}k.sh" exec -it patroni-populate -- /usr/bin/populate_db.sh
+"${1}k.sh" exec -it patroni-populate -- /usr/bin/populate_db.sh "$1"

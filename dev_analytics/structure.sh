@@ -17,4 +17,4 @@ do
 done
 "${1}k.sh" cp dev_analytics/structure_db.sh patroni-structure:/usr/bin/structure_db.sh
 "${1}k.sh" cp dev_analytics/structure.sql patroni-structure:structure.sql
-"${1}k.sh" exec -it patroni-structure -- /usr/bin/structure_db.sh
+"${1}k.sh" exec -it patroni-structure -- /usr/bin/structure_db.sh $1
