@@ -21,6 +21,7 @@ cp dev-analytics-ui/namespace.yaml "$ns"
 cp dev-analytics-ui/deployment.yaml "$fn"
 cert=`cat "dev-analytics-ui/secrets/ssl-cert.$1.secret"`
 host=`cat "dev-analytics-ui/secrets/hostname.$1.secret"`
+cert="${cert//\//\\\/}"
 if ( [ -z "$cert" ] || [ -z "$host" ] )
 then
   echo "$0: you need to provide values in dev-analytics-ui/secrets/ssl-cert.$1.secret and dev-analytics-ui/secrets/hostname.$1.secret"
