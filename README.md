@@ -149,9 +149,16 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 
 # dev-analytics-api deployment
 
-- Make sure that you have `dev-analytics-api` image built (see `dev-analytics-api image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-api` (due to (probably) some AWS imagePullSecret issues).
-- Run `DOCKER_USER=... ./dev-analytics-api/setup.sh test` to deploy. You cna delete via `./dev-analytics-api/delete.sh`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
+- Make sure that you have `dev-analytics-api` image built (see `dev-analytics-api image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-api`.
+- Run `DOCKER_USER=... ./dev-analytics-api/setup.sh test` to deploy. You can delete via `./dev-analytics-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 - Note that during the deployment `.circleci/deployments/test/secrets.ejson` file is regenerated with new key values. You may want to go to `dev-analytics-api` repo and commit that changes (secrets.ejson is encrypted and can be committed into the repo).
+
+
+# dev-analytics-ui deployment
+
+- Make sure that you have `dev-analytics-ui` image built (see `dev-analytics-ui image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-ui`.
+- For each file in `dev-analytics-ui/secrets/*.secret.example` provide the corresponding `*.secret` file. Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
+- Run `DOCKER_USER=... ./dev-analytics-ui/setup.sh test` to deploy. You can delete via `./dev-analytics-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 
 
 # Merge Sorting Hat databases
