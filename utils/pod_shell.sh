@@ -14,6 +14,11 @@ then
   echo "$0: you need to pass a pod name as a 3rd argument"
   exit 3
 fi
+cmd="/bin/bash"
+if [ ! -z "$4" ]
+then
+  cmd=$4
+fi
 change_namespace.sh $1 $2
-"${1}k.sh" exec -it "$3" -- /bin/bash
+"${1}k.sh" exec -it "$3" -- $cmd
 change_namespace.sh $1 default
