@@ -40,5 +40,5 @@ else
 fi
 echo "Deleting $name $slug"
 change_namespace.sh $1 "$name"
-helm delete "$name"
-change_namespace.sh $ default
+"${1}h.sh" delete "$name"
+change_namespace.sh $1 default
