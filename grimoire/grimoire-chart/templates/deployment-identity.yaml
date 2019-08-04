@@ -40,13 +40,13 @@ spec:
         imagePullPolicy: {{ $.Values.imagePullPolicy }}
         env:
         - name: FLASK_ENV
-          value: "development"
+          value: "{{ $.Values.flask_env }}"
         - name: FLASK_DEBUG
-          value: "1"
+          value: "{{ $.Values.flask_debug }}"
         - name: WEB_CONCURRENCY
-          value: "1"
+          value: "{{ $.Values.web_concurency }}"
         - name: LOG_LEVEL
-          value: "debug"
+          value: "{{ $.Values.log_level }}"
         - name: PORT
           value: "9091"
         - name: SORTINGHAT_DB_DATABASE

@@ -98,7 +98,7 @@ llev=`cat "dev-analytics-sortinghat-api/parameters/LOG_LEVEL.$1.parameter"`
 if ( [ -z "$wcon" ] || [ -z "$fenv" ] || [ -z "$fdbg" ] || [ -z "$llev" ] )
 then
   echo "$0: you need to provide values in dev-analytics-sortinghat-api/parameters/WEB_CONCURENCY.$1.parameter, dev-analytics-sortinghat-api/parameters/FLASK_ENV.$1.parameter, dev-analytics-sortinghat-api/parameters/FLASK_DEBUG.$1.parameter and dev-analytics-sortinghat-api/parameters/LOG_LEVEL.$1.parameter files"
-  exit 3
+  exit 13
 fi
 echo "Installing: $name $slug"
 echo "API: $api_url"
@@ -115,10 +115,10 @@ vim --not-a-term -c "%s/NAME/${name}/g" -c 'wq!' "$fn"
 change_namespace.sh $1 "$name"
 if [ "$op" = "install" ]
 then
-  "${1}h.sh" install "$name" ./grimoire/grimoire-chart $FLAGS -n $name --set "api.url=$api_url,projectSlug=$slug,image=$repository,identity.image=$identity_repository,identity.db.name=$identity_database,identity.db.host=$shhost,identity.db.user=$shuser,identity.db.password=$shpass"
+  "${1}h.sh" install "$name" ./grimoire/grimoire-chart $FLAGS -n $name --set "api.url=$api_url,projectSlug=$slug,image=$repository,identity.image=$identity_repository,identity.db.name=$identity_database,identity.db.host=$shhost,identity.db.user=$shuser,identity.db.password=$shpass,web_concurency=$wcon,flask_env=$fenv,flask_debug=$fdbg,log_level=$llev"
 elif [ "$op" = "upgrade" ]
 then
-  "${1}h.sh" upgrade "$name" ./grimoire/grimoire-chart $FLAGS -n $name --reuse-values --set "api.url=$api_url,projectSlug=$slug,image=$repository,identity.image=$identity_repository,identity.db.name=$identity_database,identity.db.host=$shhost,identity.db.user=$shuser,identity.db.password=$shpass"
+  "${1}h.sh" upgrade "$name" ./grimoire/grimoire-chart $FLAGS -n $name --reuse-values --set "api.url=$api_url,projectSlug=$slug,image=$repository,identity.image=$identity_repository,identity.db.name=$identity_database,identity.db.host=$shhost,identity.db.user=$shuser,identity.db.password=$shpass,web_concurency=$wcon,flask_env=$fenv,flask_debug=$fdbg,log_level=$llev"
 else
   echo "$0: unknown operation: $op"
   exit 9

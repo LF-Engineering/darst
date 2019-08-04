@@ -13,6 +13,11 @@ identity:
     user: 'set-user'
     password: 'set-pass'
 
+web_concurency: 1
+flask_env: 'set-me'
+flask_debug: 1
+log_level: 'debug'
+
 resources:
   requests:
    cpu: 100m
