@@ -83,6 +83,14 @@ then
   echo "$0: failed to get data from ${api_url}"
   exit 11
 fi
+shhost="`cat ~/dev/darst/mariadb/secrets/HOST.secret`"
+shuser="`cat ~/dev/darst/mariadb/secrets/USER.secret`"
+shpass="`cat ~/dev/darst/mariadb/secrets/PASS.${1}.secret`"
+if ( [ -z "$shhost" ] || [ -z "$shuser" ] || [ -z "$shpass" ] )
+then
+  echo "$0: you need to provide value in ~/dev/darst/mariadb/secrets/HOST.secret, ~/dev/darst/mariadb/secrets/USER.secret and ~/dev/darst/mariadb/secrets/PASS.${1}.secret files"
+  exit 12
+fi
 echo "Installing: $name $slug"
 echo "API: $api_url"
 echo "ID DB: $identity_database"
@@ -98,10 +106,10 @@ vim --not-a-term -c "%s/NAME/${name}/g" -c 'wq!' "$fn"
 change_namespace.sh $1 "$name"
 if [ "$op" = "install" ]
 then
-  "${1}h.sh" install "$name" ./grimoire/grimoire-chart $FLAGS -n $name --set "api.url=$api_url,projectSlug=$slug,image.repository=$repository,identity.image.repository=$identity_repository,identity.db.name=$identity_database"
+  "${1}h.sh" install "$name" ./grimoire/grimoire-chart $FLAGS -n $name --set "api.url=$api_url,projectSlug=$slug,image=$repository,identity.image=$identity_repository,identity.db.name=$identity_database,identity.db.host=$shhost,identity.db.user=$shuser,identity.db.password=$shpass"
 elif [ "$op" = "upgrade" ]
 then
-  "${1}h.sh" upgrade "$name" ./grimoire/grimoire-chart $FLAGS -n $name --reuse-values --set "api.url=$api_url,projectSlug=$slug,image.repository=$repository,identity.image.repository=$identity_repository,identity.db.name=$identity_database"
+  "${1}h.sh" upgrade "$name" ./grimoire/grimoire-chart $FLAGS -n $name --reuse-values --set "api.url=$api_url,projectSlug=$slug,image=$repository,identity.image=$identity_repository,identity.db.name=$identity_database,identity.db.host=$shhost,identity.db.user=$shuser,identity.db.password=$shpass"
 else
   echo "$0: unknown operation: $op"
   exit 9
