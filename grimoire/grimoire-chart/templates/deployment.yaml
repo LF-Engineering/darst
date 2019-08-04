@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{$service.name}}
+  name: {{ $service.name }}
   labels:
-    app.kubernetes.io/name: {{ include "grimoire-core.name" $ }}-{{$service.name}}
+    app.kubernetes.io/name: {{ include "grimoire-core.name" $ }}-{{ $service.name }}
     helm.sh/chart: {{ include "grimoire-core.chart" $ }}
     app.kubernetes.io/instance: {{ $.Release.Name }}
     app.kubernetes.io/managed-by: {{ $.Release.Service }}
@@ -12,9 +12,9 @@ spec:
   replicas: {{ $service.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "grimoire-core.name" $ }}-{{$service.name}}
+      app.kubernetes.io/name: {{ include "grimoire-core.name" $ }}-{{ $service.name }}
       app.kubernetes.io/instance: {{ $.Release.Name }}
-      grimoire.lfanalytics.io/grimoire-service: {{$service.name}}
+      grimoire.lfanalytics.io/grimoire-service: {{ $service.name }}
   strategy:
     type: {{ $service.upgradeStrategy }}
   template:
@@ -22,7 +22,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "grimoire-core.name" $ }}-{{$service.name}}
         app.kubernetes.io/instance: {{ $.Release.Name }}
-        grimoire.lfanalytics.io/grimoire-service: {{$service.name}}
+        grimoire.lfanalytics.io/grimoire-service: {{ $service.name }}
     spec:
       volumes:
       - name: logs
@@ -39,11 +39,11 @@ spec:
       {{ include "grimoire.config-init" $ | nindent 6 }}
       containers:
       {{- if or (eq $service.name "mordred") (eq $service.name "arthurd") }}
-      - name: {{$service.name}}-logs
+      - name: {{ $service.name }}-logs
         stdin: true 
         tty: true 
-        image: "{{ $.Values.image.account }}.{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
-        imagePullPolicy: {{ $.Values.image.pullPolicy }}
+        image: "{{ $.Values.image }}"
+        imagePullPolicy: {{ $.Values.imagePullPolicy }}
         {{- if eq $service.name "mordred" }}
         command: ["tail", "-q", "-s", "2", "-F", "/logs/mordred/all.log"]
         {{- else if eq $service.name "arthurd" }}
@@ -53,10 +53,10 @@ spec:
         - mountPath: /logs
           name: logs
       {{ end }}
-      - name: {{$service.name}}
-        image: "{{ $.Values.image.account }}.{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
-        imagePullPolicy: {{ $.Values.image.pullPolicy }}
-        command: ["/run/{{$service.name}}.sh"]
+      - name: {{ $service.name }}
+        image: "{{ $.Values.image }}"
+        imagePullPolicy: {{ $.Values.imagePullPolicy }}
+        command: ["/run/{{ $service.name }}.sh"]
         {{- if eq $service.name "arthurd" }}
         ports:
         - containerPort: 9090
@@ -94,4 +94,4 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{ end }}
 ---
-{{end}}
+{{ end }}
