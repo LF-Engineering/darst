@@ -23,8 +23,8 @@ spec:
           {{ include "grimoire.config-init" $ | nindent 10 }}
           containers:
           - name: rq-monitor
-            image: "{{ $.Values.image.account }}.{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
-            imagePullPolicy: {{ $.Values.image.pullPolicy }}
+            image: "{{ $.Values.image }}"
+            imagePullPolicy: {{ $.Values.imagePullPolicy }}
             command: ["/run/rq_monitor.sh"]
             volumeMounts:
             - mountPath: /config

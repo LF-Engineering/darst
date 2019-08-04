@@ -18,6 +18,8 @@ flask_env: 'set-me'
 flask_debug: 1
 log_level: 'debug'
 
+storageClass: 'nfs-openebs-localstorage'
+
 resources:
   requests:
    cpu: 100m
