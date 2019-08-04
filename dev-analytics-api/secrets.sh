@@ -26,12 +26,12 @@ cd .circleci/deployments || exit 2
 ./update-secret.sh $ENV_NS DATABASE_USERNAME "`cat ~/dev/da-patroni/da-patroni/secrets/PG_USER.secret`" > /dev/null
 ./update-secret.sh $ENV_NS RAILS_ENV $ENV_NS > /dev/null
 ./update-secret.sh $ENV_NS REDIS_URL_ROOT "redis://redis.redis" > /dev/null
-./update-secret.sh $ENV_NS REDIS_URL "`cat ~/dev/darst/redis/secrets/URL.secret`" > /dev/null
+./update-secret.sh $ENV_NS REDIS_URL "`cat redis/secrets/URL.secret`" > /dev/null
 ./update-secret.sh $ENV_NS DEVSTATS_DB_HOST "`cat ~/dev/da-patroni/da-patroni/secrets/PG_HOST.secret`" > /dev/null
-./update-secret.sh $ENV_NS SORTINGHAT_HOST "`cat ~/dev/darst/mariadb/secrets/HOST.secret`" > /dev/null
+./update-secret.sh $ENV_NS SORTINGHAT_HOST "`cat mariadb/secrets/HOST.secret`" > /dev/null
 # FIXME: we should have those keys
-./update-secret.sh $ENV_NS SORTINGHAT_USER "`cat ~/dev/darst/mariadb/secrets/USER.secret`" > /dev/null
-./update-secret.sh $ENV_NS SORTINGHAT_PASSWORD "`cat ~/dev/darst/mariadb/secrets/PASS.$1.secret`" > /dev/null
+./update-secret.sh $ENV_NS SORTINGHAT_USER "`cat mariadb/secrets/USER.secret`" > /dev/null
+./update-secret.sh $ENV_NS SORTINGHAT_PASSWORD "`cat mariadb/secrets/PASS.$1.secret`" > /dev/null
 # FIXME: how about those keys?
 # ./update-secret.sh $ENV_NS RAILS_MASTER_KEY '?' (its not needed probably), how about SalesForce keys?
 ./update-secret.sh $ENV_NS

@@ -83,13 +83,22 @@ then
   echo "$0: failed to get data from ${api_url}"
   exit 11
 fi
-shhost="`cat ~/dev/darst/mariadb/secrets/HOST.secret`"
-shuser="`cat ~/dev/darst/mariadb/secrets/USER.secret`"
-shpass="`cat ~/dev/darst/mariadb/secrets/PASS.${1}.secret`"
+shhost="`cat mariadb/secrets/HOST.secret`"
+shuser="`cat mariadb/secrets/USER.secret`"
+shpass="`cat mariadb/secrets/PASS.${1}.secret`"
 if ( [ -z "$shhost" ] || [ -z "$shuser" ] || [ -z "$shpass" ] )
 then
   echo "$0: you need to provide value in ~/dev/darst/mariadb/secrets/HOST.secret, ~/dev/darst/mariadb/secrets/USER.secret and ~/dev/darst/mariadb/secrets/PASS.${1}.secret files"
   exit 12
+fi
+wcon=`cat "dev-analytics-sortinghat-api/parameters/WEB_CONCURENCY.$1.parameter"`
+fenv=`cat "dev-analytics-sortinghat-api/parameters/FLASK_ENV.$1.parameter"`
+fdbg=`cat "dev-analytics-sortinghat-api/parameters/FLASK_DEBUG.$1.parameter"`
+llev=`cat "dev-analytics-sortinghat-api/parameters/LOG_LEVEL.$1.parameter"`
+if ( [ -z "$wcon" ] || [ -z "$fenv" ] || [ -z "$fdbg" ] || [ -z "$llev" ] )
+then
+  echo "$0: you need to provide values in dev-analytics-sortinghat-api/parameters/WEB_CONCURENCY.$1.parameter, dev-analytics-sortinghat-api/parameters/FLASK_ENV.$1.parameter, dev-analytics-sortinghat-api/parameters/FLASK_DEBUG.$1.parameter and dev-analytics-sortinghat-api/parameters/LOG_LEVEL.$1.parameter files"
+  exit 3
 fi
 echo "Installing: $name $slug"
 echo "API: $api_url"

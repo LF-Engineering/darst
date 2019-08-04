@@ -36,8 +36,8 @@ spec:
       - name: identity-api
         stdin: true 
         tty: true 
-        image: "{{ $.Values.identity.image.account }}.{{ $.Values.identity.image.repository }}:{{ $.Values.identity.image.tag }}"
-        imagePullPolicy: {{ $.Values.identity.image.pullPolicy }}
+        image: "{{ $.Values.identity.image }}"
+        imagePullPolicy: {{ $.Values.imagePullPolicy }}
         env:
         - name: FLASK_ENV
           value: "development"
