@@ -31,6 +31,7 @@ cd .circleci/deployments || exit 2
 ./update-secret.sh $ENV_NS DEVSTATS_DB_HOST "`cat ~/dev/da-patroni/da-patroni/secrets/PG_HOST.secret`" > /dev/null
 ./update-secret.sh $ENV_NS SORTINGHAT_HOST "`cat ~/dev/darst/mariadb/secrets/HOST.secret`" > /dev/null
 # FIXME: we should have those keys
+./update-secret.sh $ENV_NS SORTINGHAT_DATABASE "`cat ~/dev/darst/mariadb/secrets/DB.secret`" > /dev/null
 ./update-secret.sh $ENV_NS SORTINGHAT_USER "`cat ~/dev/darst/mariadb/secrets/USER.secret`" > /dev/null
 ./update-secret.sh $ENV_NS SORTINGHAT_PASSWORD "`cat ~/dev/darst/mariadb/secrets/PASS.$1.secret`" > /dev/null
 ./update-secret.sh $ENV_NS
