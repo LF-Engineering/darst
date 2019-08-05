@@ -24,7 +24,8 @@ cd .circleci/deployments || exit 2
 ./update-secret.sh $ENV_NS DATABASE_HOST "`cat ~/dev/da-patroni/da-patroni/secrets/PG_HOST.secret`" > /dev/null
 ./update-secret.sh $ENV_NS DATABASE_PASSWORD "`cat ~/dev/da-patroni/da-patroni/secrets/PG_PASS.$1.secret`" > /dev/null
 ./update-secret.sh $ENV_NS DATABASE_USERNAME "`cat ~/dev/da-patroni/da-patroni/secrets/PG_USER.secret`" > /dev/null
-./update-secret.sh $ENV_NS RAILS_ENV $ENV_NS > /dev/null
+./update-secret.sh $ENV_NS ELASTICSEARCH_URL "elasticsearch-master.dev-analytics-elasticsearch" > /dev/null
+./update-secret.sh $ENV_NS RAILS_ENV $RAILS_ENV > /dev/null
 # ./update-secret.sh $ENV_NS REDIS_URL "`cat ~/dev/darst/redis/secrets/URL.secret`" > /dev/null
 # ./update-secret.sh $ENV_NS REDIS_URL_ROOT "redis://redis.redis" > /dev/null
 ./update-secret.sh $ENV_NS REDIS_URL "redis-master.redis" > /dev/null

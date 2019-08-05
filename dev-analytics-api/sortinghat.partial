@@ -1,0 +1,5 @@
+            - name: SORTINGHAT_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: dev-analytics-api
+                  key: SORTINGHAT_HOST
