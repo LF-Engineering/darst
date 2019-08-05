@@ -1,5 +1,15 @@
-            - name: SORTINGHAT_HOST
+            - name: SORTINGHAT_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: dev-analytics-api
-                  key: SORTINGHAT_HOST
+                  key: SORTINGHAT_DATABASE
+            - name: SORTINGHAT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: dev-analytics-api
+                  key: SORTINGHAT_USER
+            - name: SORTINGHAT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dev-analytics-api
+                  key: SORTINGHAT_PASSWORD
