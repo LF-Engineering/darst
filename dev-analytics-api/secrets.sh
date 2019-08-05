@@ -28,7 +28,7 @@ cd .circleci/deployments || exit 2
 # ./update-secret.sh $ENV_NS REDIS_URL "`cat ~/dev/darst/redis/secrets/URL.secret`" > /dev/null
 # ./update-secret.sh $ENV_NS REDIS_URL_ROOT "redis://redis.redis" > /dev/null
 ./update-secret.sh $ENV_NS REDIS_URL "redis-master.redis" > /dev/null
-./update-secret.sh $ENV_NS REDIS_URL_ROOT "`redis-master.redis`" > /dev/null
+./update-secret.sh $ENV_NS REDIS_URL_ROOT "redis-master.redis" > /dev/null
 ./update-secret.sh $ENV_NS REDIS_PASSWORD "`cat ~/dev/darst/redis/secrets/PASS.${1}.secret`" > /dev/null
 ./update-secret.sh $ENV_NS DEVSTATS_DB_HOST "`cat ~/dev/da-patroni/da-patroni/secrets/PG_HOST.secret`" > /dev/null
 ./update-secret.sh $ENV_NS SORTINGHAT_HOST "`cat ~/dev/darst/mariadb/secrets/HOST.secret`" > /dev/null
