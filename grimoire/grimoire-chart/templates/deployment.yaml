@@ -38,6 +38,20 @@ spec:
       initContainers:
       {{ include "grimoire.config-init" $ | nindent 6 }}
       containers:
+      - name: {{ $service.name }}-sleep
+        image: "{{ $.Values.image }}"
+        imagePullPolicy: {{ $.Values.imagePullPolicy }}
+        command: ["sleep", "infinity"]
+        volumeMounts:
+        - mountPath: /logs
+          name: logs
+        resources:
+          requests:
+            cpu: '25m'
+            memory: '32Mi'
+          limits:
+            cpu:  '250m'
+            memory: '256Mi'
       {{- if or (eq $service.name "mordred") (eq $service.name "arthurd") }}
       - name: {{ $service.name }}-logs
         stdin: true 

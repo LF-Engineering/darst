@@ -20,5 +20,10 @@ then
   cmd=$4
 fi
 change_namespace.sh $1 $2
-"${1}k.sh" exec -it "$3" -- $cmd
+if [ -z "$5" ]
+then
+  "${1}k.sh" exec -it "$3" -- $cmd
+else
+  "${1}k.sh" exec -it "$3" --container "$5" -- $cmd
+fi
 change_namespace.sh $1 default

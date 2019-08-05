@@ -103,12 +103,6 @@ fi
 echo "Installing: $name $slug"
 echo "API: $api_url"
 echo "ID DB: $identity_database"
-read -p "Continue (y/n) " choice
-case "$choice" in 
-  y|Y ) echo "$op";;
-  n|N ) exit 1;;
-  * ) exit 2;;
-esac
 cp grimoire/namespace.yaml "$fn"
 vim --not-a-term -c "%s/NAME/${name}/g" -c 'wq!' "$fn"
 "${1}k.sh" apply -f "$fn"
