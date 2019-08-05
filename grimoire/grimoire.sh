@@ -105,7 +105,7 @@ echo "API: $api_url"
 echo "ID DB: $identity_database"
 read -p "Continue (y/n) " choice
 case "$choice" in 
-  y|Y ) echo "Upgrading";;
+  y|Y ) echo "$op";;
   n|N ) exit 1;;
   * ) exit 2;;
 esac
