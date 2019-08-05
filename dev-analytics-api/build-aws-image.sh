@@ -26,3 +26,4 @@ aws ecr get-login --region $region --no-include-email
 `aws ecr get-login --region $region --no-include-email`
 echo "docker push $n.dkr.ecr.$region.amazonaws.com/lfda/api:latest"
 docker push "$n.dkr.ecr.$region.amazonaws.com/lfda/api:latest"
+docker system prune -f

@@ -40,5 +40,3 @@ cd .circleci/deployments || exit 2
 ./update-secret.sh $ENV_NS
 rm -rf "$API_DIR/temp-key/" 2>/dev/null
 git status
-echo "You should build $DOCKER_USER/dev-analytics-api image now, press enter when ready"
-read

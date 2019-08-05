@@ -9,6 +9,7 @@ then
   echo "$0: you need to specify docker user via DOCKER_USER=..."
   exit 2
 fi
-./dev-analytics-api/secrets.sh "$1" || exit 3
-./dev-analytics-api/build-user-image.sh "$1" || exit 4
-./dev-analytics-api/kubernetes-deploy.sh "$1" ||exit 5
+cd ~/dev/dev-analytics-api || exit 3
+docker build -f Dockerfile -t "${DOCKER_USER}/dev-analytics-api" . || exit 4
+docker push "${DOCKER_USER}/dev-analytics-api" || exit 5
+docker system prune -f
