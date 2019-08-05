@@ -45,6 +45,12 @@ spec:
         volumeMounts:
         - mountPath: /logs
           name: logs
+        - mountPath: /config
+          name: config
+        - mountPath: /home/grimoire/.perceval/archives
+          name: archives
+        - mountPath: /home/grimoire/.perceval/repositories
+          name: shared
         resources:
           requests:
             cpu: '25m'
