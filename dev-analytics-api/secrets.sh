@@ -24,20 +24,15 @@ cd .circleci/deployments || exit 2
 ./update-secret.sh $ENV_NS DATABASE_HOST "`cat ~/dev/da-patroni/da-patroni/secrets/PG_HOST.secret`" > /dev/null
 ./update-secret.sh $ENV_NS DATABASE_PASSWORD "`cat ~/dev/da-patroni/da-patroni/secrets/PG_PASS.$1.secret`" > /dev/null
 ./update-secret.sh $ENV_NS DATABASE_USERNAME "`cat ~/dev/da-patroni/da-patroni/secrets/PG_USER.secret`" > /dev/null
-./update-secret.sh $ENV_NS ELASTICSEARCH_URL "elasticsearch-master.dev-analytics-elasticsearch" > /dev/null
+./update-secret.sh $ENV_NS ELASTICSEARCH_URL "http://elasticsearch-master.dev-analytics-elasticsearch:9200" > /dev/null
 ./update-secret.sh $ENV_NS RAILS_ENV $RAILS_ENV > /dev/null
-# ./update-secret.sh $ENV_NS REDIS_URL "`cat ~/dev/darst/redis/secrets/URL.secret`" > /dev/null
-# ./update-secret.sh $ENV_NS REDIS_URL_ROOT "redis://redis.redis" > /dev/null
-./update-secret.sh $ENV_NS REDIS_URL "redis-master.redis" > /dev/null
-./update-secret.sh $ENV_NS REDIS_URL_ROOT "redis-master.redis" > /dev/null
-./update-secret.sh $ENV_NS REDIS_PASSWORD "`cat ~/dev/darst/redis/secrets/PASS.${1}.secret`" > /dev/null
+./update-secret.sh $ENV_NS REDIS_URL "redis://redis-master.redis" > /dev/null
+./update-secret.sh $ENV_NS REDIS_URL_ROOT "redis://redis-master.redis" > /dev/null
 ./update-secret.sh $ENV_NS DEVSTATS_DB_HOST "`cat ~/dev/da-patroni/da-patroni/secrets/PG_HOST.secret`" > /dev/null
 ./update-secret.sh $ENV_NS SORTINGHAT_HOST "`cat ~/dev/darst/mariadb/secrets/HOST.secret`" > /dev/null
 # FIXME: we should have those keys
 ./update-secret.sh $ENV_NS SORTINGHAT_USER "`cat ~/dev/darst/mariadb/secrets/USER.secret`" > /dev/null
 ./update-secret.sh $ENV_NS SORTINGHAT_PASSWORD "`cat ~/dev/darst/mariadb/secrets/PASS.$1.secret`" > /dev/null
-# FIXME: how about those keys?
-# ./update-secret.sh $ENV_NS RAILS_MASTER_KEY '?' (its not needed probably), how about SalesForce keys?
 ./update-secret.sh $ENV_NS
 rm -rf "$API_DIR/temp-key/" 2>/dev/null
 git status
