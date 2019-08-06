@@ -1,0 +1,52 @@
+
+elasticsearch:
+  url: "http://elasticsearch-master.dev-analytics-elasticsearch:9200"
+
+kibana:
+  version: 6.5.1
+
+image: 'set-me'
+imagePullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 5601
+  protocol: http
+
+updateStrategy:
+  type: "Recreate"
+
+replicaCount: 2
+antiAffinityTopologyKey: "kubernetes.io/hostname" 
+antiAffinity: "hard"
+
+ingress:
+  external: 
+    enabled: true
+    ssl: false
+    certArn: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+nodeSelector:
+  lfda: app
+
+resources:
+  requests:
+    cpu: "200m"
+    memory: "500m"
+  limits:
+    cpu: "1000m"
+    memory: "1Gi"
+
+readinessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  successThreshold: 3
+  timeoutSeconds: 5
+
+imagePullSecrets: []
+tolerations: []
+affinity: {}
