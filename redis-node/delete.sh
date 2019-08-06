@@ -5,10 +5,10 @@ then
   exit 1
 fi
 
-# Mount NVMes in elastic node-group
+# remove redis settings and restore THP to madvice mode
 for ip in `testk.sh get nodes -l lfda=grimoire -o wide | grep 'ip-' | awk '{print $7}'`
 do
   echo "grimoire node group ip: $ip"
-  ssh "ec2-user@${ip}" 'sudo vi -e -s -c "g/net\.core\.somaxconn/d" -c "g/vm\.overcommit_memory/d" -c "wq" /etc/rc.local'
+  ssh "ec2-user@${ip}" 'sudo vi -e -s -c "g/net\.core\.somaxconn/d" -c "g/vm\.overcommit_memory/d" -c "wq" /etc/rc.local; echo "madvice" | sudo tee /sys/kernel/mm/transparent_hugepage/enabled'
 done
 

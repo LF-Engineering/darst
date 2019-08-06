@@ -5,7 +5,7 @@ then
   exit 1
 fi
 
-# Mount NVMes in elastic node-group
+# Sysctls and disable THP
 for ip in `testk.sh get nodes -l lfda=grimoire -o wide | grep 'ip-' | awk '{print $7}'`
 do
   echo "grimoire node group ip: $ip"
