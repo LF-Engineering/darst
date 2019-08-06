@@ -248,6 +248,12 @@ Using AWS account:
 - Use command(s) to delete cronjob for any project: `./sortinghat-cronjob/delete.sh test none linux-kernel`.
 
 
+# Kibana deployment
+
+- Make sure that you have `dev-analytics-kibana` image built (see `dev-analytics-kibana image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-kibana`.
+- Run `DOCKER_USER=... ./kibana/setup.sh test` to deploy. You can delete via `./kibana/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
+
+
 ## LF One time operation(s)
 
 # Merge Sorting Hat databases
