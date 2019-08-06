@@ -222,6 +222,7 @@ Using AWS account:
 
 - Make sure that you have `dev-analytics-ui` image built (see `dev-analytics-ui image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-ui`.
 - For each file in `dev-analytics-ui/secrets/*.secret.example` provide the corresponding `*.secret` file. Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
+- if you want to skip setting external DNS, prepend `setup.sh` call with `NO_DNS=1`.
 - Run `DOCKER_USER=... ./dev-analytics-ui/setup.sh test` to deploy. You can delete via `./dev-analytics-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 
 

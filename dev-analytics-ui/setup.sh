@@ -1,4 +1,5 @@
 #!/bin/bash
+# NO_DNS=1 - skip requesting external DNS
 if  [ -z "$1" ]
 then
   echo "$0: you need to specify env: test, dev, stg, prod"
@@ -28,6 +29,10 @@ then
 fi
 vim --not-a-term -c "%s/SSLCERT/${cert}/g" -c "%s/HOSTNAME/${host}/g" -c "%s/IMAGE/${DOCKER_USER}\/dev-analytics-ui/g" -c 'wq!' "$fn"
 vim --not-a-term -c "%s/ENV/${ENV_NS}/g" -c 'wq!' "$ns"
+if [ ! -z "$NO_DNS" ]
+then
+  vim --not-a-term -c "%s/external-dns\..*//g" -c "%s/service.beta.kubernetes.io\/aws-load-balancer.*//g" -c 'wq!' "$fn"
+fi
 "${1}k.sh" create -f "$ns"
 change_namespace.sh $1 dev-analytics-ui
 "${1}k.sh" -n dev-analytics-ui create -f "$fn"
