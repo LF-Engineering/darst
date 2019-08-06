@@ -233,7 +233,7 @@ Using AWS account:
 
 # Grimoire stack deployments
 
-- Use `./grimoire/projects.sh test` to list deployments for all projects.
+- Use `[SORT=sort_order] ./grimoire/projects.sh test` to list deployments for all projects.
 - Use `DOCKER_USER=... LIST=install ./grimoire/projects.sh test` to show install commands.
 - Use `DOCKER_USER=... LIST=upgrade ./grimoire/projects.sh test` to show upgrade commands.
 - Use `LIST=uninstall ./grimoire/projects.sh test` to show uninstall commands.

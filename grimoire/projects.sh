@@ -3,6 +3,7 @@
 # LIST=upgrade - list upgrade commands
 # LIST=uninstall - list uninstall commands
 # LIST=anything_else - list projects
+# SORT=col_name (for example 'sort_order'), default 'slug'
 if [ -z "$1" ]
 then
   echo "$0: you need to specify env: test, dev, stg, prod"
@@ -13,7 +14,12 @@ if [ "$1" = "test" ]
 then
   db=dev_analytics_test
 fi
-for proj in `"${1}k.sh" -n devstats exec devstats-postgres-0 -- psql "$db" -tAc 'select slug from projects where project_type = 0 order by slug'`
+sortcol=slug
+if [ ! -z "$SORT" ]
+then
+  sortcol=$SORT
+fi
+for proj in `"${1}k.sh" -n devstats exec devstats-postgres-0 -- psql "$db" -tAc "select slug from projects where project_type = 0 order by $sortcol"`
 do
   IFS=\/ read -a ary <<<"$proj"
   foundation=${ary[0]}

@@ -13,5 +13,13 @@ api=`"${1}k.sh" -n "dev-analytics-api-$1" get svc | grep dev-analytics-api-lb | 
 api="${api}/api/internal/grimoire/configuration/$2"
 for type in mordred environment aliases projects credentials
 do
-  curl -s "${api}/${type}" | jq
+  echo '======================================================='
+  echo "${type}:"
+  echo '======================================================='
+  if [ "$type" = "mordred" ]
+  then
+    curl -s "${api}/${type}" | jq -r .rendered
+  else
+    curl -s "${api}/${type}" | jq
+  fi
 done
