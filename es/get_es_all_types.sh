@@ -8,4 +8,4 @@ if [ -z "${ES_URL}" ]
 then
   ES_URL='elasticsearch-master.dev-analytics-elasticsearch:9200'
 fi
-"${1}k.sh" run --generator=run-pod/v1 curl-test-es -i --tty --restart=Never --rm --image="radial/busyboxplus:curl" -- /usr/bin/curl -XGET "${ES_URL}/_cat/indices?v"
+"${1}k.sh" run --generator=run-pod/v1 curl-test-es -i --tty --restart=Never --rm --image="radial/busyboxplus:curl" -- /usr/bin/curl -XGET "${ES_URL}/_mapping?pretty"
