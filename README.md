@@ -198,9 +198,8 @@ Using AWS account:
 # dev-analytics-kibana image
 
 
-FIXME: this is currently broken, but we don't use it anywhere yet.
-
 - Clone `dev-analytics-kibana` repo: `git clone https://github.com/LF-Engineering/dev-analytics-kibana.git` and change directory to that repo.
+- Run `./package_plugins_for_version.sh`
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-kibana" .` to build `dev-analytics-kibana` image, replace `docker-user` with your docker user.
 - Run `docker push "docker-user/dev-analytics-kibana"`.
 
@@ -225,6 +224,16 @@ FIXME: this is currently broken, but we don't use it anywhere yet.
 
 - Make sure that you have `dev-analytics-sortinghat-api` image built (see `dev-analytics-sortinghat-api image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-sortinghat-api`.
 - Run `DOCKER_USER=... ./dev-analytics-sortinghat-api/setup.sh test` to deploy. You can delete via `./dev-analytics-sortinghat-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
+
+
+# Grimoire stack deployments
+
+- Use `./grimoire/projects.sh test` to list deployments for all projects.
+- Use `DOCKER_USER=... LIST=install ./grimoire/projects.sh test` to show install commands.
+- Use `DOCKER_USER=... LIST=upgrade ./grimoire/projects.sh test` to show upgrade commands.
+- Use `LIST=uninstall ./grimoire/projects.sh test` to show uninstall commands.
+- Use command(s) generated to deploy given project, for example: `DOCKER_USER=user-name ./grimoire/grimoire.sh test install none linux-kernel`.
+- Use command(s) to delete any project: `./grimoire/delete.sh test none linux-kernel`.
 
 
 ## LF One time operation(s)
