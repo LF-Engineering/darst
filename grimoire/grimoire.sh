@@ -1,6 +1,5 @@
 #!/bin/bash
 # DRY=1 - will add --dry-run --debug flags
-# NO_API_DNS=1 - use internal kubernetes service for API calls (when no external DNS API is available).
 env="$1"
 op="$2"
 foundation="$3"
@@ -64,16 +63,7 @@ function finish {
   change_namespace.sh $env default
 }
 trap finish EXIT
-api_url="https://`cat grimoire/secrets/api-url.${1}.secret`"
-if [ -z "$api_url" ]
-then
-  echo "$0: you need to provide API URL in grimoire/secrets/api-url.${1}.secret"
-  exit 10
-fi
-if [ ! -z "$NO_API_DNS" ]
-then
-  api_url="dev-analytics-api-lb.dev-analytics-api-${env}"
-fi
+api_url="dev-analytics-api-lb.dev-analytics-api-${env}"
 shhost="`cat mariadb/secrets/HOST.secret`"
 shdb="`cat mariadb/secrets/DB.secret`"
 shuser="`cat mariadb/secrets/USER.secret`"

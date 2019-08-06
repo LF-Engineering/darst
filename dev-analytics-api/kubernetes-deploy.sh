@@ -19,6 +19,7 @@ rm -rf "$dd"
 mkdir "$dd"
 cp ~/dev/dev-analytics-api/.circleci/deployments/$API_DIR/* "$dd" || exit 3
 vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api/g" -c '%s/"bundle", "exec", "rails", "s", "-b", "0\.0\.0\.0"/"\/bin\/sh", "-c", "bundle exec rails db:reset \&\& bundle exec rails s -b 0\.0\.0\.0"/g' -c 'wq!' "${dd}/api.deployment.yml.erb"
+vim --not-a-term -c "%s/external-dns\..*//g" -c "%s/service.beta.kubernetes.io\/aws-load-balancer.*//g" -c 'wq!' "${dd}/api.deployment.yml.erb"
 vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api/g" -c 'wq!' "${dd}/migrate.yml.erb"
 cat dev-analytics-api/sortinghat.partial >> "${dd}/api.deployment.yml.erb"
 if [ "$1" = "test" ]

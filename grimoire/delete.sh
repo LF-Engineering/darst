@@ -9,12 +9,12 @@ then
 fi
 if [ -z "$foundation" ]
 then
-  echo "$0: you need to provide foundation as 3rd arg or use none for LF"
+  echo "$0: you need to provide foundation as 2nd arg or use none for LF"
   exit 2
 fi
 if [ -z "$project" ]
 then
-  echo "$0: you need to provide project as 4th arg"
+  echo "$0: you need to provide project as 3rd arg"
   exit 3
 fi
 if [ "$foundation" = "none" ]
