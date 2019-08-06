@@ -17,6 +17,7 @@ then
   echo "$0: you need to provide project as 3rd arg"
   exit 3
 fi
+foundation_present=1
 if [ "$foundation" = "none" ]
 then
   foundation_present=0

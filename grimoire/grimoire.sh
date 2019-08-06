@@ -34,6 +34,7 @@ then
   FLAGS="--dry-run --debug"
 fi
 . env.sh "$1" || exit 8
+foundation_present=1
 if [ "$foundation" = "none" ]
 then
   foundation_present=0
