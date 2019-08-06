@@ -78,6 +78,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Install ElasticSearch Helm Chart: `./es/setup.sh test`. You can delete via `./es/delete.sh test`.
 - When ES is up and running (all 5 ES pods should be in `Running` state: `testk.sh get po -n dev-analytics-elasticsearch`), test it via: `./es/test.sh test`.
 - You can examine ES contents via `./es/get_*.sh` scripts. For example: `./es/get_es_indexes.sh test`.
+- For more complex queries you can use: `./es/query_es_index.sh test ...` and/or `./es/search_es_index.sh test ...`.
 
 
 # Patroni (Postgres database for dev-analytics-api and DevStats with automatic daily backups)
