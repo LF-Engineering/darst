@@ -42,3 +42,4 @@ echo "Deleting $name $slug"
 change_namespace.sh $1 "$name"
 "${1}h.sh" delete "$name"
 change_namespace.sh $1 default
+"${1}k.sh" delete ns "$name"
