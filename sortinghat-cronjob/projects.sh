@@ -13,13 +13,14 @@ if [ "$1" = "test" ]
 then
   db=dev_analytics_test
 fi
-for proj in `"${1}k.sh" -n devstats exec devstats-postgres-0 -- psql "$db" -tAc 'select slug from projects order by slug'`
+for proj in `"${1}k.sh" -n devstats exec devstats-postgres-0 -- psql "$db" -tAc 'select slug from projects where project_type = 0 order by slug'`
 do
   IFS=\/ read -a ary <<<"$proj"
-  name=${ary[0]}
-  foundation=${ary[1]}
-  if [ -z "$foundation" ]
+  foundation=${ary[0]}
+  name=${ary[1]}
+  if [ -z "$name" ]
   then
+    name="$foundation"
     foundation="none"
   fi
   if ( [ "$LIST" = "install" ] || [ "$LIST" = "upgrade" ] )
@@ -34,6 +35,11 @@ do
   then
     echo "./sortinghat-cronjob/delete.sh $1 $foundation $name"
   else
-    printf "Foundation: %-30s\tProject: %s\n" "$foundation" "$name"
+    if [ "$foundation" = "none" ]
+    then
+      printf "Foundation: %-40s\tProject: %-40s\tSlug: %s\n" "$foundation" "$name" "$name"
+    else
+      printf "Foundation: %-40s\tProject: %-40s\tSlug: %s\n" "$foundation" "$name" "$foundation/$name"
+    fi
   fi
 done
