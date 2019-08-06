@@ -1,0 +1,29 @@
+replicaCount: 1
+
+image:  'set-me'
+imagePullPolicy: Always
+
+identity:
+  db:
+    host: 'set-me'
+    name: 'set-me'
+    user: 'set-me'
+    password: 'set-me'
+
+resources:
+  limits:
+   cpu: 200m
+   memory: 512Mi
+  requests:
+   cpu: 50m
+   memory: 64Mi
+
+db:
+  name: 'set-me'
+
+nodeSelector:
+  lfda: grimoire
+
+tolerations: []
+
+affinity: {}

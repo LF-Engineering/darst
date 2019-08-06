@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sortinghat-env
+type: Opaque
+stringData:
+  SORTINGHAT_DB_HOST: {{ $.Values.identity.db.host }}
+  SORTINGHAT_DB_DATABASE: {{ $.Values.identity.db.name }}
+  SORTINGHAT_DB_USER: {{ $.Values.identity.db.user }}
+  SORTINGHAT_DB_PASSWORD: {{ $.Values.identity.db.password }}
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "sortinghat-cronjob.name" . }}
+spec:
+  schedule: "*/30 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "sortinghat-cronjob.name" . }}
+        app.kubernetes.io/instance: {{ $.Release.Name }}
+        grimoire.lfanalytics.io/grimoire-service: sortinghat-identity-affiliate
+    spec:
+      template:
+        spec:
+          restartPolicy: "Never"
+          containers:
+          - name: sortinghat-identity-affiliate
+            image: "{{ $.Values.image }}"
+            imagePullPolicy: {{ $.Values.imagePullPolicy }}
+            command: ["sortinghat", "--debug", "affiliate"]
+            env:
+            - name: SORTINGHAT_DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: sortinghat-env
+                  key: SORTINGHAT_DB_DATABASE
+            - name: SORTINGHAT_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: sortinghat-env
+                  key: SORTINGHAT_DB_USER
+            - name: SORTINGHAT_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sortinghat-env
+                  key: SORTINGHAT_DB_PASSWORD
+            - name: SORTINGHAT_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: sortinghat-env
+                  key: SORTINGHAT_DB_HOST
+          {{- with $.Values.nodeSelector }}
+            {{- toYaml . | nindent 6 }}
+          {{- end }}
