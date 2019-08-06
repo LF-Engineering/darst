@@ -111,6 +111,7 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 - Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
 - Run `./redis/setup.sh test` to deploy Redis on `test` env.
 - Run `./redis/test.sh test` to test Redis installation.
+- Run `./redis/list_dbs.sh test` to list Redis databases.
 - To delete Redis run `./redis/delete.sh test`.
 
 
