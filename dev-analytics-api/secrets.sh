@@ -30,6 +30,7 @@ cd .circleci/deployments || exit 2
 ./update-secret.sh $ENV_NS REDIS_URL_ROOT "redis://redis-master.redis" > /dev/null
 ./update-secret.sh $ENV_NS DEVSTATS_DB_HOST "`cat ~/dev/da-patroni/da-patroni/secrets/PG_HOST.secret`" > /dev/null
 ./update-secret.sh $ENV_NS SORTINGHAT_HOST "`cat ~/dev/darst/mariadb/secrets/HOST.secret`" > /dev/null
+./update-secret.sh $ENV_NS KIBANA_BASE_URL "http://dev-analytics-kibana-elb.kibana" > /dev/null
 # FIXME: we should have those keys
 ./update-secret.sh $ENV_NS SORTINGHAT_DATABASE "`cat ~/dev/darst/mariadb/secrets/DB.secret`" > /dev/null
 ./update-secret.sh $ENV_NS SORTINGHAT_USER "`cat ~/dev/darst/mariadb/secrets/USER.secret`" > /dev/null
