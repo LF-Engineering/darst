@@ -46,7 +46,7 @@ spec:
             - name: SERVER_NAME
               value: "_"
             - name: API_BASE_URL
-              value: https://api.dev.lfanalytics.io
+              value: APIURL
           livenessProbe:
             httpGet:
               path: /health
