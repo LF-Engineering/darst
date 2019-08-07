@@ -57,7 +57,7 @@ services:
   replicaCount: 1
   upgradeStrategy: Recreate
 - name: arthurw
-  replicaCount: 2
+  replicaCount: 4
   upgradeStrategy: Recreate
 - name: mordred
   replicaCount: 1
