@@ -14,6 +14,7 @@ fi
 ns=/tmp/ns.yaml
 fn=/tmp/apply.yaml
 function finish {
+  #cat "$fn"
   rm -f "$ns" "$fn" 2>/dev/null
 }
 trap finish EXIT
@@ -22,13 +23,17 @@ cp dev-analytics-ui/deployment.yaml "$fn"
 cert=`cat "dev-analytics-ui/secrets/ssl-cert.$1.secret"`
 host=`cat "dev-analytics-ui/secrets/hostname.$1.secret"`
 cert="${cert//\//\\\/}"
+cert="${cert//\./\\\.}"
+host="${host//\./\\\.}"
 if ( [ -z "$cert" ] || [ -z "$host" ] )
 then
   echo "$0: you need to provide values in dev-analytics-ui/secrets/ssl-cert.$1.secret and dev-analytics-ui/secrets/hostname.$1.secret"
   exit 1
 fi
-# External can be like this: https://api.dev.lfanalytics.io
-api_url="http://dev-analytics-api-lb.dev-analytics-api-${1}"
+# Internal API service path (UI don't work with this)
+# api_url="http://dev-analytics-api-lb.dev-analytics-api-${1}"
+# External API service path
+api_url="api\.${TF_DIR}\.lfanalytics\.io"
 vim --not-a-term -c "%s/SSLCERT/${cert}/g" -c "%s/HOSTNAME/${host}/g" -c "%s/APIURL/${api_url}/g" -c "%s/IMAGE/${DOCKER_USER}\/dev-analytics-ui/g" -c 'wq!' "$fn"
 vim --not-a-term -c "%s/ENV/${ENV_NS}/g" -c 'wq!' "$ns"
 if [ ! -z "$NO_DNS" ]
