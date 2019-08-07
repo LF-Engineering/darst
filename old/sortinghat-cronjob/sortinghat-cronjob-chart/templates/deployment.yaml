@@ -15,7 +15,7 @@ kind: CronJob
 metadata:
   name: {{ include "sortinghat-cronjob.name" . }}
 spec:
-  schedule: "10 * * * *"
+  schedule: "*/30 * * * *"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 2

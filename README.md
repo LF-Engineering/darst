@@ -245,11 +245,9 @@ Using AWS account:
 
 # SortingHat id-maintenance cron job deployment
 
-- Use `DOCKER_USER=... LIST=install ./sortinghat-cronjob/projects.sh test` to show cronjob install commands.
-- Use `DOCKER_USER=... LIST=upgrade ./sortinghat-cronjob/projects.sh test` to show cronjob upgrade commands.
-- Use `LIST=uninstall ./sortinghat-cronjob/projects.sh test` to show cronjob uninstall commands.
-- Use command(s) generated to deploy cronjob for a given project, for example: `DOCKER_USER=user-name ./sortinghat-cronjob/sortinghat-cronjob.sh test install none linux-kernel`.
-- Use command(s) to delete cronjob for any project: `./sortinghat-cronjob/delete.sh test none linux-kernel`.
+- Use `DOCKER_USER=user-name ./sortinghat-cronjob/setup.sh test install` to install ID maintenance cronjob.
+- Use `DOCKER_USER=user-name ./sortinghat-cronjob/setup.sh test upgrade` to upgrade ID maintenance cronjob.
+- Use `./sortinghat-cronjob/delete.sh` to delete.
 
 
 # Kibana deployment
