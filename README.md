@@ -184,6 +184,7 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 For your own user:
 
 - Clone `dev-analytics-api` repo: `git clone https://github.com/LF-Engineering/dev-analytics-api.git` and change directory to that repo.
+- Make sure you are on the `lukaszgryglicki-sh` branch.
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-api" .` to build `dev-analytics-api` image, replace `docker-user` with your docker user.
 - Run `docker push "docker-user/dev-analytics-api"`.
 
