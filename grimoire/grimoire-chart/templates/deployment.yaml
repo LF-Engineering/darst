@@ -90,7 +90,7 @@ spec:
           name: logs
         - mountPath: /home/grimoire/.perceval/archives
           name: archives
-        - mountPath: /home/grimoire/.perceval/repositories
+        - mountPath: /tmp
           name: shared
         resources:
         {{- if eq $service.name "mordred" -}}
