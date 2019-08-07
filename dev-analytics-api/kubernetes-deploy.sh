@@ -22,6 +22,7 @@ vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api/g" -c '
 vim --not-a-term -c "%s/external-dns\..*//g" -c "%s/service.beta.kubernetes.io\/aws-load-balancer.*//g" -c 'wq!' "${dd}/api.deployment.yml.erb"
 vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api/g" -c 'wq!' "${dd}/migrate.yml.erb"
 cat dev-analytics-api/sortinghat.partial >> "${dd}/api.deployment.yml.erb"
+cat dev-analytics-api/env.partial >> "${dd}/api.deployment.yml.erb"
 if [ "$1" = "test" ]
 then
   cat dev-analytics-api/sortinghat.partial.test >> "${dd}/api.deployment.yml.erb"
