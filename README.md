@@ -257,6 +257,16 @@ Using AWS account:
 - Run `DOCKER_USER=... ./kibana/setup.sh test` to deploy. You can delete via `./kibana/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 
 
+# SSL/DNS configuration
+
+Replace `test` occurences with other env eventually:
+
+- Use `ARN_ONLY=1 ./dnsssl/dnsssl.sh test` to get SSL certificate ARN for the `test` env.
+- Use `./dnsssl/dnsssl.sh test dev-analytics-elasticsearch elasticsearch-master-elb elastic.test.lfanalytics.io` - to configure DNS/SSL for `test` environment ElasticSearch load balancer.
+- Use `./dnsssl/dnsssl.sh test dev-analytics-api-test dev-analytics-api-lb api.test.lfanalytics.io` - to configure DNS/SSL for `test` environment API load balancer.
+- Use `./dnsssl/dnsssl.sh test dev-analytics-ui dev-analytics-ui-lb ui.test.lfanalytics.io` - to configure DNS/SSL for `test` environment UI load balancer.
+
+
 ## LF One time operation(s)
 
 # Merge Sorting Hat databases
