@@ -84,11 +84,11 @@ spec:
           name: logs
         - mountPath: /home/grimoire/.perceval/archives
           name: archives
-        {{- if or (eq $service.name "arthurw") (eq $service.name "arthurd") }}
+        {{ if or (eq $service.name "arthurw") (eq $service.name "arthurd") }}
         - mountPath: /tmp
-        {{- else -}}
+        {{ else }}
         - mountPath: /home/grimoire/.perceval/repositories
-        {{- end }}
+        {{ end }}
           name: shared
         resources:
         {{- if eq $service.name "mordred" -}}
