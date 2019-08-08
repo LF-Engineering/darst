@@ -49,16 +49,10 @@ spec:
           name: config
         - mountPath: /home/grimoire/.perceval/archives
           name: archives
-        #- mountPath: /home/grimoire/.perceval/repositories
-        - mountPath: /tmp
+        - mountPath: /home/grimoire/.perceval/repositories
           name: shared
         resources:
-          requests:
-            cpu: '25m'
-            memory: '32Mi'
-          limits:
-            cpu:  '250m'
-            memory: '256Mi'
+          {{- toYaml $.Values.sleepResources | nindent 12 }}
       {{- if or (eq $service.name "mordred") (eq $service.name "arthurd") }}
       - name: {{ $service.name }}-logs
         stdin: true 
@@ -90,7 +84,11 @@ spec:
           name: logs
         - mountPath: /home/grimoire/.perceval/archives
           name: archives
+        {{- if or (eq $service.name "arthurw") (eq $service.name "arthurd") }}
         - mountPath: /tmp
+        {{- else -}}
+        - mountPath: /home/grimoire/.perceval/repositories
+        {{- end }}
           name: shared
         resources:
         {{- if eq $service.name "mordred" -}}
