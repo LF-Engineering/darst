@@ -261,10 +261,18 @@ Using AWS account:
 
 Replace `test` occurences with other env eventually:
 
+SSL and hostname configuration: 
+
 - Use `ARN_ONLY=1 ./dnsssl/dnsssl.sh test` to get SSL certificate ARN for the `test` env.
-- Use `./dnsssl/dnsssl.sh test dev-analytics-elasticsearch elasticsearch-master-elb elastic.test.lfanalytics.io` - to configure DNS/SSL for `test` environment ElasticSearch load balancer.
-- Use `./dnsssl/dnsssl.sh test dev-analytics-api-test dev-analytics-api-lb api.test.lfanalytics.io` - to configure DNS/SSL for `test` environment API load balancer.
-- Use `./dnsssl/dnsssl.sh test dev-analytics-ui dev-analytics-ui-lb ui.test.lfanalytics.io` - to configure DNS/SSL for `test` environment UI load balancer.
+- Use `./dnsssl/dnsssl.sh test dev-analytics-elasticsearch elasticsearch-master-elb elastic.test.lfanalytics.io` to configure SSL/hostname for `test` environment ElasticSearch load balancer.
+- Use `./dnsssl/dnsssl.sh test dev-analytics-api-test dev-analytics-api-lb api.test.lfanalytics.io` to configure SSL/hostname for `test` environment API load balancer.
+- Use `./dnsssl/dnsssl.sh test dev-analytics-ui dev-analytics-ui-lb ui.test.lfanalytics.io` to configure SSL/hostanme for `test` environment UI load balancer.
+
+Route 53 DNS configuration:
+
+- Use `./route53/setup.sh test dev-analytics-elasticsearch elasticsearch-master-elb elastic` to configure DNS for `test` environment ElasticSearch load balancer.
+- Use `./route53/setup.sh test dev-analytics-api-test dev-analytics-api-lb api` to configure DNS for `test` environment load balancer.
+- Use `./route53/setup.sh test dev-analytics-ui dev-analytics-ui-lb ui` to configure DNS for for `test` environment load balancer.
 
 
 ## LF One time operation(s)
