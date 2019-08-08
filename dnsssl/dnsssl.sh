@@ -24,8 +24,19 @@ then
   fi
 fi
 . env.sh "$1" || exit 1
+wantdom="${TF_DIR}.lfanalytics.io"
+if [ -z "$ARN_ONLY" ]
+then
+  if ( [[ ${4} == *".${wantdom}" ]] || [ "$4" = "$wantdom" ] )
+  then
+    echo "$4 belongs wildcard domain $wantdom, ok"
+  else
+    echo "$0: $4 doesn't belong to wildcard domain $wantdom, exiting"
+    exit 5
+  fi
+fi
+wantdom="\"$wantdom\""
 i=0
-wantdom="\"${TF_DIR}.lfanalytics.io\""
 while true
 do
   dom=`"${1}aws.sh" acm list-certificates --certificate-statuses=ISSUED | jq ".CertificateSummaryList[$i].DomainName"`
@@ -43,7 +54,7 @@ done
 if [ -z "$arn" ]
 then
   echo "$0: arn for $wantdom not found, exiting"
-  exit 5
+  exit 6
 fi
 echo "Found arn: $arn"
 if [ ! -z "$ARN_ONLY" ]
