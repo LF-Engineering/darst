@@ -3,5 +3,5 @@ master:
 slave:
   disableCommands: []
 configmap: |-
-  databases 1000
+  databases 65535
 
