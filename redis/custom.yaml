@@ -2,3 +2,6 @@ master:
   disableCommands: []
 slave:
   disableCommands: []
+configmap: |-
+  databases 1000
+
