@@ -38,16 +38,23 @@ arthurwResources:
    memory: 128Mi
 mordredResources:
   limits:
-    cpu: 1500m
+    cpu: 2
   requests:
-   cpu: 100m
-   memory: 512Mi
+   cpu: 250m
+   memory: 1024Mi
 identityResources:
   limits:
-    cpu: 500m
+    cpu: 1
   requests:
    cpu: 100m
    memory: 256Mi
+sleepResources:
+  requests:
+    cpu: 25m
+    memory: 32Mi
+  limits:
+    cpu:  250m
+    memory: 1Gi
 
 arthurw:
   flags: ""
@@ -57,7 +64,7 @@ services:
   replicaCount: 1
   upgradeStrategy: Recreate
 - name: arthurw
-  replicaCount: 3
+  replicaCount: 4
   upgradeStrategy: Recreate
 - name: mordred
   replicaCount: 1

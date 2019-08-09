@@ -1,0 +1,31 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "grimoire-core.name" . }}-rq-monitor
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "grimoire-core.name" . }}-rqm
+        app.kubernetes.io/instance: {{ $.Release.Name }}
+        grimoire.lfanalytics.io/grimoire-service: rq-monitor
+    spec:
+      template:
+        spec:
+          restartPolicy: "Never"
+          volumes:
+          - name: config
+            emptyDir:
+              medium: Memory
+          initContainers:
+          {{ include "grimoire.config-init" $ | nindent 10 }}
+          containers:
+          - name: rq-monitor
+            image: "{{ $.Values.image }}"
+            imagePullPolicy: {{ $.Values.imagePullPolicy }}
+            command: ["/run/rq_monitor.sh"]
+            volumeMounts:
+            - mountPath: /config
+              name: config

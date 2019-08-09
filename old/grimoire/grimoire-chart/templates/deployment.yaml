@@ -38,6 +38,21 @@ spec:
       initContainers:
       {{ include "grimoire.config-init" $ | nindent 6 }}
       containers:
+      - name: {{ $service.name }}-sleep
+        image: "{{ $.Values.image }}"
+        imagePullPolicy: {{ $.Values.imagePullPolicy }}
+        command: ["sleep", "infinity"]
+        volumeMounts:
+        - mountPath: /logs
+          name: logs
+        - mountPath: /config
+          name: config
+        - mountPath: /home/grimoire/.perceval/archives
+          name: archives
+        - mountPath: /home/grimoire/.perceval/repositories
+          name: shared
+        resources:
+          {{- toYaml $.Values.sleepResources | nindent 12 }}
       {{- if or (eq $service.name "mordred") (eq $service.name "arthurd") }}
       - name: {{ $service.name }}-logs
         stdin: true 
