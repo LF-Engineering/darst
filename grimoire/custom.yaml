@@ -1,4 +1,11 @@
 ---
 services:
+- name: arthurd
+  replicaCount: 1
+  upgradeStrategy: Recreate
 - name: arthurw
   replicaCount: WORKERS
+  upgradeStrategy: Recreate
+- name: mordred
+  replicaCount: 1
+  upgradeStrategy: Recreate
