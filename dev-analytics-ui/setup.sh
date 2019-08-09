@@ -33,9 +33,9 @@ then
 fi
 if [ -z "$API_INTERNAL" ]
 then
-  api_url="https://api\.${TF_DIR}\.lfanalytics\.io"
+  api_url="https:\/\/api\.${TF_DIR}\.lfanalytics\.io"
 else
-  api_url="http://dev-analytics-api-lb.dev-analytics-api-${1}"
+  api_url="http:\/\/dev-analytics-api-lb\.dev-analytics-api-${1}"
 fi
 vim --not-a-term -c "%s/SSLCERT/${cert}/g" -c "%s/HOSTNAME/${host}/g" -c "%s/APIURL/${api_url}/g" -c "%s/IMAGE/${DOCKER_USER}\/dev-analytics-ui/g" -c 'wq!' "$fn"
 vim --not-a-term -c "%s/ENV/${ENV_NS}/g" -c 'wq!' "$ns"
