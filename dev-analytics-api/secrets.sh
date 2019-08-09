@@ -1,5 +1,5 @@
 #!/bin/bash
-# ES_INTERNAL=1 - use internal ES address
+# ES_EXTERNAL=1 - use external ES address
 # KIBANA_INTERNAL=1 - use internal Kibana address
 if  [ -z "$1" ]
 then
@@ -11,11 +11,11 @@ fi
 seed_env_short=dev
 seed_env_long=develop
 env_short=$1
-if [ -z "$ES_INTERNAL" ]
+if [ -z "$ES_EXTERNAL" ]
 then
-  es_url="https://elastic.${TF_DIR}.lfanalytics.io"
-else
   es_url="http://elasticsearch-master.dev-analytics-elasticsearch:9200"
+else
+  es_url="https://elastic.${TF_DIR}.lfanalytics.io"
 fi
 if [ -z "$KIBANA_INTERNAL" ]
 then

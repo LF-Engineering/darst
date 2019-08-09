@@ -1,6 +1,6 @@
 #!/bin/bash
 # DRY=1 - will add --dry-run --debug flags
-# ES_INTERNAL=1 - use internal ES address
+# ES_EXTERNAL=1 - use external ES address
 env="$1"
 op="$2"
 if [ -z "$env" ]
@@ -25,11 +25,11 @@ fi
 . env.sh "$1" || exit 8
 repository="${DOCKER_USER}/dev-analytics-kibana"
 kibana_url="kibana\.${TF_DIR}\.lfanalytics\.io"
-if [ -z "$ES_INTERNAL" ]
+if [ -z "$ES_EXTERNAL" ]
 then
-  es_url="https://elastic.${TF_DIR}.lfanalytics.io"
-else
   es_url="http://elasticsearch-master.dev-analytics-elasticsearch:9200"
+else
+  es_url="https://elastic.${TF_DIR}.lfanalytics.io"
 fi
 cert=`cat "es/secrets/ssl-cert.$1.secret"`
 cert="${cert//\//\\\/}"

@@ -214,7 +214,7 @@ Using AWS account:
 # dev-analytics-api deployment
 
 - Make sure that you have `dev-analytics-api` image built (see `dev-analytics-api image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-api`.
-- Run `[ES_INTERNAL=1] [KIBANA_INTERNAL=1] DOCKER_USER=... ./dev-analytics-api/setup.sh test` to deploy. You can delete via `./dev-analytics-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
+- Run `[ES_EXTERNAL=1] [KIBANA_INTERNAL=1] DOCKER_USER=... ./dev-analytics-api/setup.sh test` to deploy. You can delete via `./dev-analytics-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 - Note that during the deployment `.circleci/deployments/test/secrets.ejson` file is regenerated with new key values. You may want to go to `dev-analytics-api` repo and commit that changes (secrets.ejson is encrypted and can be committed into the repo).
 - You can query given project config via `./dev-analytics-api/project_config.sh test project-name`, replace `project-name` with for example `linux-kernel`. To see all projects use `./grimoire/projects.sh test` - use `Slug` column.
 - You can query any API call via via `./dev-analytics-api/query.sh test ...`.
@@ -254,7 +254,7 @@ Using AWS account:
 # Kibana deployment
 
 - Make sure that you have `dev-analytics-kibana` image built (see `dev-analytics-kibana image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-kibana`.
-- Run `[DRY=1] [ES_INTERNAL=1] DOCKER_USER=... ./kibana/setup.sh test install` to deploy. You can delete via `./kibana/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
+- Run `[DRY=1] [ES_EXTERNAL=1] DOCKER_USER=... ./kibana/setup.sh test install` to deploy. You can delete via `./kibana/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 
 
 # SSL/DNS configuration
