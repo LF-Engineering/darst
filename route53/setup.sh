@@ -55,4 +55,3 @@ cat > "$fn" <<EOF
 }
 EOF
 "${1}aws.sh" route53 change-resource-record-sets --hosted-zone-id ${zid} --change-batch "file://$fn" || cat "$fn"
-echo OK
