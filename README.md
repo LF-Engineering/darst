@@ -240,7 +240,7 @@ Using AWS account:
 - Use `DOCKER_USER=... LIST=install ./grimoire/projects.sh test` to show install commands.
 - Use `DOCKER_USER=... LIST=upgrade ./grimoire/projects.sh test` to show upgrade commands.
 - Use `LIST=uninstall ./grimoire/projects.sh test` to show uninstall commands.
-- Use command(s) generated to deploy given project, for example: `[WORKERS=n] DOCKER_USER=user-name ./grimoire/grimoire.sh test install none linux-kernel`.
+- Use command(s) generated to deploy given project, for example: `[WORKERS=n] [NODE=selector|-] DOCKER_USER=user-name ./grimoire/grimoire.sh test install none linux-kernel`.
 - Use command(s) to delete any project: `./grimoire/delete.sh test none linux-kernel`.
 
 

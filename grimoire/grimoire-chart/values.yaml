@@ -63,6 +63,7 @@ services:
   replicaCount: 1
   upgradeStrategy: Recreate
 
+useNodeSelector: 1
 nodeSelector:
   lfda: grimoire
 

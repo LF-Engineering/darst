@@ -1,6 +1,7 @@
 #!/bin/bash
 # DRY=1 - will add --dry-run --debug flags
 # WORKERS=n - override default number of arthurw workers which is 3
+# NODE=grimoire - use other node selector, set NODE='-' to skip node selector
 env="$1"
 op="$2"
 foundation="$3"
@@ -62,6 +63,17 @@ if [ ! -z "$WORKERS" ]
 then
   workers="$WORKERS"
 fi
+nodeSelector=grimoire
+useNodeSelector=1
+if [ ! -z "$NODE" ]
+then
+  if [ "$NODE" = "-" ]
+  then
+    useNodeSelector=''
+  else
+    nodeSelector="$NODE"
+  fi
+fi
 identity_repository="${DOCKER_USER}/dev-analytics-sortinghat-api"
 repository="${DOCKER_USER}/dev-analytics-grimoire-docker"
 fn=/tmp/ns.yaml
@@ -100,10 +112,10 @@ vim --not-a-term -c "%s/WORKERS/${workers}/g" -c 'wq!' "$custom"
 change_namespace.sh $1 "$name"
 if [ "$op" = "install" ]
 then
-  "${1}h.sh" install "$name" ./grimoire/grimoire-chart $FLAGS -n $name -f "$custom" --set "api.url=$api_url,projectSlug=$slug,image=$repository,identity.image=$identity_repository,identity.db.name=$shdb,identity.db.host=$shhost,identity.db.user=$shuser,identity.db.password=$shpass,web_concurency=$wcon,flask_env=$fenv,flask_debug=$fdbg,log_level=$llev"
+  "${1}h.sh" install "$name" ./grimoire/grimoire-chart $FLAGS -n $name -f "$custom" --set "api.url=$api_url,projectSlug=$slug,image=$repository,identity.image=$identity_repository,identity.db.name=$shdb,identity.db.host=$shhost,identity.db.user=$shuser,identity.db.password=$shpass,web_concurency=$wcon,flask_env=$fenv,flask_debug=$fdbg,log_level=$llev,useNodeSelector=${useNodeSelector},nodeSelector.lfda=${nodeSelector}"
 elif [ "$op" = "upgrade" ]
 then
-  "${1}h.sh" upgrade "$name" ./grimoire/grimoire-chart $FLAGS -n $name --reuse-values -f "$custom" --set "api.url=$api_url,projectSlug=$slug,image=$repository,identity.image=$identity_repository,identity.db.name=$shdb,identity.db.host=$shhost,identity.db.user=$shuser,identity.db.password=$shpass,web_concurency=$wcon,flask_env=$fenv,flask_debug=$fdbg,log_level=$llev"
+  "${1}h.sh" upgrade "$name" ./grimoire/grimoire-chart $FLAGS -n $name --reuse-values -f "$custom" --set "api.url=$api_url,projectSlug=$slug,image=$repository,identity.image=$identity_repository,identity.db.name=$shdb,identity.db.host=$shhost,identity.db.user=$shuser,identity.db.password=$shpass,web_concurency=$wcon,flask_env=$fenv,flask_debug=$fdbg,log_level=$llev,useNodeSelector=${useNodeSelector},nodeSelector.lfda=${nodeSelector}"
 else
   echo "$0: unknown operation: $op"
   exit 9
