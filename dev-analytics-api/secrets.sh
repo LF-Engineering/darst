@@ -1,4 +1,6 @@
 #!/bin/bash
+# ES_INTERNAL=1 - use internal ES address
+# KIBANA_INTERNAL=1 - use internal Kibana address
 if  [ -z "$1" ]
 then
   echo "$0: you need to specify env: test, dev, stg, prod"
@@ -9,6 +11,18 @@ fi
 seed_env_short=dev
 seed_env_long=develop
 env_short=$1
+if [ -z "$ES_INTERNAL" ]
+then
+  es_url="https://elastic.${TF_DIR}.lfanalytics.io"
+else
+  es_url="http://elasticsearch-master.dev-analytics-elasticsearch:9200"
+fi
+if [ -z "$KIBANA_INTERNAL" ]
+then
+  kibana_url="https://kibana.${TF_DIR}.lfanalytics.io"
+else
+  kibana_url="http://dev-analytics-kibana-elb.kibana"
+fi
 function finish {
   change_namespace.sh $env_short default
 }
@@ -24,13 +38,13 @@ cd .circleci/deployments || exit 2
 ./update-secret.sh $ENV_NS DATABASE_HOST "`cat ~/dev/da-patroni/da-patroni/secrets/PG_HOST.secret`" > /dev/null
 ./update-secret.sh $ENV_NS DATABASE_PASSWORD "`cat ~/dev/da-patroni/da-patroni/secrets/PG_PASS.$1.secret`" > /dev/null
 ./update-secret.sh $ENV_NS DATABASE_USERNAME "`cat ~/dev/da-patroni/da-patroni/secrets/PG_USER.secret`" > /dev/null
-./update-secret.sh $ENV_NS ELASTICSEARCH_URL "http://elasticsearch-master.dev-analytics-elasticsearch:9200" > /dev/null
+./update-secret.sh $ENV_NS ELASTICSEARCH_URL "$es_url" > /dev/null
 ./update-secret.sh $ENV_NS RAILS_ENV $RAILS_ENV > /dev/null
 ./update-secret.sh $ENV_NS REDIS_URL "redis://redis-master.redis" > /dev/null
 ./update-secret.sh $ENV_NS REDIS_URL_ROOT "redis://redis-master.redis" > /dev/null
 ./update-secret.sh $ENV_NS DEVSTATS_DB_HOST "`cat ~/dev/da-patroni/da-patroni/secrets/PG_HOST.secret`" > /dev/null
 ./update-secret.sh $ENV_NS SORTINGHAT_HOST "`cat ~/dev/darst/mariadb/secrets/HOST.secret`" > /dev/null
-./update-secret.sh $ENV_NS KIBANA_BASE_URL "http://dev-analytics-kibana-elb.kibana" > /dev/null
+./update-secret.sh $ENV_NS KIBANA_BASE_URL "$kibana_url" > /dev/null
 # FIXME: we should have those keys
 ./update-secret.sh $ENV_NS SORTINGHAT_DATABASE "`cat ~/dev/darst/mariadb/secrets/DB.secret`" > /dev/null
 ./update-secret.sh $ENV_NS SORTINGHAT_USER "`cat ~/dev/darst/mariadb/secrets/USER.secret`" > /dev/null

@@ -1,5 +1,6 @@
 #!/bin/bash
 # NO_DNS=1 - skip requesting external DNS
+# API_INTERNAL=1 - use internal API address
 if  [ -z "$1" ]
 then
   echo "$0: you need to specify env: test, dev, stg, prod"
@@ -30,10 +31,12 @@ then
   echo "$0: you need to provide values in dev-analytics-ui/secrets/ssl-cert.$1.secret and dev-analytics-ui/secrets/hostname.$1.secret"
   exit 1
 fi
-# Internal API service path (UI don't work with this)
-# api_url="http://dev-analytics-api-lb.dev-analytics-api-${1}"
-# External API service path
-api_url="api\.${TF_DIR}\.lfanalytics\.io"
+if [ -z "$API_INTERNAL" ]
+then
+  api_url="https://api\.${TF_DIR}\.lfanalytics\.io"
+else
+  api_url="http://dev-analytics-api-lb.dev-analytics-api-${1}"
+fi
 vim --not-a-term -c "%s/SSLCERT/${cert}/g" -c "%s/HOSTNAME/${host}/g" -c "%s/APIURL/${api_url}/g" -c "%s/IMAGE/${DOCKER_USER}\/dev-analytics-ui/g" -c 'wq!' "$fn"
 vim --not-a-term -c "%s/ENV/${ENV_NS}/g" -c 'wq!' "$ns"
 if [ ! -z "$NO_DNS" ]
