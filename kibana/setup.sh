@@ -1,5 +1,6 @@
 #!/bin/bash
 # DRY=1 - will add --dry-run --debug flags
+# ES_INTERNAL=1 - use internal ES address
 env="$1"
 op="$2"
 if [ -z "$env" ]
@@ -15,7 +16,7 @@ fi
 if [ -z "$DOCKER_USER" ]
 then
   echo "$0: you need to specify docker user via DOCKER_USER=..."
-  exit 7
+  exit 3
 fi
 if [ ! -z "$DRY" ]
 then
@@ -23,8 +24,21 @@ then
 fi
 . env.sh "$1" || exit 8
 repository="${DOCKER_USER}/dev-analytics-kibana"
-# es_url="http://elasticsearch-master.dev-analytics-elasticsearch:9200"
-es_url="https://elastic.${TF_DIR}.lfanalytics.io"
+kibana_url="kibana\.${TF_DIR}\.lfanalytics\.io"
+if [ -z "$ES_INTERNAL" ]
+then
+  es_url="https://elastic.${TF_DIR}.lfanalytics.io"
+else
+  es_url="http://elasticsearch-master.dev-analytics-elasticsearch:9200"
+fi
+cert=`cat "es/secrets/ssl-cert.$1.secret"`
+cert="${cert//\//\\\/}"
+cert="${cert//\./\\\.}"
+if [ -z "$cert" ]
+then
+  echo "$0: you need to provide value in kibana/secrets/ssl-cert.$1.secret"
+  exit 4
+fi
 function finish {
   change_namespace.sh $env default
 }
@@ -33,10 +47,10 @@ trap finish EXIT
 change_namespace.sh $1 kibana
 if [ "$op" = "install" ]
 then
-  "${1}h.sh" install kibana ./kibana/kibana-chart $FLAGS -n kibana --set "image=$repository,elasticsearch.url=${es_url}"
+  "${1}h.sh" install kibana ./kibana/kibana-chart $FLAGS -n kibana --set "image=$repository,elasticsearch.url=${es_url},hostname=${kibana_url},ingress.external.certArn=${cert}"
 elif [ "$op" = "upgrade" ]
 then
-  "${1}h.sh" upgrade kibana ./kibana/kibana-chart $FLAGS -n kibana --reuse-values --set "image=$repository,elasticsearch.url=${es_url}"
+  "${1}h.sh" upgrade kibana ./kibana/kibana-chart $FLAGS -n kibana --reuse-values --set "image=$repository,elasticsearch.url=${es_url},hostname=${kibana_url},ingress.external.certArn=${cert}"
 else
   echo "$0: unknown operation: $op"
   exit 9

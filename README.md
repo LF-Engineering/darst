@@ -254,7 +254,7 @@ Using AWS account:
 # Kibana deployment
 
 - Make sure that you have `dev-analytics-kibana` image built (see `dev-analytics-kibana image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-kibana`.
-- Run `DOCKER_USER=... ./kibana/setup.sh test` to deploy. You can delete via `./kibana/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
+- Run `[DRY=1] [ES_INTERNAL=1] DOCKER_USER=... ./kibana/setup.sh test install` to deploy. You can delete via `./kibana/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 
 
 # SSL/DNS configuration
@@ -264,12 +264,14 @@ Replace `test` occurences with other env eventually:
 SSL and hostname configuration: 
 
 - Use `ARN_ONLY=1 ./dnsssl/dnsssl.sh test` to get SSL certificate ARN for the `test` env.
+- Use `./dnsssl/dnsssl.sh test kibana dev-analytics-kibana-elb kibana.test.lfanalytics.io` to configure SSL/hostname for `test` environment Kibana load balancer.
 - Use `./dnsssl/dnsssl.sh test dev-analytics-elasticsearch elasticsearch-master-elb elastic.test.lfanalytics.io` to configure SSL/hostname for `test` environment ElasticSearch load balancer.
 - Use `./dnsssl/dnsssl.sh test dev-analytics-api-test dev-analytics-api-lb api.test.lfanalytics.io` to configure SSL/hostname for `test` environment API load balancer.
 - Use `./dnsssl/dnsssl.sh test dev-analytics-ui dev-analytics-ui-lb ui.test.lfanalytics.io` to configure SSL/hostanme for `test` environment UI load balancer.
 
 Route 53 DNS configuration:
 
+- Use `./route53/setup.sh test kibana dev-analytics-kibana-elb kibana` to configure DNS for `test` environment Kibana load balancer.
 - Use `./route53/setup.sh test dev-analytics-elasticsearch elasticsearch-master-elb elastic` to configure DNS for `test` environment ElasticSearch load balancer.
 - Use `./route53/setup.sh test dev-analytics-api-test dev-analytics-api-lb api` to configure DNS for `test` environment load balancer.
 - Use `./route53/setup.sh test dev-analytics-ui dev-analytics-ui-lb ui` to configure DNS for for `test` environment load balancer.

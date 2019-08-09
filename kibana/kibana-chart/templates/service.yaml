@@ -24,9 +24,10 @@ kind: Service
 metadata:
   name: dev-analytics-kibana-elb
   annotations:
+    external-dns.alpha.kubernetes.io/hostname: '{{ .Values.hostname }}'
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
     {{- if .Values.ingress.external.ssl }}
-    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: {{ .Values.ingress.external.certArn }}
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: '{{ .Values.ingress.external.certArn }}'
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
     {{ end }}
 spec:

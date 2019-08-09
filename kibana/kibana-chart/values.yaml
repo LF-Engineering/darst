@@ -23,8 +23,8 @@ antiAffinity: "hard"
 ingress:
   external: 
     enabled: true
-    ssl: false
-    certArn: ""
+    ssl: true
+    certArn: 'set-me'
 
 nameOverride: ""
 fullnameOverride: ""
