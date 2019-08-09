@@ -23,6 +23,8 @@ then
 fi
 . env.sh "$1" || exit 8
 repository="${DOCKER_USER}/dev-analytics-kibana"
+# es_url="http://elasticsearch-master.dev-analytics-elasticsearch:9200"
+es_url="https://elastic.${TF_DIR}.lfanalytics.io"
 function finish {
   change_namespace.sh $env default
 }
@@ -31,10 +33,10 @@ trap finish EXIT
 change_namespace.sh $1 kibana
 if [ "$op" = "install" ]
 then
-  "${1}h.sh" install kibana ./kibana/kibana-chart $FLAGS -n kibana --set "image=$repository"
+  "${1}h.sh" install kibana ./kibana/kibana-chart $FLAGS -n kibana --set "image=$repository,elasticsearch.url=${es_url}"
 elif [ "$op" = "upgrade" ]
 then
-  "${1}h.sh" upgrade kibana ./kibana/kibana-chart $FLAGS -n kibana --reuse-values --set "image=$repository"
+  "${1}h.sh" upgrade kibana ./kibana/kibana-chart $FLAGS -n kibana --reuse-values --set "image=$repository,elasticsearch.url=${es_url}"
 else
   echo "$0: unknown operation: $op"
   exit 9
