@@ -1,6 +1,6 @@
 #!/bin/bash
 # DRY=1 - will add --dry-run --debug flags
-# WORKERS=n - override default number of arthurw workers which is 3
+# WORKERS=n - override default number of arthurw workers which is 1
 # NODE=grimoire - use other node selector, set NODE='-' to skip node selector
 env="$1"
 op="$2"
@@ -58,7 +58,7 @@ else
   name="g-lf-${project}"
   slug="${project}"
 fi
-workers=3
+workers=1
 if [ ! -z "$WORKERS" ]
 then
   workers="$WORKERS"
