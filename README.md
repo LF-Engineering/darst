@@ -218,7 +218,7 @@ Using AWS account:
 - Note that during the deployment `.circleci/deployments/test/secrets.ejson` file is regenerated with new key values. You may want to go to `dev-analytics-api` repo and commit that changes (secrets.ejson is encrypted and can be committed into the repo).
 - You can query given project config via `./dev-analytics-api/project_config.sh test project-name`, replace `project-name` with for example `linux-kernel`. To see all projects use `./grimoire/projects.sh test` - use `Slug` column.
 - You can query any API call via via `./dev-analytics-api/query.sh test ...`.
-- Once API servr is up and running, you should add permissions to affiliations edit in projects, go to `LF-Engineering/dev-analytics-api:permissions`, run `./add_permissions.sh test` script.
+- Once API server is up and running, you should add permissions to affiliations edit in projects, go to `LF-Engineering/dev-analytics-api:permissions`, run `./add_permissions.sh test` script.
 
 
 # dev-analytics-ui deployment
