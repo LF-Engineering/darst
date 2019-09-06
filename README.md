@@ -151,9 +151,9 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 
 # Static Nginx deployment giving access to all database backups
 
-- Run `./backups-page/setup.sh` to setup static page allowing to see generated backups. (NFS shared RWX volume access).
-- Run `./backups-page/elbs.sh` to see the final URLs where MariaDB and Postgres backups are available, give AWS ELBs some time to be created first.
-- Use `./backups-page/delete.sh` to delete backups static page.
+- Run `./backups-page/setup.sh test` to setup static page allowing to see generated backups. (NFS shared RWX volume access).
+- Run `./backups-page/elbs.sh test` to see the final URLs where MariaDB and Postgres backups are available, give AWS ELBs some time to be created first.
+- Use `./backups-page/delete.sh test` to delete backups static page.
 
 
 ## LF Docker images
