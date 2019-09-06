@@ -28,9 +28,9 @@ then
   exit 2
 fi
 cp ~/dev/dev-analytics-api/.circleci/deployments/$API_DIR/* "$dd" || exit 3
-vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api/g" -c '%s/"bundle", "exec", "rails", "s", "-b", "0\.0\.0\.0"/"\/bin\/sh", "-c", "bundle exec rails db:reset \&\& bundle exec rails s -b 0\.0\.0\.0"/g' -c 'wq!' "${dd}/api.deployment.yml.erb"
+vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api/g" -c 'wq!' "${dd}/api.deployment.yml.erb"
 vim --not-a-term -c "%s/external-dns\.alpha\.kubernetes\.io\/hostname: .*/external-dns\.alpha\.kubernetes\.io\/hostname: ${api_url}/g" -c "%s/service\.beta\.kubernetes\.io\/aws-load-balancer-ssl-cert: .*/service\.beta\.kubernetes\.io\/aws-load-balancer-ssl-cert: ${cert}/g" -c 'wq!' "${dd}/api.deployment.yml.erb"
-vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api/g" -c 'wq!' "${dd}/migrate.yml.erb"
+vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api/g" -c '%s/"bundle", "exec", "rails", "db:migrate"/"\/bin\/sh", "-c", "bundle exec rails db:reset; bundle exec rails db:migrate"/g' -c 'wq!' "${dd}/migrate.yml.erb"
 cat dev-analytics-api/sortinghat.partial >> "${dd}/api.deployment.yml.erb"
 cat dev-analytics-api/env.partial >> "${dd}/api.deployment.yml.erb"
 if [ "$1" = "test" ]
@@ -39,7 +39,7 @@ then
 fi
 if [ "$1" = "prod" ]
 then
-  cat dev-analytics-api/env.partial.prod >> "${dd}/api.deployment.yml.erb"
+  cat dev-analytics-api/env.partial.prod >> "${dd}/migrate.yml.erb"
 fi
 context="`${1}k.sh config current-context`"
 TASK_ID=`date +'%s%N'` kubernetes-deploy "dev-analytics-api-$ENV_NS" "$context" --template-dir="$dd"
