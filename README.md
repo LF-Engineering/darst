@@ -111,7 +111,7 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 
 # Redis
 
-- You need special node setup for Redis: `./redis-node/setup.sh`. To remove special node configuration do: ./redis-node/delete.sh`.
+- You need special node setup for Redis: `./redis-node/setup.sh test`. To remove special node configuration do: ./redis-node/delete.sh test`.
 - For each file in `redis/secrets/*.secret.example` create corresponding `redis/secrets/*.secret` file. `*.secret` files are not checked in the gitgub repository.
 - Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
 - Run `./redis/setup.sh test` to deploy Redis on `test` env.
