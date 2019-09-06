@@ -20,7 +20,7 @@ api="${api}/api/internal/grimoire/configuration/$2"
 for type in mordred environment aliases projects credentials
 do
   echo '======================================================='
-  echo "${type}:"
+  echo "${api}/${type}:"
   echo '======================================================='
   if [ "$type" = "mordred" ]
   then
