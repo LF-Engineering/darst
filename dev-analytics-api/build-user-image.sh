@@ -12,4 +12,4 @@ fi
 cd ~/dev/dev-analytics-api || exit 3
 docker build -f Dockerfile -t "${DOCKER_USER}/dev-analytics-api" . || exit 4
 docker push "${DOCKER_USER}/dev-analytics-api" || exit 5
-docker system prune -f
+#docker system prune -f
