@@ -218,8 +218,9 @@ Using AWS account:
 - Make sure that you have `dev-analytics-api` image built (see `dev-analytics-api image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-api`.
 - Run `[ES_EXTERNAL=1] [KIBANA_INTERNAL=1] DOCKER_USER=... ./dev-analytics-api/setup.sh test` to deploy. You can delete via `./dev-analytics-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 - Note that during the deployment `.circleci/deployments/test/secrets.ejson` file is regenerated with new key values. You may want to go to `dev-analytics-api` repo and commit that changes (secrets.ejson is encrypted and can be committed into the repo).
-- You can query given project config via `./dev-analytics-api/project_config.sh test project-name`, replace `project-name` with for example `linux-kernel`. To see all projects use `./grimoire/projects.sh test` - use `Slug` column.
+- You can query given project config via `[NO_DNS=1] ./dev-analytics-api/project_config.sh test project-name`, replace `project-name` with for example `linux-kernel`. To see all projects use `./grimoire/projects.sh test` - use `Slug` column.
 - You can query any API call via via `./dev-analytics-api/query.sh test ...`.
+- You can deploy populated `dev-analytics-api` DB structure: `./dev_analytics/populate.sh test`. You will need `dev_analytics/dev_analytics.sql.secret` file which is gitignored due to sensitive data. Without this step you will have no projects configured
 - Once API server is up and running, you should add permissions to affiliations edit in projects, go to `LF-Engineering/dev-analytics-api:permissions`, run `./add_permissions.sh test` script.
 
 
