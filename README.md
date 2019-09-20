@@ -246,7 +246,7 @@ Using AWS account:
 - Use `LIST=uninstall ./grimoire/projects.sh test` to show uninstall commands.
 - Use command(s) generated to deploy given project, for example: `[WORKERS=n] [NODE=selector|-] DOCKER_USER=user-name ./grimoire/grimoire.sh test install none linux-kernel`.
 - Use command(s) to delete any project: `./grimoire/delete.sh test none linux-kernel`.
-- Use example command to manually debug deployment: `WORKERS=1 NODE=- DOCKER_USER=lukaszgryglicki DRY=1 NS=grimoire-debug DEBUG=1 ./grimoire/grimoire.sh test install none yocto`.
+- Use example command to manually debug deployment: `WORKERS=1 NODE=- DOCKER_USER=lukaszgryglicki DRY=1 NS=grimoire-debug DEBUG=1 ./grimoire/grimoire.sh test install none yocto`. More details [here](https://github.com/LF-Engineering/grimoire-minimal-example#example-debugging).
 
 
 # SortingHat id-maintenance cron job deployment
