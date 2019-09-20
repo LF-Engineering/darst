@@ -56,7 +56,11 @@ spec:
       - name: {{ $service.name }}
         image: "{{ $.Values.image }}"
         imagePullPolicy: {{ $.Values.imagePullPolicy }}
+        {{ if $.Values.manualDebug }}
+        command: ["/bin/sleep", "infinity"]
+        {{ else }}
         command: ["/run/{{ $service.name }}.sh"]
+        {{ end }}
         {{- if eq $service.name "arthurd" }}
         ports:
         - containerPort: 9090

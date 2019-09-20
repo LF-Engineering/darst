@@ -2,6 +2,8 @@
 # DRY=1 - will add --dry-run --debug flags
 # WORKERS=n - override default number of arthurw workers which is 1
 # NODE=grimoire - use other node selector, set NODE='-' to skip node selector
+# DEBUG=1 - will set manualDebug=1 mode, which creates deployment but all services are '/bin/sleep infinity'
+# NS=name - overwrite namespace name generation
 env="$1"
 op="$2"
 foundation="$3"
@@ -33,7 +35,11 @@ then
 fi
 if [ ! -z "$DRY" ]
 then
-  FLAGS="--dry-run --debug"
+  FLAGS="$FALGS --dry-run --debug"
+fi
+if [ ! -z "$DEBUG" ]
+then
+  FLAGS="$FLAGS --set manualDebug=1"
 fi
 . env.sh "$1" || exit 8
 foundation_present=1
@@ -57,6 +63,10 @@ then
 else
   name="g-lf-${project}"
   slug="${project}"
+fi
+if [ ! -z "$NS" ]
+then
+  name=$NS
 fi
 workers=1
 if [ ! -z "$WORKERS" ]

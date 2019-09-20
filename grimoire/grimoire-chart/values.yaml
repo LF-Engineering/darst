@@ -1,3 +1,4 @@
+manualDebug: '' # set to '1' to have /bin/sleep infinity running in all deployed containers, then shell into them and do whatever you want manually
 replicaCount: 1
 
 api:
