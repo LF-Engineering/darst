@@ -29,8 +29,8 @@ do
   echo '======================================================='
   if [ "$type" = "mordred" ]
   then
-    curl -s "${api}/${type}" | jq -r .rendered
+    curl -s "${api}/${type}" | jq -r .rendered || curl -s "${api}/${type}"
   else
-    curl -s "${api}/${type}" | jq
+    curl -s "${api}/${type}" | jq || curl -s "${api}/${type}"
   fi
 done
