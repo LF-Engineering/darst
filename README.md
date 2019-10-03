@@ -287,12 +287,29 @@ Route 53 DNS configuration:
 
 - Do changes to `dev-analytics-api` repo, commit changes.
 - Build new API image as described [here](https://github.com/cncf/darst#dev-analytics-api-image).
+
+Test cluster:
+
 - Edit API deployment: `testk.sh get deployment --all-namespaces | grep analytics-api` and then `testk.sh edit deployment -n dev-analytics-api-test dev-analytics-api`.
 - Add or remove `:latest` tag on all images: `lukaszgryglicki/dev-analytics-api` <-> `lukaszgryglicki/dev-analytics-api:latest` to inform Kubernetes that it need to do rolling update for API.
 - Once Kubernetes recreate API pod, shell into it: `testk.sh get po --all-namespaces | grep analytics-api` and then `pod_shell.sh test dev-analytics-api-test dev-analytics-api-58d95497fb-hm8gq /bin/sh`.
 - While inside the API pod run: `bundle exec rails db:seed`.
-- Now confirm new projects configuration on the API database: `pod_shell.sh test devstats devstats-postgres-0`, then inside the pod: `select * from projects;`.
+- Now confirm new projects configuration on the API database: `pod_shell.sh test devstats devstats-postgres-0`, then inside the pod: `psql dev_analytics_test`, `select * from projects;`.
 - See changes via: `./grimoire/projects.sh test | grep projname`, see specific project configuration: `./dev-analytics-api/project_config.sh test proj-slug`.
+
+Prod cluster:
+
+- Edit API deployment: `prodk.sh get deployment --all-namespaces | grep analytics-api` and then `prodk.sh edit deployment -n dev-analytics-api-prod dev-analytics-api`.
+- Add or remove `:latest` tag on all images: `lukaszgryglicki/dev-analytics-api` <-> `lukaszgryglicki/dev-analytics-api:latest` to inform Kubernetes that it need to do rolling update for API.
+- Once Kubernetes recreate API pod, shell into it: `prodk.sh get po --all-namespaces | grep analytics-api` and then `pod_shell.sh prod dev-analytics-api-prod dev-analytics-api-685bf4fb66-pd642 /bin/sh`.
+- While inside the API pod run: `bundle exec rails db:seed`.
+- You may need to use:
+  - `bundle exec rails db:environment:set RAILS_ENV=production`
+  - `DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:reset`
+  - `test` cluster: `pod_shell.sh test devstats devstats-postgres-0`: `pg_dump -Fc dev_analytics_test -f dev_analytics.dump`, `testk.sh -n devstats cp devstats-postgres-0:dev_analytics.dump dev_analytics.dump`.
+  - `prod` cluster: `pod_shell.sh prod devstats devstats-postgres-0`: `psql`, `select pg_terminate_backend(pid) from pg_stat_activity where datname = 'dev_analytics'; drop database dev_analytics;`, `createdb dev_analytics; pg_restore -d dev_analytics dev_analytics.dump`.
+- Now confirm new projects configuration on the API database: `pod_shell.sh prod devstats devstats-postgres-0`, then inside the pod: `psql dev_analytics`, `select * from projects;`.
+- See changes via: `./grimoire/projects.sh prod | grep projname`, see specific project configuration: `./dev-analytics-api/project_config.sh prod proj-slug`.
 
 
 ## LF One time operation(s)
