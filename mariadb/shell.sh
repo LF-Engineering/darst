@@ -15,4 +15,5 @@ do
   echo "Waiting for pod to be running..."
   sleep 1
 done
-"${1}k.sh" exec -it mariadb-test -- /opt/bitnami/mariadb/bin/mysql -h$SH_HOST -u$SH_USER -p$SH_PASS $SH_DB
+"${1}k.sh" cp mariadb/shell_db.sh mariadb-test:/usr/bin/shell_db.sh
+"${1}k.sh" exec -it mariadb-test -- /usr/bin/shell_db.sh

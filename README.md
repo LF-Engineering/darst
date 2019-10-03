@@ -142,6 +142,7 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 - Provision Sorting Hat structure: `./mariadb/structure.sh test`.
 - Popoulate merged `dev` and `staging` Sorting Hat data: `./mariadb/populate.sh test`. You will need `cncf/merge-sh-dbs` repo cloned in `../merge-sh-dbs` and actual merged data generated (that merged SQL is checked in the repo).
 - Run `./mariadb/backups.sh test` to setup daily automatic backups.
+- Run `./mariadb/shell.sh test` to get into mariadb shell.
 
 
 # MariadDB backups image
