@@ -44,7 +44,8 @@ then
 fi
 if [ "$1" = "prod" ]
 then
-  cat dev-analytics-api/env.partial.prod >> "${dd}/migrate.yml.erb"
+  cat dev-analytics-api/migrate.env.partial.prod >> "${dd}/migrate.yml.erb"
+  cat dev-analytics-api/api.env.partial.prod >> "${dd}/api.deployment.yml.erb"
 fi
 context="`${1}k.sh config current-context`"
 TASK_ID=`date +'%s%N'` kubernetes-deploy "dev-analytics-api-$ENV_NS" "$context" --template-dir="$dd"
