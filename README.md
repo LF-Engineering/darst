@@ -187,7 +187,7 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 For your own user:
 
 - Clone `dev-analytics-api` repo: `git clone https://github.com/LF-Engineering/dev-analytics-api.git` and change directory to that repo.
-- Make sure you are on the `lukaszgryglicki-sh` branch.
+- Make sure you are on the `develop` branch.
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-api" .` to build `dev-analytics-api` image, replace `docker-user` with your docker user.
 - Run `docker push "docker-user/dev-analytics-api"`.
 
@@ -281,6 +281,18 @@ Route 53 DNS configuration:
 - Use `./route53/setup.sh test dev-analytics-elasticsearch elasticsearch-master-elb elastic` to configure DNS for `test` environment ElasticSearch load balancer.
 - Use `./route53/setup.sh test dev-analytics-api-test dev-analytics-api-lb api` to configure DNS for `test` environment load balancer.
 - Use `./route53/setup.sh test dev-analytics-ui dev-analytics-ui-lb ui` to configure DNS for for `test` environment load balancer.
+
+
+# Updating API adding/removing/modifying projects
+
+- Do changes to `dev-analytics-api` repo, commit changes.
+- Build new API image as described [here](https://github.com/cncf/darst#dev-analytics-api-image).
+- Edit API deployment: `testk.sh get deployment --all-namespaces | grep analytics-api` and then `testk.sh edit deployment -n dev-analytics-api-test dev-analytics-api`.
+- Add or remove `:latest` tag on all images: `lukaszgryglicki/dev-analytics-api` <-> `lukaszgryglicki/dev-analytics-api:latest` to inform Kubernetes that it need to do rolling update for API.
+- Once Kubernetes recreate API pod, shell into it: `testk.sh get po --all-namespaces | grep analytics-api` and then `pod_shell.sh test dev-analytics-api-test dev-analytics-api-58d95497fb-hm8gq /bin/sh`.
+- While inside the API pod run: `bundle exec rails db:seed`.
+- Now confirm new projects configuration on the API database: `pod_shell.sh test devstats devstats-postgres-0`, then inside the pod: `select * from projects;`.
+- See changes via: `./grimoire/projects.sh test | grep projname`, see specific project configuration: `./dev-analytics-api/project_config.sh test proj-slug`.
 
 
 ## LF One time operation(s)
