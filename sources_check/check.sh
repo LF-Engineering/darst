@@ -6,6 +6,7 @@
 # ./sources_check/check.sh sources_check/edgex_repos.txt github_pull_requests_enriched_xotis-haziv-denub-guloz-pupit-tirir-nasic-mehyv-suter-rabyd-rixux github_repo
 # ./grimoire/projects.sh prod | grep yocto
 # ./dev-analytics-api/project_config.sh prod yocto | grep enrich
+# ./sources_check/check.sh sources_check/yocto_pipermail.txt mbox_enriched_xucoh-mekul-zipuf-gikyz-sitef-tuhas-zuhib-diter-sydot-ligyk-myxux list
 if [ -z "$1" ]
 then
   echo "$0: required file containing list of repos to process"
