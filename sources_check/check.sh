@@ -4,6 +4,8 @@
 # ./es/get_es_index_values.sh prod slack_enriched_xotis-haziv-denub-guloz-pupit-tirir-nasic-mehyv-suter-rabyd-rixux
 # ./sources_check/check.sh sources_check/edgex_slack_ids.txt slack_enriched_xotis-haziv-denub-guloz-pupit-tirir-nasic-mehyv-suter-rabyd-rixux channel_id
 # ./sources_check/check.sh sources_check/edgex_repos.txt github_pull_requests_enriched_xotis-haziv-denub-guloz-pupit-tirir-nasic-mehyv-suter-rabyd-rixux github_repo
+# ./grimoire/projects.sh prod | grep yocto
+# ./dev-analytics-api/project_config.sh prod yocto | grep enrich
 if [ -z "$1" ]
 then
   echo "$0: required file containing list of repos to process"
