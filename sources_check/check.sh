@@ -39,6 +39,10 @@ do
   then
     n="ok"
   fi
+  if [ "$n" = "n" ]
+  then
+    n="no data"
+  fi
   echo "$f,$n" >> "$fn"
 done
 cat "$fn"
