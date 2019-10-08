@@ -21,11 +21,16 @@ then
   echo "$0: required field name to query"
   exit 3
 fi
+envn=prod
+if [ ! -z "$4" ]
+then
+  envn=$4
+fi
 fn=result.csv
 > "$fn"
 for f in `cat "$1"`
 do
-  ./es/search_es_index.sh prod "$2" items "{\"match\":{\"$3\":\"$f\"}}"
+  ./es/search_es_index.sh "$envn" "$2" items "{\"match\":{\"$3\":\"$f\"}}"
   echo -n "$f status: "
   read n
   echo "$f,$n" >> "$fn"
