@@ -34,6 +34,10 @@ do
   ./es/search_es_index.sh "$envn" "$2" items "{\"match\":{\"$3\":\"$f\"}}"
   echo -n "$f status: "
   read n
+  if [ -z "$n" ]
+  then
+    n="ok"
+  fi
   echo "$f,$n" >> "$fn"
 done
 cat "$fn"

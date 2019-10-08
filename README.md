@@ -311,6 +311,11 @@ Prod cluster:
 - See changes via: `./grimoire/projects.sh prod | grep projname`, see specific project configuration: `./dev-analytics-api/project_config.sh prod proj-slug`.
 
 
+# Checking deployments data source presence
+
+Use script: `sources_check/check.sh`, see comments inside this script.
+
+
 ## LF One time operation(s)
 
 # Merge Sorting Hat databases
