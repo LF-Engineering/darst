@@ -1,4 +1,6 @@
 #!/bin/bash
+# ./es/get_es_indexes.sh prod | grep xotis
+# ./es/search_es_index.sh prod git_enriched_xotis-haziv-denub-guloz-pupit-tirir-nasic-mehyv-suter-rabyd-rixux items '{"match":{"github_repo":"edgexfoundry/go-mod-registry"}}' | grep github_repo
 if [ -z "$1" ]
 then
   echo "$0: required file containing list of repos to process"
