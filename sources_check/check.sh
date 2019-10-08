@@ -7,6 +7,7 @@
 # ./grimoire/projects.sh prod | grep yocto
 # ./dev-analytics-api/project_config.sh prod yocto | grep enrich
 # ./sources_check/check.sh sources_check/yocto_pipermail.txt mbox_enriched_xucoh-mekul-zipuf-gikyz-sitef-tuhas-zuhib-diter-sydot-ligyk-myxux list
+# ./sources_check/check.sh sources_check/zowe_repos.txt github_issues_enriched_xiroz-pirat-litat-bagiz-cisuv-gerel-hypen-nevis-rosep-tysin-voxix repository
 if [ -z "$1" ]
 then
   echo "$0: required file containing list of repos to process"

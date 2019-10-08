@@ -88,7 +88,7 @@ https://github.com/zowe/zowe-install-packaging
 https://github.com/zowe/zowe-install-test
 https://github.com/zowe/zowe-promote-publish
 https://github.com/zowe/zowe-smpe-packaging
-https://github.com/zowe/zowehub.io
+https://github.com/zowe/zowe.github.io
 https://github.com/zowe/zss
 https://github.com/zowe/zss-auth
 https://github.com/zowe/ztrial-sample-cli-plugin
