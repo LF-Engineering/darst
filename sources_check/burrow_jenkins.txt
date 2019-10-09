@@ -1,0 +1,15 @@
+https://jenkins.hyperledger.org/view/fabric
+https://jenkins.hyperledger.org/view/fabric-baseimage
+https://jenkins.hyperledger.org/view/fabric-binaries
+https://jenkins.hyperledger.org/view/fabric-ca
+https://jenkins.hyperledger.org/view/fabric-chaincode-evm
+https://jenkins.hyperledger.org/view/fabric-chaincode-java
+https://jenkins.hyperledger.org/view/fabric-chaincode-node
+https://jenkins.hyperledger.org/view/fabric-chaintool
+https://jenkins.hyperledger.org/view/fabric-gateway-java
+https://jenkins.hyperledger.org/view/fabric-lib-go
+https://jenkins.hyperledger.org/view/fabric-sdk-go
+https://jenkins.hyperledger.org/view/fabric-sdk-java
+https://jenkins.hyperledger.org/view/fabric-sdk-node
+https://jenkins.hyperledger.org/view/fabric-sdk-py
+https://jenkins.hyperledger.org/view/fabric-samples
