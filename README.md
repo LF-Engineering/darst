@@ -251,6 +251,7 @@ Using AWS account:
 - Use command(s) generated to deploy given project, for example: `[WORKERS=n] [NODE=selector|-] DOCKER_USER=user-name ./grimoire/grimoire.sh test install none linux-kernel`.
 - Use command(s) to delete any project: `./grimoire/delete.sh test none linux-kernel`.
 - Use example command to manually debug deployment: `WORKERS=1 NODE=- DOCKER_USER=lukaszgryglicki DRY=1 NS=grimoire-debug DEBUG=1 ./grimoire/grimoire.sh test install none yocto`. More details [here](https://github.com/LF-Engineering/grimoire-minimal-example#example-debugging).
+- To redeploy existing project (for example after API server updates (remember to update the API DB and to check `project_config.sh`) or after project config changes) use: `./grimoire/redeploy.sh test unique-proj-search-keyword`.
 
 
 # SortingHat id-maintenance cron job deployment
