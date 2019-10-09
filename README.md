@@ -294,7 +294,7 @@ Test cluster:
 - Edit API deployment: `testk.sh get deployment --all-namespaces | grep analytics-api` and then `testk.sh edit deployment -n dev-analytics-api-test dev-analytics-api`.
 - Add or remove `:latest` tag on all images: `lukaszgryglicki/dev-analytics-api` <-> `lukaszgryglicki/dev-analytics-api:latest` to inform Kubernetes that it need to do rolling update for API.
 - Once Kubernetes recreate API pod, shell into it: `testk.sh get po --all-namespaces | grep analytics-api` and then `pod_shell.sh test dev-analytics-api-test dev-analytics-api-58d95497fb-hm8gq /bin/sh`.
-- While inside the API pod run: `bundle exec rake db:drop; bundle exec rake db:create; bundle exec rake db:setup`.
+- While inside the API pod run: `bundle exec rake db:drop; bundle exec rake db:create; bundle exec rake db:setup`. `exit`.
 - `cd ../dev-analytics-api/permissions/ && ./add_permissions.sh test && cd ../../darst/`.
 - Now confirm new projects configuration on the API database: `pod_shell.sh test devstats devstats-postgres-0`, then inside the pod: `psql dev_analytics_test`, `select * from projects;`.
 - See changes via: `./grimoire/projects.sh test | grep projname`, see specific project configuration: `./dev-analytics-api/project_config.sh test proj-slug`.
