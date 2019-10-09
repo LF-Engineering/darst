@@ -2,6 +2,7 @@
 # LIST=install - list install commands
 # LIST=upgrade - list upgrade commands
 # LIST=uninstall - list uninstall commands
+# LIST=slg - list projects slugs
 # LIST=anything_else - list projects
 # SORT=col_name (for example 'sort_order'), default 'slug'
 if [ -z "$1" ]
@@ -40,6 +41,14 @@ do
   elif [ "$LIST" = "uninstall" ]
   then
     echo "./grimoire/delete.sh $1 $foundation $name"
+  elif [ "$LIST" = "slug" ]
+  then
+    if [ "$foundation" = "none" ]
+    then
+      echo $name
+    else
+      echo "$foundation/$name"
+    fi
   else
     if [ "$foundation" = "none" ]
     then

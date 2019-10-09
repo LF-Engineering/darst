@@ -24,6 +24,10 @@ fi
 api="${api}/api/internal/grimoire/configuration/$2"
 for type in mordred environment aliases projects credentials
 do
+  if ( [ ! -z "$3" ] && [ ! "$type" = "$3" ] )
+  then
+    continue
+  fi
   echo '======================================================='
   echo "${api}/${type}:"
   echo '======================================================='
