@@ -220,7 +220,8 @@ Using AWS account:
 - Make sure that you have `dev-analytics-api` image built (see `dev-analytics-api image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-api`.
 - Run `[ES_EXTERNAL=1] [KIBANA_INTERNAL=1] [NO_DNS=1] DOCKER_USER=... ./dev-analytics-api/setup.sh test` to deploy. You can delete via `./dev-analytics-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 - Note that during the deployment `.circleci/deployments/test/secrets.ejson` file is regenerated with new key values. You may want to go to `dev-analytics-api` repo and commit that changes (secrets.ejson is encrypted and can be committed into the repo).
-- You can query given project config via `[NO_DNS=1] ./dev-analytics-api/project_config.sh test project-name`, replace `project-name` with for example `linux-kernel`. To see all projects use `./grimoire/projects.sh test` - use `Slug` column.
+- You can query given project config via `[NO_DNS=1] ./dev-analytics-api/project_config.sh test project-name [config-option]`, replace `project-name` with for example `linux-kernel`. To see all projects use `./grimoire/projects.sh test` - use `Slug` column.
+- Optional `[config-option]` allows returning only selected subset of project's configuration, allowed values are: `mordred environment aliases projects credentials`. All those sections are retuned if `[config-option]` is not specified.
 - You can query any API call via via `./dev-analytics-api/query.sh test ...`.
 - You can deploy populated `dev-analytics-api` DB structure: `./dev_analytics/populate.sh test`. You will need `dev_analytics/dev_analytics.sql.secret` file which is gitignored due to sensitive data. Without this step you will have no projects configured
 - Once API server is up and running, you should add permissions to affiliations edit in projects, go to `LF-Engineering/dev-analytics-api:permissions`, run `./add_permissions.sh test` script.
@@ -246,6 +247,7 @@ Using AWS account:
 - Use `DOCKER_USER=... LIST=install ./grimoire/projects.sh test` to show install commands.
 - Use `DOCKER_USER=... LIST=upgrade ./grimoire/projects.sh test` to show upgrade commands.
 - Use `LIST=uninstall ./grimoire/projects.sh test` to show uninstall commands.
+- Use `LIST=slug ./grimoire/projects.sh test` to show only porjects unique `slug` values.
 - Use command(s) generated to deploy given project, for example: `[WORKERS=n] [NODE=selector|-] DOCKER_USER=user-name ./grimoire/grimoire.sh test install none linux-kernel`.
 - Use command(s) to delete any project: `./grimoire/delete.sh test none linux-kernel`.
 - Use example command to manually debug deployment: `WORKERS=1 NODE=- DOCKER_USER=lukaszgryglicki DRY=1 NS=grimoire-debug DEBUG=1 ./grimoire/grimoire.sh test install none yocto`. More details [here](https://github.com/LF-Engineering/grimoire-minimal-example#example-debugging).
@@ -303,11 +305,13 @@ Prod cluster:
 
 - Edit API deployment: `prodk.sh get deployment --all-namespaces | grep analytics-api` and then `prodk.sh edit deployment -n dev-analytics-api-prod dev-analytics-api`.
 - Add or remove `:latest` tag on all images: `lukaszgryglicki/dev-analytics-api` <-> `lukaszgryglicki/dev-analytics-api:latest` to inform Kubernetes that it need to do rolling update for API.
-- Once Kubernetes recreate API pod, shell into it: `prodk.sh get po --all-namespaces | grep analytics-api` and then `pod_shell.sh prod dev-analytics-api-prod dev-analytics-api-685bf4fb66-pd642 /bin/sh`.
-- Run: `pod_shell.sh test devstats devstats-postgres-0`: `pg_dump -Fc dev_analytics_test -f dev_analytics.dump`, `exit`, `testk.sh -n devstats cp devstats-postgres-0:dev_analytics.dump dev_analytics.dump`.
-- Run `pod_shell.sh test devstats devstats-postgres-0`, `rm dev_analytics.dump`, `prodk.sh -n devstats cp dev_analytics.dump devstats-postgres-0:dev_analytics.dump`
+- Once Kubernetes recreate API pod, shell into it: `prodk.sh get po --all-namespaces | grep analytics-api`.
+- Run: `pod_shell.sh test devstats devstats-postgres-0`: `pg_dump -Fc dev_analytics_test -f dev_analytics.dump`, `pg_dump dev_analytics_test -f dev_analytics.sql`, `exit`.
+- Run: `testk.sh -n devstats cp devstats-postgres-0:dev_analytics.dump dev_analytics.dump`, `testk.sh -n devstats cp devstats-postgres-0:dev_analytics.sql dev_analytics.sql`
+- Run `pod_shell.sh test devstats devstats-postgres-0`, `rm dev_analytics.*`, `exit`, `mv dev_analytics.sql dev_analytics/dev_analytics.sql.secret`.
+- Run `prodk.sh -n devstats cp dev_analytics.dump devstats-postgres-0:dev_analytics.dump`, `mv dev_analytics.dump ~`.
 - Run: `pod_shell.sh prod devstats devstats-postgres-0`: `psql`, `select pg_terminate_backend(pid) from pg_stat_activity where datname = 'dev_analytics'; drop database dev_analytics;`, `\q`.
-- Run: `createdb dev_analytics; pg_restore -d dev_analytics dev_analytics.dump, rm dev_analytics.dump`, `exit`.
+- Run: `createdb dev_analytics; pg_restore -d dev_analytics dev_analytics.dump; rm dev_analytics.dump`, `exit`.
 - Now confirm new projects configuration on the API database: `pod_shell.sh prod devstats devstats-postgres-0`, then inside the pod: `psql dev_analytics`, `select * from projects;`.
 - See changes via: `./grimoire/projects.sh prod | grep projname`, see specific project configuration: `./dev-analytics-api/project_config.sh prod proj-slug`.
 
