@@ -187,6 +187,7 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 For your own user:
 
 - Clone `dev-analytics-api` repo: `git clone https://github.com/LF-Engineering/dev-analytics-api.git` and change directory to that repo.
+- If you changed any datasources, please use: `LF-Engineering/dev-analytics-api/scripts/check_addresses.sh` before building API image to make sure all datasources are present.
 - Make sure you are on the `develop` branch.
 - Use `docker build -f Dockerfile -t "docker-user/dev-analytics-api" .` to build `dev-analytics-api` image, replace `docker-user` with your docker user.
 - Run `docker push "docker-user/dev-analytics-api"`.
@@ -313,7 +314,8 @@ Prod cluster:
 
 # Checking deployments data source presence
 
-Use script: `sources_check/check.sh`, see comments inside this script.
+- Use script: `sources_check/check.sh`, see comments inside this script.
+- Also use: `LF-Engineering/dev-analytics-api/scripts/check_addresses.sh` before building API image to make sure all datasources are present.
 
 
 ## LF One time operation(s)
