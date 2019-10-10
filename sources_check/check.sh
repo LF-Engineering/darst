@@ -24,7 +24,7 @@
 # ./es/search_es_index.sh prod github_repositories_enriched_xivin-nucov-dozic-zatat-popob-getyt-pafuv-zatic-ruzyp-zidek-poxax items '{"match":{"repository":"https://github.com/intel-go/nff-go"}}' | grep '"repository"' | uniq
 # ./es/search_es_index.sh prod git_enrich-xumag-cetom-zokin-tazup-haven-bobaf-fogor-sybed-hehib-dozip-nuxix items '{"match":{"repo_name":"https://dpdk.org/git/apps/pktgen-dpdk"}}' | grep repo_name | uniq
 # ./es/search_es_index.sh prod git_enrich-xehig-hopol-povik-fonub-tytyh-vurab-lemol-madub-nozig-dysek-zyxyx items '{"match":{"repo_name":"https://dpdk.org/git/apps/spp"}}' | grep repo_name | uniq
-# ./es/search_es_index.sh test groupsio_enriched_xotis-haziv-denub-guloz-pupit-tirir-nasic-mehyv-suter-rabyd-rixux items '{"match":{"list":"https://groups.io/g/edgexfoundry"}}' | grep '"list"' | uniq
+# ./es/search_es_index.sh prod groupsio_enriched_xotis-haziv-denub-guloz-pupit-tirir-nasic-mehyv-suter-rabyd-rixux items '{"match":{"list":"https://groups.io/g/edgexfoundry"}}' | grep '"list"' | uniq
 if [ -z "$1" ]
 then
   echo "$0: required file containing list of repos to process"
