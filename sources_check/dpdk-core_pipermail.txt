@@ -1,0 +1,10 @@
+https://mails.dpdk.org/archives/moving/
+https://mails.dpdk.org/archives/web/
+https://mails.dpdk.org/archives/spp/
+https://mails.dpdk.org/archives/test-report/
+https://mails.dpdk.org/archives/dts/
+https://mails.dpdk.org/archives/ci/
+https://mails.dpdk.org/archives/stable/
+https://mails.dpdk.org/archives/dev/
+https://mails.dpdk.org/archives/announce/
+https://mails.dpdk.org/archives/users/

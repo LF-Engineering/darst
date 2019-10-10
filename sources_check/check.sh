@@ -14,6 +14,7 @@
 # ./sources_check/check.sh sources_check/burrow_jenkins.txt jenkins_enriched_xohav-nymic-mafeh-kuhuf-sanol-zasod-zinyg-dozyb-nypes-pyruh-rexex tag prod
 # ./sources_check/check.sh sources_check/cello_jenkins.txt jenkins_enriched_xulol-celas-gyzar-maciv-kyneb-tuhup-kuzan-guvok-hocic-hyvyg-sexox tag prod
 # ./sources_check/check.sh sources_check/indy_jenkins.txt jenkins_enriched_xivor-hanob-lidas-cobav-hifal-zamel-nevat-konol-cesas-velav-pixix tag prod
+# ./sources_check/check.sh sources_check/dpdk-core_pipermail.txt mbox_enriched_xipob-lekep-cusal-bohef-golup-vuryk-hypyn-lefan-pitaf-tedem-kuxex list
 if [ -z "$1" ]
 then
   echo "$0: required file containing list of repos to process"
@@ -38,6 +39,10 @@ fn=result.csv
 > "$fn"
 for f in `cat "$1"`
 do
+  if [ ! -z "$DEBUG" ]
+  then
+    echo "./es/search_es_index.sh \"$envn\" \"$2\" items \"{\"match\":{\"$3\":\"$f\"}}\""
+  fi
   ./es/search_es_index.sh "$envn" "$2" items "{\"match\":{\"$3\":\"$f\"}}"
   echo -n "$f status: "
   read n
