@@ -18,6 +18,7 @@ then
 fi
 slug=`LIST=slug ./grimoire/projects.sh "$1" | grep "$2"`
 ./dev-analytics-api/project_config.sh "$1" "$slug" projects
+./dev-analytics-api/project_config.sh "$1" "$slug" aliases | grep _enrich
 echo "Slug: $slug"
 IFS=\/ read -a ary <<<"$slug"
 f=${ary[0]}
