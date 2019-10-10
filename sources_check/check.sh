@@ -9,10 +9,11 @@
 # ./sources_check/check.sh sources_check/yocto_pipermail.txt mbox_enriched_xucoh-mekul-zipuf-gikyz-sitef-tuhas-zuhib-diter-sydot-ligyk-myxux list
 # ./sources_check/check.sh sources_check/zowe_repos.txt github_issues_enriched_xiroz-pirat-litat-bagiz-cisuv-gerel-hypen-nevis-rosep-tysin-voxix repository
 # ./sources_check/check.sh sources_check/zowe_jenkins.txt jenkins_enriched_xiroz-pirat-litat-bagiz-cisuv-gerel-hypen-nevis-rosep-tysin-voxix tag test
-# ./sources_check/check.sh sources_check/zowe_confluence.txt confluence_enriched_xiroz-pirat-litat-bagiz-cisuv-gerel-hypen-nevis-rosep-tysin-voxix origin test
-# ./sources_check/check.sh sources_check/burrow_jenkins.txt jenkins_enriched_xohav-nymic-mafeh-kuhuf-sanol-zasod-zinyg-dozyb-nypes-pyruh-rexex tag test
-# ./sources_check/check.sh sources_check/cello_jenkins.txt jenkins_enriched_xulol-celas-gyzar-maciv-kyneb-tuhup-kuzan-guvok-hocic-hyvyg-sexox tag test
-# ./sources_check/check.sh sources_check/indy_jenkins.txt jenkins_enriched_xivor-hanob-lidas-cobav-hifal-zamel-nevat-konol-cesas-velav-pixix tag test
+# ./sources_check/check.sh sources_check/zowe_jenkins.txt jenkins_enriched_xiroz-pirat-litat-bagiz-cisuv-gerel-hypen-nevis-rosep-tysin-voxix tag prod
+# ./sources_check/check.sh sources_check/zowe_confluence.txt confluence_enriched_xiroz-pirat-litat-bagiz-cisuv-gerel-hypen-nevis-rosep-tysin-voxix origin prod
+# ./sources_check/check.sh sources_check/burrow_jenkins.txt jenkins_enriched_xohav-nymic-mafeh-kuhuf-sanol-zasod-zinyg-dozyb-nypes-pyruh-rexex tag prod
+# ./sources_check/check.sh sources_check/cello_jenkins.txt jenkins_enriched_xulol-celas-gyzar-maciv-kyneb-tuhup-kuzan-guvok-hocic-hyvyg-sexox tag prod
+# ./sources_check/check.sh sources_check/indy_jenkins.txt jenkins_enriched_xivor-hanob-lidas-cobav-hifal-zamel-nevat-konol-cesas-velav-pixix tag prod
 if [ -z "$1" ]
 then
   echo "$0: required file containing list of repos to process"
