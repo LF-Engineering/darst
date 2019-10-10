@@ -15,6 +15,8 @@
 # ./sources_check/check.sh sources_check/cello_jenkins.txt jenkins_enriched_xulol-celas-gyzar-maciv-kyneb-tuhup-kuzan-guvok-hocic-hyvyg-sexox tag prod
 # ./sources_check/check.sh sources_check/indy_jenkins.txt jenkins_enriched_xivor-hanob-lidas-cobav-hifal-zamel-nevat-konol-cesas-velav-pixix tag prod
 # ./sources_check/check.sh sources_check/dpdk-core_pipermail.txt mbox_enriched_xipob-lekep-cusal-bohef-golup-vuryk-hypyn-lefan-pitaf-tedem-kuxex list
+# ./sources_check/check.sh sources_check/dpdk-core_bugzilla.txt bugzilla_enriched_xipob-lekep-cusal-bohef-golup-vuryk-hypyn-lefan-pitaf-tedem-kuxex list
+# ./sources_check/check.sh sources_check/dpdk-core_repos.txt git_enriched_xipob-lekep-cusal-bohef-golup-vuryk-hypyn-lefan-pitaf-tedem-kuxex repo_name
 if [ -z "$1" ]
 then
   echo "$0: required file containing list of repos to process"
