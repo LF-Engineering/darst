@@ -300,7 +300,7 @@ Test cluster:
 - While inside the API pod run: `bundle exec rake db:drop; bundle exec rake db:create; bundle exec rake db:setup`. `exit`.
 - Eventually Run (instead of `bundle exec rake db:drop`): `pod_shell.sh test devstats devstats-postgres-0`: `psql`, `select pg_terminate_backend(pid) from pg_stat_activity where datname = 'dev_analytics_test'; drop database dev_analytics_test;`, `\q`.
 - `cd ../dev-analytics-api/permissions/ && ./add_permissions.sh test && cd ../../darst/`.
-- Now confirm new projects configuration on the API database: `pod_shell.sh test devstats devstats-postgres-0`, then inside the pod: `psql dev_analytics_test`, `select * from projects;`.
+- Now confirm new projects configuration on the API database: `pod_shell.sh test devstats devstats-postgres-0`, then inside the pod: `psql dev_analytics_test`, `select id, name, slug from projects order by slug;`.
 - See changes via: `./grimoire/projects.sh test | grep projname`, see specific project configuration: `./dev-analytics-api/project_config.sh test proj-slug`.
 
 Prod cluster:
@@ -314,7 +314,7 @@ Prod cluster:
 - Run `prodk.sh -n devstats cp dev_analytics.dump devstats-postgres-0:dev_analytics.dump && mv dev_analytics.dump ~`.
 - Run: `pod_shell.sh prod devstats devstats-postgres-0`: `psql`, `select pg_terminate_backend(pid) from pg_stat_activity where datname = 'dev_analytics'; drop database dev_analytics;`, `\q`.
 - Run: `createdb dev_analytics; pg_restore -d dev_analytics dev_analytics.dump; rm dev_analytics.dump; exit`.
-- Now confirm new projects configuration on the API database: `pod_shell.sh prod devstats devstats-postgres-0`, then inside the pod: `psql dev_analytics`, `select * from projects;`.
+- Now confirm new projects configuration on the API database: `pod_shell.sh prod devstats devstats-postgres-0`, then inside the pod: `psql dev_analytics`, `select id, name, slug from projects order by slug`.
 - See changes via: `./grimoire/projects.sh prod | grep projname`, see specific project configuration: `./dev-analytics-api/project_config.sh prod proj-slug`.
 
 
