@@ -1,0 +1,11 @@
+https://github.com/hyperledger/indy-node
+https://github.com/hyperledger/indy-sdk
+https://github.com/hyperledger/indy-plenum
+https://github.com/hyperledger/indy-hipe
+https://github.com/hyperledger/indy-crypto
+https://github.com/hyperledger/indy-agent
+https://github.com/hyperledger/indy-post-install-automation
+https://github.com/hyperledger/indy-test-automation
+https://github.com/hyperledger/indy-anoncreds
+https://github.com/hyperledger/indy-docs
+https://github.com/hyperledger/indy-jenkins-pipeline-lib

@@ -1,0 +1,11 @@
+https://github.com/hyperledger/iroha
+https://github.com/hyperledger/iroha-api
+https://github.com/hyperledger/iroha-android
+https://github.com/hyperledger/iroha-ios
+https://github.com/hyperledger/iroha-python
+https://github.com/hyperledger/iroha-javascript
+https://github.com/hyperledger/iroha-scala
+https://github.com/hyperledger/iroha-dotnet
+https://github.com/hyperledger/iroha-ed25519
+https://github.com/hyperledger/iroha-deploy
+https://github.com/hyperledger/iroha-java

@@ -13,3 +13,4 @@ https://jenkins.hyperledger.org/view/fabric-sdk-java
 https://jenkins.hyperledger.org/view/fabric-sdk-node
 https://jenkins.hyperledger.org/view/fabric-sdk-py
 https://jenkins.hyperledger.org/view/fabric-samples
+https://jenkins.hyperledger.org/view/fabric-test

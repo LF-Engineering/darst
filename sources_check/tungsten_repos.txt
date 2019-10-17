@@ -1,0 +1,17 @@
+https://github.com/tungstenfabric/analytics
+https://github.com/tungstenfabric/api-client
+https://github.com/tungstenfabric/archived-tf-devstack
+https://github.com/tungstenfabric/common
+https://github.com/tungstenfabric/contrail-ci-test
+https://github.com/tungstenfabric/controller
+https://github.com/tungstenfabric/docs
+https://github.com/tungstenfabric/nodepool
+https://github.com/tungstenfabric/tf-dev-env
+https://github.com/tungstenfabric/tf-devstack
+https://github.com/tungstenfabric/tf-openlab-ci
+https://github.com/tungstenfabric/tf-transitional-contrail-docs
+https://github.com/tungstenfabric/tungsten-resource-test
+https://github.com/tungstenfabric/tungsten-tempest
+https://github.com/tungstenfabric/tungsten-test-runner
+https://github.com/tungstenfabric/website
+https://github.com/tungstenfabric/zuul

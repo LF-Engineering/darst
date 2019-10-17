@@ -1,0 +1,9 @@
+https://github.com/hyperledger/composer
+https://github.com/hyperledger/composer-tools
+https://github.com/hyperledger/composer-concerto
+https://github.com/hyperledger/composer-concerto-tools
+https://github.com/hyperledger/composer-atom-plugin
+https://github.com/hyperledger/composer-knowledge-wiki
+https://github.com/hyperledger/composer-sample-models
+https://github.com/hyperledger/composer-sample-networks
+https://github.com/hyperledger/composer-vscode-plugin
