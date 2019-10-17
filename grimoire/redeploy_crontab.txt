@@ -1,1 +1,1 @@
-30 5 * * * PATH=$PATH:/usr/local/bin redeploy_cronjob.sh prod 'dpdk dts nff-go pktgen spp burrow caliper cello composer explorer fabric indy iroha quilt sawtooth akraino edgex linux yocto zephyr nfv zowe' 1>> /tmp/redeploy.log 2>>/tmp/redeploy.err
+30 5 * * * PATH=$PATH:/usr/local/bin redeploy_cronjob.sh prod 'dpdk dts nff-go pktgen spp burrow caliper cello composer explorer fabric indy iroha quilt sawtooth akraino edgex linux yocto zephyr nfv zowe aries besu grid ursa tungsten' 1>> /tmp/redeploy.log 2>>/tmp/redeploy.err
