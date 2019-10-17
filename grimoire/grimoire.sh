@@ -118,7 +118,7 @@ cp grimoire/namespace.yaml "$fn"
 cp grimoire/custom.yaml "$custom"
 vim --not-a-term -c "%s/NAME/${name}/g" -c 'wq!' "$fn"
 vim --not-a-term -c "%s/WORKERS/${workers}/g" -c 'wq!' "$custom"
-"${1}k.sh" apply -f "$fn"
+"${1}k.sh" apply -f "$fn" || exit 14
 change_namespace.sh $1 "$name"
 if [ "$op" = "install" ]
 then
