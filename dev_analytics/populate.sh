@@ -4,9 +4,9 @@ then
   echo "$0: you need to specify env: test, dev, stg, prod"
   exit 1
 fi
-if [ ! -f "dev_analytics/dev_analytics.sql.secret" ]
+if [ ! -f "dev_analytics/dev_analytics_${1}.sql.secret" ]
 then
-  echo "$0: you need to provide 'dev_analytics/dev_analytics.sql.secret' file to run this script"
+  echo "$0: you need to provide 'dev_analytics/dev_analytics_${1}.sql.secret' file to run this script"
   exit 2
 fi
 k="${1}k.sh"
@@ -21,5 +21,5 @@ do
   sleep 1
 done
 "${1}k.sh" cp dev_analytics/populate_db.sh patroni-populate:/usr/bin/populate_db.sh
-"${1}k.sh" cp dev_analytics/dev_analytics.sql.secret patroni-populate:populate.sql
+"${1}k.sh" cp "dev_analytics/dev_analytics_${1}.sql.secret" patroni-populate:populate.sql
 "${1}k.sh" exec -it patroni-populate -- /usr/bin/populate_db.sh "$1"

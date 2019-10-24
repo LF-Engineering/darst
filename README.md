@@ -105,7 +105,7 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 Optional (this will be done automatically by `dev-analytics-api` app deployment):
 
 - Deploy `dev-analytics-api` DB structure: `./dev_analytics/structure.sh test`.
-- Deploy populated `dev-analytics-api` DB structure: `./dev_analytics/populate.sh test`. You will need `dev_analytics/dev_analytics.sql.secret` file which is gitignored due to sensitive data.
+- Deploy populated `dev-analytics-api` DB structure: `./dev_analytics/populate.sh test`. You will need `dev_analytics/dev_analytics_env.sql.secret` file which is gitignored due to sensitive data (`env` = `test` or `prod`).
 - You can see database details from the patroni stateful pod: `pod_shell.sh test devstats devstats-postgres-0`, then `psql dev_analytics`, finally: `select id, name, slug from projects;`.
 
 
