@@ -188,9 +188,9 @@ For your own user:
 
 - Clone `dev-analytics-api` repo: `git clone https://github.com/LF-Engineering/dev-analytics-api.git` and change directory to that repo.
 - If you changed any datasources, please use: `LF-Engineering/dev-analytics-api/scripts/check_addresses.sh` before building API image to make sure all datasources are present.
-- Make sure you are on the `develop` branch.
-- Use `docker build -f Dockerfile -t "docker-user/dev-analytics-api" .` to build `dev-analytics-api` image, replace `docker-user` with your docker user.
-- Run `docker push "docker-user/dev-analytics-api"`.
+- Make sure you are on the `test` or `prod` branch. User `test` or `prod` instead of `env`.
+- Use `docker build -f Dockerfile -t "docker-user/dev-analytics-api-env" .` to build `dev-analytics-api-env` image, replace `docker-user` with your docker user and `env` with `test` or `prod`.
+- Run `docker push "docker-user/dev-analytics-api-env"`.
 
 Using AWS account:
 
@@ -217,7 +217,7 @@ Using AWS account:
 
 # dev-analytics-api deployment
 
-- Make sure that you have `dev-analytics-api` image built (see `dev-analytics-api image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-api`.
+- Make sure that you have `dev-analytics-api-env` image built (see `dev-analytics-api image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-api-env`.
 - Run `[ES_EXTERNAL=1] [KIBANA_INTERNAL=1] [NO_DNS=1] DOCKER_USER=... ./dev-analytics-api/setup.sh test` to deploy. You can delete via `./dev-analytics-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 - Note that during the deployment `.circleci/deployments/test/secrets.ejson` file is regenerated with new key values. You may want to go to `dev-analytics-api` repo and commit that changes (secrets.ejson is encrypted and can be committed into the repo).
 - You can query given project config via `[NO_DNS=1] ./dev-analytics-api/project_config.sh test project-name [config-option]`, replace `project-name` with for example `linux-kernel`. To see all projects use `./grimoire/projects.sh test` - use `Slug` column.
@@ -232,7 +232,7 @@ Using AWS account:
 - Make sure that you have `dev-analytics-ui` image built (see `dev-analytics-ui image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-ui`.
 - For each file in `dev-analytics-ui/secrets/*.secret.example` provide the corresponding `*.secret` file. Each file must be saved without new line at the end. `vim` automatically add one, to remove `truncate -s -a filename`.
 - If you want to skip setting external DNS, prepend `setup.sh` call with `NO_DNS=1`.
-- Run `[API_INTERNAL=1] [NO_DNS=1] DOCKER_USER=... ./dev-analytics-ui/setup.sh test` to deploy. You can delete via `./dev-analytics-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
+- Run `[API_INTERNAL=1] [NO_DNS=1] DOCKER_USER=... ./dev-analytics-ui/setup.sh test` to deploy. You can delete via `./dev-analytics-ui/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 
 
 # dev-analytics-sortinghat-api deployment
@@ -289,13 +289,13 @@ Route 53 DNS configuration:
 
 # Updating API adding/removing/modifying projects
 
-- Do changes to `dev-analytics-api` repo, commit changes.
+- Do changes to `dev-analytics-api` repo, commit changes to `test` or `prod` branch.
 - Build new API image as described [here](https://github.com/cncf/darst#dev-analytics-api-image).
 
 Test cluster:
 
 - Edit API deployment: `testk.sh get deployment --all-namespaces | grep analytics-api` and then `testk.sh edit deployment -n dev-analytics-api-test dev-analytics-api`.
-- Add or remove `:latest` tag on all images: `lukaszgryglicki/dev-analytics-api` <-> `lukaszgryglicki/dev-analytics-api:latest` to inform Kubernetes that it need to do rolling update for API.
+- Add or remove `:latest` tag on all images: `lukaszgryglicki/dev-analytics-api-test` <-> `lukaszgryglicki/dev-analytics-api-test:latest` to inform Kubernetes that it need to do rolling update for API.
 - Once Kubernetes recreate API pod, shell into it: `testk.sh get po --all-namespaces | grep analytics-api` and then `pod_shell.sh test dev-analytics-api-test dev-analytics-api-58d95497fb-hm8gq /bin/sh`.
 - While inside the API pod run: `bundle exec rake db:drop; bundle exec rake db:create; bundle exec rake db:setup`. `exit`.
 - Eventually Run (instead of `bundle exec rake db:drop`): `pod_shell.sh test devstats devstats-postgres-0`: `psql`, `select pg_terminate_backend(pid) from pg_stat_activity where datname = 'dev_analytics_test'; drop database dev_analytics_test;`, `\q`.
@@ -306,7 +306,7 @@ Test cluster:
 Prod cluster:
 
 - Edit API deployment: `prodk.sh get deployment --all-namespaces | grep analytics-api` and then `prodk.sh edit deployment -n dev-analytics-api-prod dev-analytics-api`.
-- Add or remove `:latest` tag on all images: `lukaszgryglicki/dev-analytics-api` <-> `lukaszgryglicki/dev-analytics-api:latest` to inform Kubernetes that it need to do rolling update for API.
+- Add or remove `:latest` tag on all images: `lukaszgryglicki/dev-analytics-api-prod` <-> `lukaszgryglicki/dev-analytics-api-prod:latest` to inform Kubernetes that it need to do rolling update for API.
 - Once Kubernetes recreate API pod, shell into it: `prodk.sh get po --all-namespaces | grep analytics-api`.
 - Run: `pod_shell.sh test devstats devstats-postgres-0`: `pg_dump -Fc dev_analytics_test -f dev_analytics.dump && pg_dump dev_analytics_test -f dev_analytics.sql && exit`.
 - Run: `testk.sh -n devstats cp devstats-postgres-0:dev_analytics.dump dev_analytics.dump && testk.sh -n devstats cp devstats-postgres-0:dev_analytics.sql dev_analytics.sql`

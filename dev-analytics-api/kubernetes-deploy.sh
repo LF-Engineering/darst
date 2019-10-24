@@ -29,9 +29,9 @@ then
   exit 2
 fi
 cp ~/dev/dev-analytics-api/.circleci/deployments/$API_DIR/* "$dd" || exit 3
-vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api/g" -c 'wq!' "${dd}/api.deployment.yml.erb"
+vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api-${1}/g" -c 'wq!' "${dd}/api.deployment.yml.erb"
 vim --not-a-term -c "%s/external-dns\.alpha\.kubernetes\.io\/hostname: .*/external-dns\.alpha\.kubernetes\.io\/hostname: ${api_url}/g" -c "%s/service\.beta\.kubernetes\.io\/aws-load-balancer-ssl-cert: .*/service\.beta\.kubernetes\.io\/aws-load-balancer-ssl-cert: ${cert}/g" -c 'wq!' "${dd}/api.deployment.yml.erb"
-vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api/g" -c '%s/"bundle", "exec", "rails", "db:migrate"/"\/bin\/sh", "-c", "bundle exec rails db:reset; bundle exec rails db:migrate"/g' -c 'wq!' "${dd}/migrate.yml.erb"
+vim --not-a-term -c "%s/image: .*/image: $DOCKER_USER\/dev-analytics-api-${1}/g" -c '%s/"bundle", "exec", "rails", "db:migrate"/"\/bin\/sh", "-c", "bundle exec rails db:reset; bundle exec rails db:migrate"/g' -c 'wq!' "${dd}/migrate.yml.erb"
 if [ ! -z "$NO_DNS" ]
 then
   vim --not-a-term -c "%s/external-dns\..*//g" -c "%s/service.beta.kubernetes.io\/aws-load-balancer.*//g" -c 'wq!' "${dd}/api.deployment.yml.erb"
