@@ -27,6 +27,6 @@ vim --not-a-term -c "%s/SSLCERT/${cert}/g" -c "%s/HOSTNAME/${host}/g" -c "%s/IMA
 change_namespace.sh $1 dev-analytics-elasticsearch
 # This was needed when raw 'local-storage' was used, but we switched to OpenEBS.
 # ./es/setup_local_storage.sh $1
-"${1}h.sh" -n dev-analytics-elasticsearch install dev-analytics-elasticsearch elastic/elasticsearch --set 'imageTag=6.8.1,replicas=5,esJavaOpts=-Xms6g -Xmx6g,nodeSelector.lfda=elastic,resources.requests.cpu=1500m,resources.requests.memory=6Gi,resources.limits.cpu=2000m,resources.limits.memory=7Gi,volumeClaimTemplate.storageClassName=openebs-hostpath,volumeClaimTemplate.resources.requests.storage=400Gi'
+"${1}h.sh" -n dev-analytics-elasticsearch install dev-analytics-elasticsearch elastic/elasticsearch --set 'imageTag=6.8.1,replicas=5,esJavaOpts=-Xms6g -Xmx6g,nodeSelector.lfda=elastic,resources.requests.cpu=1500m,resources.requests.memory=6Gi,resources.limits.cpu=8000m,resources.limits.memory=28Gi,volumeClaimTemplate.storageClassName=openebs-hostpath,volumeClaimTemplate.resources.requests.storage=400Gi'
 "${1}k.sh" -n dev-analytics-elasticsearch create -f "$fn"
 change_namespace.sh $1 default
