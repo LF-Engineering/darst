@@ -1,0 +1,14 @@
+./es/get_es_indexes.sh test | grep xumel-nyseh-likip
+./es/get_es_indexes.sh test | grep xemap-pypat-dagyf
+./es/get_es_indexes.sh test | grep nymic-mafeh-kuhuf
+./es/get_es_indexes.sh test | grep xinoz-fypet-dehud
+./es/get_es_indexes.sh test | grep xulol-celas-gyzar
+./es/get_es_indexes.sh test | grep xigin-vapun-synus
+./es/get_es_indexes.sh test | grep xedir-bagiz-mikir
+./es/get_es_indexes.sh test | grep xoras-lezeg-pefyf
+./es/get_es_indexes.sh test | grep ximif-dagyc-cikun
+./es/get_es_indexes.sh test | grep hanob-lidas-cobav
+./es/get_es_indexes.sh test | grep bahyg-gisob-tymar
+./es/get_es_indexes.sh test | grep nyzuk-torip-fabuf
+./es/get_es_indexes.sh test | grep xokif-bocyh-cobap
+./es/get_es_indexes.sh test | grep xetez-ninip-tyfag
