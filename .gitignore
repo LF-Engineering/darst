@@ -18,3 +18,4 @@
 *.secret
 
 /result.csv
+out
