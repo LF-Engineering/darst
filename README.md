@@ -1,5 +1,6 @@
 # darst
-darts jump box
+
+darst jump box
 
 
 # How to use
@@ -38,7 +39,7 @@ It uses darst local `helm` with a specific environment selected:
 
 - Use `testh.sh` (installed from `helm/testh.sh`) instead of the plain `helm` command, it just prepends `KUBECONFIG=/root/.kube/kubeconfig_test AWS_PROFILE=lfproduct-test`.
 - Similarly with `devh.sh`, `stgh.sh` and `prodh.sh`.
-- You can prepend with `V2=1` to use `Helm 2` instead of `helm 3` - but this is only valid until old clusters are still alive (for example dev and stg: `V2=1 devh.sh list` or `V2=1 stgh.sh list`).
+- You can prepend with `V2=1` to use `Helm 2` instead of `Helm 3` - but this is only valid until old clusters are still alive (for example dev and stg: `V2=1 devh.sh list` or `V2=1 stgh.sh list`).
 
 
 # eksctl
@@ -77,7 +78,9 @@ For each envs (`test`, `dev`, `staging`, `prod`), example for the `test` env:
 - Install OpenEBS and NFS provisioner: `./openebs/setup.sh test`. You can delete via `./openebs/delete.sh test`.
 
 
-# ElasticSearch
+# ElasticSearch (optional)
+
+Note that current setup uses external ElasticSearch, deploying own ES instance in Kubernetes is now optional.
 
 - Install ElasticSearch Helm Chart: `./es/setup.sh test`. You can delete via `./es/delete.sh test`.
 - When ES is up and running (all 5 ES pods should be in `Running` state: `testk.sh get po -n dev-analytics-elasticsearch`), test it via: `./es/test.sh test`.
@@ -109,7 +112,9 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 - You can see database details from the patroni stateful pod: `pod_shell.sh test devstats devstats-postgres-0`, then `psql dev_analytics`, finally: `select id, name, slug from projects;`.
 
 
-# Redis
+# Redis (otional)
+
+Note that now we're using `[SDS](https://github.com/LF-Engineering/sync-data-sources) which do not require Redis. It replaces entire Mordred orchestration stack.
 
 - You need special node setup for Redis: `./redis-node/setup.sh test`. To remove special node configuration do: ./redis-node/delete.sh test`.
 - Run `./redis/setup.sh test` to deploy Redis on `test` env.
@@ -125,7 +130,9 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 - To delete run `./delete.sh test`.
 
 
-# DevStats
+# DevStats (optional)
+
+Current DA V1 is not using DevStats, installing DevStats is optional.
 
 - Clone `cncf/devstats-helm-lf` repo and change directory to that repo.
 - Run `./setup.sh test` to deploy on `test` env. Note that this currently deploys only 4 projects (just a demo), all 65 projects will take days to provision.
@@ -175,10 +182,12 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 
 # dev-analytics-grimoire-docker image
 
+You should build the minimal image, refer to [dev-analytics-sortinghat-api](https://github.com/LF-Engineering/dev-analytics-sortinghat-api) repo README for details.
+
 - Clone `dev-analytics-grimoire-docker` repo: `git clone https://github.com/LF-Engineering/dev-analytics-grimoire-docker.git` and change directory to that repo.
-- Run `./collect_and_build.sh`
-- Use `docker build -f Dockerfile -t "docker-user/dev-analytics-grimoire-docker" .` to build `dev-analytics-grimoire-docker` image, replace `docker-user` with your docker user.
-- Run `docker push "docker-user/dev-analytics-grimoire-docker"`.
+- Run `MINIMAL=1 ./collect_and_build.sh`
+- Use `docker build -f Dockerfile.minimal -t "docker-user/dev-analytics-grimoire-docker-minimal" .` to build `dev-analytics-grimoire-docker-minimal` image, replace `docker-user` with your docker user.
+- Run `docker push "docker-user/dev-analytics-grimoire-docker-minimal"`.
 
 
 # dev-analytics-api image
@@ -204,8 +213,9 @@ Using AWS account:
 - Run `docker push "docker-user/dev-analytics-circle-docker-build-base"`.
 
 
-# dev-analytics-kibana image
+# dev-analytics-kibana image (optional)
 
+Note that now DA V1 uses external Kibana by default, so building own Kibana and installing in Kubernetes is optional.
 
 - Clone `dev-analytics-kibana` repo: `git clone https://github.com/LF-Engineering/dev-analytics-kibana.git` and change directory to that repo.
 - Run `./package_plugins_for_version.sh`
@@ -241,7 +251,9 @@ Using AWS account:
 - Run `DOCKER_USER=... ./dev-analytics-sortinghat-api/setup.sh test` to deploy. You can delete via `./dev-analytics-sortinghat-api/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
 
 
-# Grimoire stack deployments
+# Grimoire stack deployments (obsolete)
+
+Note that DA V1 now uses [SDS](https://github.com/LF-Engineering/sync-data-sources) for orchestrating entire Grimoire stack, so Mordred deployments described below are reduntant and not needed at all.
 
 - Use `[SORT=sort_order] ./grimoire/projects.sh test` to list deployments for all projects.
 - Use `DOCKER_USER=... LIST=install ./grimoire/projects.sh test` to show install commands.
@@ -261,7 +273,9 @@ Using AWS account:
 - Use `./sortinghat-cronjob/delete.sh` to delete.
 
 
-# Kibana deployment
+# Kibana deployment (optional)
+
+Note that now DA V1 uses external Kibana by default, so building own Kibana and installing in Kubernetes is optional.
 
 - Make sure that you have `dev-analytics-kibana` image built (see `dev-analytics-kibana image` section). Currently we're using image built outside of AWS: `lukaszgryglicki/dev-analytics-kibana`.
 - Run `[DRY=1] [ES_EXTERNAL=1] DOCKER_USER=... ./kibana/setup.sh test install` to deploy. You can delete via `./kibana/delete.sh test`. Currently image is already built for `DOCKER_USER=lukaszgryglicki`.
