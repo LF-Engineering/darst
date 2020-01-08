@@ -32,7 +32,7 @@ then
 fi
 curl -XGET "${1}/${2}/_search?scroll=5m&size=${bucket}&pretty" > "$temp" 2>/dev/null || fexit 'Error initializing scroll' 4
 scroll_id=`cat "$temp" | jq '._scroll_id'`
-hits=`cat "$temp" | jq '.hits.total.value'`
+hits=`cat "$temp" | jq '.hits.total.value' 2>/dev/null`
 if [ -z "$hits" ]
 then
   hits=`cat "$temp" | jq '.hits.total'`
