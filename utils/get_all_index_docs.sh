@@ -21,8 +21,8 @@ function cleanup {
 }
 trap cleanup EXIT
 function fexit {
-  echo "$1"
   cat $temp
+  echo "$1"
   exit $2
 }
 bucket=10000
@@ -33,10 +33,14 @@ fi
 curl -XGET "${1}/${2}/_search?scroll=5m&size=${bucket}&pretty" > "$temp" 2>/dev/null || fexit 'Error initializing scroll' 4
 scroll_id=`cat "$temp" | jq '._scroll_id'`
 hits=`cat "$temp" | jq '.hits.total.value'`
+if [ -z "$hits" ]
+then
+  hits=`cat "$temp" | jq '.hits.total'`
+fi
 if ( [ -z "$scroll_id" ] || [ -z "$hits" ] || [ "$scroll_id" = "null" ] || [ "$hits" = "null" ] )
 then
-  echo "Scroll ID not found ($scroll_id) or no hits ($hits)"
   cat $temp
+  echo "Scroll ID not found ($scroll_id) or no hits ($hits)"
   exit 5
 fi
 echo "Scroll ID: $scroll_id, Hits: $hits"
