@@ -8,4 +8,4 @@ if [ -z "${ES_URL}" ]
 then
   ES_URL='elasticsearch-master.dev-analytics-elasticsearch:9200'
 fi
-"${1}k.sh" run --generator=run-pod/v1 bash-curl-jq-es -i --tty --restart=Never --rm --image="cfmanteiga/alpine-bash-curl-jq" -- /bin/bash
+"${1}k.sh" run --generator=run-pod/v1 bash-curl-jq-es -i --tty --restart=Never --rm --image="cfmanteiga/alpine-bash-curl-jq" --env="ES_URL=${ES_URL}" -- /bin/bash
