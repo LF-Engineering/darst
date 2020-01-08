@@ -22,6 +22,7 @@ function cleanup {
 trap cleanup EXIT
 function fexit {
   echo "$1"
+  cat $temp
   exit $2
 }
 bucket=10000
