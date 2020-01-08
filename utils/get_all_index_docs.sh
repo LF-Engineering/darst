@@ -47,6 +47,9 @@ then
   exit 0
 fi
 echo "Got $cnt records from initial call"
+data=`cat "$temp" | jq '.hits.hits'`
+data="${data:1:-1}"
+all_data="$data"
 loopz=0
 while true
 do
@@ -58,7 +61,12 @@ do
     echo "No more data, done $loopz scroll API loops (doesn't include initial $bucket fetch)"
     break
   fi
+  data=`cat "$temp" | jq '.hits.hits'`
+  data="${data:1:-1}"
+  all_data="$all_data,$data"
   loopz=$((loopz+1))
   echo "Got $cnt records in #$loopz loop"
 done
-echo 'Done'
+echo "[ $all_data ]" > "$3"
+records=`cat "$3" | jq '. | length'`
+echo "Done, saved $records records"
