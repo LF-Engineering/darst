@@ -16,12 +16,14 @@ then
   exit 3
 fi
 temp=temp.json
+err=err.txt
 function cleanup {
-  rm -f "$temp"
+  rm -f "$temp" "$err"
 }
 trap cleanup EXIT
 function fexit {
   cat $temp
+  cat $err
   echo "$1"
   exit $2
 }
@@ -30,9 +32,9 @@ if [ ! -z "$BUCKET" ]
 then
   bucket=$BUCKET
 fi
-curl -XGET "${1}/${2}/_search?scroll=5m&size=${bucket}&pretty" > "$temp" 2>/dev/null || fexit 'Error initializing scroll' 4
+curl -XGET "${1}/${2}/_search?scroll=5m&size=${bucket}&pretty" > "$temp" 2>"$err" || fexit 'Error initializing scroll' 4
 scroll_id=`cat "$temp" | jq '._scroll_id'`
-hits=`cat "$temp" | jq '.hits.total.value' 2>/dev/null`
+hits=`cat "$temp" | jq '.hits.total.value' 2>"$err"`
 if [ -z "$hits" ]
 then
   hits=`cat "$temp" | jq '.hits.total'`
@@ -59,7 +61,7 @@ loopz=0
 while true
 do
   json="{\"scroll\":\"5m\",\"scroll_id\":${scroll_id}}"
-  curl -XGET -H 'Content-Type: application/json' "${1}/_search/scroll?pretty" -d "$json" > "$temp" 2>/dev/null || fexit "Error getting data: $json" 6
+  curl -XGET -H 'Content-Type: application/json' "${1}/_search/scroll?pretty" -d "$json" > "$temp" 2>"$err" || fexit "Error getting data: $json" 6
   cnt=`cat "$temp" | jq '.hits.hits | length'`
   if [ "$cnt" = "0" ]
   then
