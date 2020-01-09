@@ -24,6 +24,8 @@ ext_es="${2}"
 int_es="${1}"
 echo "index,count" > ext.csv
 echo "index,count" > int.csv
-curl -XGET "${ext_es}/_cat/indices?v" 2>/dev/null | grep sds- | awk '{ print $3","$7 }' | sort > ext.csv || exit 3
-../es/get_es_indexes.sh "${int_es}" 2>/dev/null | grep sds- | awk '{ print $3","$7 }' | sort > int.csv || exit 4
+curl -XGET "${ext_es}/_cat/indices?v" 2>/dev/null | grep sds- | awk '{ print $3","$7 }' | sort >> ext.csv || exit 3
+../es/get_es_indexes.sh "${int_es}" 2>/dev/null | grep sds- | awk '{ print $3","$7 }' | sort >> int.csv || exit 4
 echo "Index counts data collected"
+echo "First file is external ES, 2nd file is internal ES"
+./compare_all.rb ext.csv int.csv
