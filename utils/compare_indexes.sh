@@ -27,5 +27,5 @@ mv "${fn}" "external/${fn}"
 echo "Saving internal ES index as internal/${fn}"
 ./get_all_index_docs_internal.sh "${int_es}" "${index}" "${fn}" || exit 5
 mv "${fn}" "internal/${fn}"
-echo "Comparint 1st file (external) with 2nd file (internal)"
+echo "Comparing 1st file (external) with 2nd file (internal)"
 ./compare_indexes.rb "internal/${fn}" "external/${fn}"

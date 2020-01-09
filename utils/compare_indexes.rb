@@ -56,6 +56,8 @@ def compare(f1, f2)
   if keys.nil? || keys == ''
     puts "You should specify keys to check via KEYS='key1,key2,...,keyN', available keys:\n#{ks}"
     puts "You can also specify special value ALLKEYS"
+    puts "You can specify non-standard keys to skip, default are: metadata__updated_on,metadata__timestamp,metadata__enriched_on"
+    puts "To specify them use SKIP_KEYS='key1,key2,...,keyN', use 'SKIP_KEYS=- to disable skipping anything"
     puts "Will use default key: grimoire_creation_date"
     keys = 'grimoire_creation_date'
   end
