@@ -66,6 +66,7 @@ def compare(f1, f2)
   else
     keys = keys.split(',').map(&:strip)
   end
+  diff = 0
   keys.each do |k|
     next if skip.key?(k)
     values = []
@@ -90,6 +91,7 @@ def compare(f1, f2)
     end
     if miss1.count > 0 || miss2.count > 0
       puts "Key: #{k}"
+      diff += 1
     end
     if miss1.count > 0
       puts "Values from 2nd file missing in 1st file: #{miss1.keys.sort.join(',')}"
@@ -98,6 +100,7 @@ def compare(f1, f2)
       puts "Values from 1st file missing in 2nd file: #{miss2.keys.sort.join(',')}"
     end
   end
+  puts "Differences on #{diff} keys specified to check"
 end
 
 if ARGV.size < 2
