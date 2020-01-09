@@ -20,5 +20,6 @@
 /result.csv
 out
 /utils/*.json
+/utils/*.csv
 /utils/external
 /utils/internal
