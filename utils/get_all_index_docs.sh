@@ -32,7 +32,7 @@ if [ ! -z "$BUCKET" ]
 then
   bucket=$BUCKET
 fi
-curl -XGET "${1}/${2}/_search?scroll=5m&size=${bucket}&pretty" > "$temp" 2>"$err" || fexit 'Error initializing scroll' 4
+curl -XGET "${1}/${2}/_search?scroll=1m&size=${bucket}&pretty" > "$temp" 2>"$err" || fexit 'Error initializing scroll' 4
 scroll_id=`cat "$temp" | jq '._scroll_id'`
 hits=`cat "$temp" | jq '.hits.total.value' 2>"$err"`
 if [ -z "$hits" ]
@@ -60,12 +60,14 @@ all_data="$data"
 loopz=0
 while true
 do
-  json="{\"scroll\":\"5m\",\"scroll_id\":${scroll_id}}"
+  json="{\"scroll\":\"1m\",\"scroll_id\":${scroll_id}}"
   curl -XGET -H 'Content-Type: application/json' "${1}/_search/scroll?pretty" -d "$json" > "$temp" 2>"$err" || fexit "Error getting data: $json" 6
   cnt=`cat "$temp" | jq '.hits.hits | length'`
   if [ "$cnt" = "0" ]
   then
     echo "No more data, done $loopz scroll API loops (doesn't include initial $bucket fetch)"
+    json="{\"scroll_id\":${scroll_id}}"
+    curl -XDELETE -H 'Content-Type: application/json' "${1}/_search/scroll" -d "$json" > "$temp" 2>"$err" || fexit "Error clearing scroll: $json" 7
     break
   fi
   data=`cat "$temp" | jq '.hits.hits'`
