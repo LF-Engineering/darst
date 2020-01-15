@@ -23,11 +23,11 @@ def count(f)
     rcnt[c] = [] unless rcnt.key?(c)
     rcnt[c] = rcnt[c] << col
   end
-  puts "By column name:"
+  puts "By column name (#{data.length}):"
   cnt.keys.sort.each do |k|
     puts "#{k}: #{cnt[k]}"
   end
-  puts "\nBy distinct count:"
+  puts "\nBy distinct count (#{data.length}):"
   rcnt.keys.sort.reverse.each do |c|
       puts "#{c}: #{rcnt[c].sort.join(', ')}"
   end
