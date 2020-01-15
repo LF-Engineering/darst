@@ -81,10 +81,10 @@ def compare(f1, f2)
       end
     end
   end
-  puts "\nRaw vs enriched count differences for both files (sorted by the biggest difference)"
   rawe.keys.sort.reverse.each do |k|
     puts rawe[k]
   end
+  puts "\nRaw vs enriched count differences for both files (sorted by the biggest difference)"
 
   # external vs. internal index documents counts differences
   puts "\nIndex documents count differences between both files"
