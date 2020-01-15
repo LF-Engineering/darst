@@ -10,10 +10,10 @@ then
   echo 'Please specify index name as a second argument'
   exit 2
 fi
-if [ -z "$3" ]
+fn="${2}.json"
+if [ ! -z "$3" ]
 then
-  echo 'Please specify output filename as a third argument'
-  exit 3
+  fn="$3"
 fi
 temp=temp.json
 err=err.txt
@@ -50,7 +50,7 @@ cnt=`cat "$temp" | jq '.hits.hits | length'`
 if [ "$cnt" = "0" ]
 then
   echo "Index $2 has no data, returning"
-  echo "[]" > "$3"
+  echo "[]" > "$fn"
   exit 0
 fi
 echo "Got $cnt records from initial call"
@@ -76,6 +76,6 @@ do
   loopz=$((loopz+1))
   echo "Got $cnt records in #$loopz loop"
 done
-echo "[ $all_data ]" > "$3"
-records=`cat "$3" | jq '. | length'`
+echo "[ $all_data ]" > "$fn"
+records=`cat "$fn" | jq '. | length'`
 echo "Done, saved $records records"
