@@ -150,6 +150,7 @@ Current DA V1 is not using DevStats, installing DevStats is optional.
 - Popoulate merged `dev` and `staging` Sorting Hat data: `./mariadb/populate.sh test`. You will need `cncf/merge-sh-dbs` repo cloned in `../merge-sh-dbs` and actual merged data generated (that merged SQL is checked in the repo).
 - Run `./mariadb/backups.sh test` to setup daily automatic backups.
 - Run `./mariadb/shell.sh test` to get into mariadb shell.
+- Run `./mariadb/bash.sh test` to get into bash shell having access to DB.
 
 
 # MariadDB backups image
