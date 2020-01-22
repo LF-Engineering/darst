@@ -1,15 +1,37 @@
 #!/usr/bin/env ruby
 
+# DIG1=_source DIG2=data raw.json
+
 require 'json'
 require 'pry'
 
 # Defaults:
 def count(f)
+  i = 1
+  dig = []
+  while true
+    d = ENV["DIG#{i}"]
+    unless d.nil? || d == ''
+      dig << d
+      i += 1
+    else
+      break
+    end
+  end
+  dig = ['_source'] if dig.length == 0
   data = JSON.parse File.read f
   d = {}
   data.each do |row|
-    next unless row.key?('_source')
-    row = row['_source']
+    ok = true
+    dig.each do |d|
+      if row.key?(d)
+        row = row[d]
+      else row.key?(d)
+        ok = false
+        break
+      end
+    end
+    next unless ok
     row.each do |col, val|
       d[col] = {} unless d.key?(col)
       d[col][val] = true
