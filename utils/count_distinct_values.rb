@@ -3,6 +3,7 @@
 # DIG1=_source DIG2=data raw.json
 # FILTER1=type=comment FILTER2=is_bot=1
 # OUT=fn.json
+# DEEP=1
 
 require 'json'
 require 'pry'
@@ -20,7 +21,7 @@ def count(f)
       break
     end
   end
-  dig = ['_source'] if dig.length == 0
+  # dig = ['_source'] if dig.length == 0
   filters = {}
   i = 1
   while true
@@ -62,7 +63,8 @@ def count(f)
     out << row
     row.each do |col, val|
       d[col] = {} unless d.key?(col)
-      d[col][val] = true
+      d[col][val] = 0 unless d[col].key?(val)
+      d[col][val] = d[col][val] + 1
     end
   end
   cnt = {}
@@ -79,9 +81,27 @@ def count(f)
   end
   puts "\nBy distinct count (#{data.length}):"
   rcnt.keys.sort.reverse.each do |c|
-      puts "#{c}: #{rcnt[c].sort.join(', ')}"
+    puts "#{c}: #{rcnt[c].sort.join(', ')}"
   end
-  wrt = ENV["OUT"]
+  deep = ENV["DEEP"]
+  unless deep.nil? || deep == ''
+    puts "\nDeep analysis (#{data.length}):"
+    rcnt.keys.sort.reverse.each do |ccnt|
+      puts "Columns with #{ccnt} distinct values:"
+      rcnt[ccnt].sort.each do |col|
+        puts " Column #{col} (having #{ccnt} distinct values): "
+        rd = {}
+        d[col].each do |val, cnt|
+          rd[cnt] = [] unless rd.key?(cnt)
+          rd[cnt] = rd[cnt] << val
+        end
+        rd.keys.sort.reverse.each do |c|
+          puts "  Values appearing #{c} times: #{rd[c].sort.join(', ')}"
+        end
+      end
+    end
+  end
+  wrt = ENV["DEEP"]
   unless wrt.nil? || wrt == ''
     pretty = JSON.pretty_generate out
     File.write wrt, pretty
