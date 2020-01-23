@@ -62,6 +62,8 @@ def count(f)
     next unless ok
     out << row
     row.each do |col, val|
+      next if val.respond_to?('each')
+      val = val.to_s
       d[col] = {} unless d.key?(col)
       d[col][val] = 0 unless d[col].key?(val)
       d[col][val] = d[col][val] + 1
@@ -96,12 +98,12 @@ def count(f)
           rd[cnt] = rd[cnt] << val
         end
         rd.keys.sort.reverse.each do |c|
-          puts "  Values appearing #{c} times: #{rd[c].sort.join(', ')}"
+          puts "  #{rd[c].count} Values appearing #{c} times: #{rd[c].sort.join(', ')}"
         end
       end
     end
   end
-  wrt = ENV["DEEP"]
+  wrt = ENV["OUT"]
   unless wrt.nil? || wrt == ''
     pretty = JSON.pretty_generate out
     File.write wrt, pretty
