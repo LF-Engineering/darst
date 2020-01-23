@@ -21,5 +21,6 @@
 out
 /utils/*.json
 /utils/*.csv
+/utils/*.txt
 /utils/external
 /utils/internal

@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
 # DIG1=_source DIG2=data raw.json
+# FILTER1=type=comment FILTER2=is_bot=1
+# OUT=fn.json
 
 require 'json'
 require 'pry'
@@ -19,6 +21,20 @@ def count(f)
     end
   end
   dig = ['_source'] if dig.length == 0
+  filters = {}
+  i = 1
+  while true
+    fv = ENV["FILTER#{i}"]
+    unless fv.nil? || fv == ''
+      ary = fv.split '='
+      i += 1
+      next unless ary.length == 2
+      filters[ary[0]] = ary[1]
+    else
+      break
+    end
+  end
+  out = []
   data = JSON.parse File.read f
   d = {}
   data.each do |row|
@@ -32,6 +48,18 @@ def count(f)
       end
     end
     next unless ok
+    ok = true
+    filters.each do |k, v|
+      if !row.key?(k)
+        ok = false
+        break
+      elsif row[k] != v
+        ok = false
+        break
+      end
+    end
+    next unless ok
+    out << row
     row.each do |col, val|
       d[col] = {} unless d.key?(col)
       d[col][val] = true
@@ -52,6 +80,11 @@ def count(f)
   puts "\nBy distinct count (#{data.length}):"
   rcnt.keys.sort.reverse.each do |c|
       puts "#{c}: #{rcnt[c].sort.join(', ')}"
+  end
+  wrt = ENV["OUT"]
+  unless wrt.nil? || wrt == ''
+    pretty = JSON.pretty_generate out
+    File.write wrt, pretty
   end
 end
 
