@@ -103,6 +103,11 @@ Note that current setup uses external ElasticSearch, deploying own ES instance i
 - You can delete `dev-analytics-api` database via `./dev_analytics/delete.sh test`.
 
 
+To do the same for the external RDS:
+
+- Init: `PG_HOST=url PG_USER=rdsadmin PGPASSWORD=rds_pwd PG_PASS=new_da_pwd ./dev_analytics/init_external.sh test`.
+- You can delete via: `PG_HOST=url PG_USER=rdsadmin PGPASSWORD=rds_pwd ./dev_analytics/delete_external.sh test`.
+
 # dev-analytics-api database structure and data (optional)
 
 Optional (this will be done automatically by `dev-analytics-api` app deployment):

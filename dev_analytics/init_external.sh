@@ -1,12 +1,14 @@
 #!/bin/bash
-if  [ -z "$1" ]
+if [ -z "$1" ]
 then
   echo "$0: you need to specify env: test, prod"
   exit 1
 fi
-if ( [ -z "$PG_HOST" ] || [ -z "$PG_USER" ] || [ -z "$PGPASSWORD" ] )
+# PG_PASS is the password which will be set on the external DB (nternal DB uses secret for this)
+# PGPASSWORD is the external RDS postgres/sa password which is needed for root access
+if ( [ -z "$PG_HOST" ] || [ -z "$PG_USER" ] || [ -z "$PG_PASS" ] || [ -z "$PGPASSWORD" ] )
 then
-  echo "$0: you need to specify PG_HOST, PG_USER, PGPASSWORD to run this script"
+  echo "$0: you need to specify PG_HOST, PG_USER, PG_PASS, PGPASSWORD to run this script"
   exit 2
 fi
 fn=/tmp/query.sql
@@ -15,19 +17,14 @@ function finish {
 }
 trap finish EXIT
 cp dev_analytics/init.sql "$fn"
-pass="`cat ~/dev/da-patroni/da-patroni/secrets/PG_PASS.$1.secret`"
-if [ -z "$pass" ]
-then
-  echo "$0: you need to provide password value in ~/dev/da-patroni/da-patroni/secrets/PG_PASS.$1.secret"
-  exit 1
-fi
-vim --not-a-term -c "%s/PWD/${pass}/g" -c 'wq!' "$fn"
+# vim --not-a-term -c "%s/PWD/${PG_PASS}/g" -c "%s/-- GRANT lfda_dbo to sa/GRANT lfda_dbo to sa/g" -c 'wq!' "$fn"
+vim --not-a-term -c "%s/PWD/${PG_PASS}/g" -c 'wq!' "$fn"
 dropdb -h$PG_HOST -U$PG_USER dev_analytics
 psql -h$PG_HOST -U$PG_USER < "$fn"
 psql -h$PG_HOST -U$PG_USER dev_analytics -c 'create extension if not exists pgcrypto schema public'
 if [ "$1" = "test" ]
 then
   dropdb -h$PG_HOST -U$PG_USER "dev_analytics_$1"
-  psql -h$PG_HOST -U$PG_USER < "init_$1.sql"
+  psql -h$PG_HOST -U$PG_USER < "dev_analytics/init_$1.sql"
   psql -h$PG_HOST -U$PG_USER "dev_analytics_$1" -c 'create extension if not exists pgcrypto schema public'
 fi
