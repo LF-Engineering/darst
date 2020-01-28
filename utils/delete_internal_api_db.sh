@@ -8,4 +8,6 @@ do
   ./mariadb/delete_backups.sh test
   ./openebs/delete.sh test
   "${e}eksctl.sh" delete nodegroup --name="dev-analytics-ng-devstats-${e}" --cluster "dev-analytics-kube-${e}"
+  # sds reinstall
+  # json2hat check, mariadb installaton check
 done
