@@ -13,4 +13,4 @@ spec:
   storageClassName: nfs-openebs-localstorage
   resources:
     requests:
-      storage: 40Gi
+      storage: 4Gi
