@@ -17,7 +17,7 @@ function finish {
 }
 trap finish EXIT
 cp dev_analytics/init_external.sql "$fn"
-vim --not-a-term -c "%s/PWD/${PG_PASS}/g" -c 'wq!' "$fn"
+vim --not-a-term -c "%s/PWD/${PG_PASS}/g" -c "%s/USR/${PG_USER}/g" -c 'wq!' "$fn"
 dropdb -h$PG_HOST -U$PG_USER dev_analytics
 psql -h$PG_HOST -U$PG_USER < "$fn"
 psql -h$PG_HOST -U$PG_USER dev_analytics -c 'create extension if not exists pgcrypto schema public'
