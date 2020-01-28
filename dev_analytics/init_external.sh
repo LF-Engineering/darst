@@ -16,8 +16,7 @@ function finish {
   rm -f "$fn" 2>/dev/null
 }
 trap finish EXIT
-cp dev_analytics/init.sql "$fn"
-# vim --not-a-term -c "%s/PWD/${PG_PASS}/g" -c "%s/-- GRANT lfda_dbo to sa/GRANT lfda_dbo to sa/g" -c 'wq!' "$fn"
+cp dev_analytics/init_external.sql "$fn"
 vim --not-a-term -c "%s/PWD/${PG_PASS}/g" -c 'wq!' "$fn"
 dropdb -h$PG_HOST -U$PG_USER dev_analytics
 psql -h$PG_HOST -U$PG_USER < "$fn"
