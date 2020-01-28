@@ -5,13 +5,12 @@ metadata:
   namespace: mariadb
   name: mariadb-backups
   labels:
-    name: devstats
-    type: pvc
-    proj: backups
+    name: mariadb
+    type: backups
 spec:
   accessModes:
     - ReadWriteMany
   storageClassName: nfs-openebs-localstorage
   resources:
     requests:
-      storage: 4Gi
+      storage: 40Gi

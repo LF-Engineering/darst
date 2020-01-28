@@ -52,5 +52,5 @@ spec:
             persistentVolumeClaim:
               claimName: mariadb-backups
           restartPolicy: Never
-          nodeSelector:
-            lfda: devstats
+#          nodeSelector:
+#            lfda: devstats
