@@ -156,9 +156,10 @@ Current DA V1 is not using DevStats, installing DevStats is optional.
 - Run `./mariadb/backups.sh test` to setup daily automatic backups.
 - Run `./mariadb/shell.sh test` to get into mariadb shell.
 - Run `./mariadb/bash.sh test` to get into bash shell having access to DB.
-- Run `./mariadb/external.sh test` to make MariaDB available externally. Wait for ELB to be created and get its address via: `testk.sh get svc --all-namespaces | grep mariadb-service | awk '{ print $5 }'`.
-- Run `[SHHOST=...] ./mariadb/external_access.sh test` to access MariaDB using its ELB. `[SHHOST=...]` is needed when you have no access to `testk.sh`, `prodk.sh` (for example outside darst box).
-- If you do not specify `SHHOST=...` it will try to use `testk.sh get svc --all-namespaces | grep mariadb-service | awk '{ print $5 }'` to locate external ELB for you (which obviously only works from darst jumpbox).
+- Run `./mariadb/external.sh test` to make MariaDB available externally. Wait for ELB to be created and get its address via: `testk.sh get svc --all-namespaces | grep mariadb-service-rw | awk '{ print $5 }'`.
+- Run `[SHHOST=...] [ALL=1] ./mariadb/external_access.sh test` to access MariaDB using its ELB. `[SHHOST=...]` is needed when you have no access to `testk.sh`, `prodk.sh` (for example outside darst box).
+- If you do not specify `SHHOST=...` it will try to use `testk.sh get svc --all-namespaces | grep mariadb-service-rw | awk '{ print $5 }'` to locate external ELB for you (which obviously only works from darst jumpbox).
+- If you specify `ALL=1` it will use possible read-only connection (it will not try to reach master node which allows write, but will do load-balancing between master node and slave node(s)).
 - Run `./mariadb/external_delete.sh test` to delete service exposing MariaDB externally.
 
 

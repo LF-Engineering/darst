@@ -5,5 +5,5 @@ then
   exit 1
 fi
 change_namespace.sh $1 mariadb
-"${1}k.sh" delete svc mariadb-service
+"${1}k.sh" delete svc mariadb-service-rw mariadb-service-all
 change_namespace.sh $1 default

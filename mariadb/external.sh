@@ -5,5 +5,5 @@ then
   exit 1
 fi
 change_namespace.sh $1 mariadb
-"${1}k.sh" create -f mariadb/mariadb-service.yaml
+"${1}k.sh" create -f mariadb/mariadb-services.yaml
 change_namespace.sh $1 default
