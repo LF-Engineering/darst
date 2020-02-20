@@ -156,6 +156,8 @@ Current DA V1 is not using DevStats, installing DevStats is optional.
 - Run `./mariadb/backups.sh test` to setup daily automatic backups.
 - Run `./mariadb/shell.sh test` to get into mariadb shell.
 - Run `./mariadb/bash.sh test` to get into bash shell having access to DB.
+- Run `./mariadb/external.sh test` to make MariaDB available externally. Wait for ELB to be created and get its address via: `testk.sh get svc --all-namespaces | grep mariadb-service | awk '{ print $5 }'`.
+- Run `./mariadb/external_delete.sh test` to delete service exposing MariaDB externally.
 
 
 # MariadDB backups image
