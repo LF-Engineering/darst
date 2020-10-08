@@ -26,11 +26,11 @@ spec:
             - '/usr/bin/backup_all_dbs.sh'
             resources:
               requests:
-                memory: '128Mi'
+                memory: '256Mi'
                 cpu: '200m'
               limits:
-                memory: '1Gi'
-                cpu: '1000m'
+                memory: '4Gi'
+                cpu: '2000m'
             env:
             - name: SH_HOST
               value: SHHOST
