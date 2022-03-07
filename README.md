@@ -117,7 +117,7 @@ Optional (this will be done automatically by `dev-analytics-api` app deployment)
 - You can see database details from the patroni stateful pod: `pod_shell.sh test devstats devstats-postgres-0`, then `psql dev_analytics`, finally: `select id, name, slug from projects;`.
 
 
-# Redis (otional)
+# Redis (optional)
 
 Note that now we're using `[SDS](https://github.com/LF-Engineering/sync-data-sources) which do not require Redis. It replaces entire Mordred orchestration stack.
 
